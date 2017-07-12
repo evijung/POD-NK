@@ -1,3 +1,41 @@
 <resources>
-    <string name="app_name">Proof-Delivery-NK</string>
+    <string name="app_name" translatable="false">Proof-Delivery-NK</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="Login">Login</string>
+    <string name="Date">Date</string>
+    <string name="OK">OK</string>
+    <string name="err_login_h">Login Failed</string>
+    <string name="err_login_d">Please check username/password and try again</string>
+    <string name="NameAndSurname">Name - Surname</string>
+    <string name="TruckLicense">Truck License</string>
+    <string name="ODOMeter">Miles</string>
+    <string name="JobNo">Job No</string>
+    <string name="Store">Store</string>
+    <string name="ArrivalTime">Arrival Time</string>
+    <string name="Start">Start</string>
+    <string name="Stop">Stop</string>
+    <string name="StartTime">Start Time ::</string>
+    <string name="Mile">Miles ::</string>
+    <string name="StopTime">Stop Time ::</string>
+    <string name="Arrival">Arrival</string>
+    <string name="SavePicture">Save Picture</string>
+    <string name="Signature">Signature</string>
+    <string name="Confirm">Confirm</string>
+    <string name="Receiver">Receiver</string>
+    <string name="Save">Save</string>
+    <string name="Clear">Clear</string>
+    <string name="Model">Model</string>
+    <string name="Description">Description</string>
+    <string name="Quantity">QTY</string>
+    <string name="RetQuantity">Return QTY</string>
+    <string name="ReturnAll">Return All</string>
+    <string name="Finish">Finish</string>
+    <string name="InvoiceNo">Invoice No</string>
+    <string name="Logo">Logo</string>
+    <string name="Header">Header</string>
+    <string name="Descript">Descript</string>
+    <string name="Number">0</string>
+    <string name="Place">Place</string>
+    <string name="Time">Time</string>
 </resources>

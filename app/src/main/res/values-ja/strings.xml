@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ODOMeter">マイル</string>
+    <string name="username">ユーザー名</string>
+    <string name="password">パスワード</string>
+    <string name="Login">ログイン</string>
+    <string name="Date">日付</string>
+    <string name="NameAndSurname">名前と苗字</string>
+    <string name="TruckLicense">トラック登録</string>
+    <string name="JobNo">ジョブ番号</string>
+    <string name="StartTime"></string>
+    <string name="Logo">Logo</string>
+</resources>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ODOMeter">เลขไมล์</string>
+    <string name="username">ชื่อผู้ใช้งาน</string>
+    <string name="password">รหัสผ่าน</string>
+    <string name="Login">เข้าสู่ระบบ</string>
+    <string name="Date">วันที่</string>
+    <string name="NameAndSurname">ชื่อ - นามสกุล</string>
+    <string name="TruckLicense">ทะเบียนรถ</string>
+    <string name="JobNo">เลขที่งาน</string>
+    <string name="StartTime">เวลาเริ่มงาน ::</string>
+    <string name="Logo">Logo</string>
+</resources>

@@ -15,6 +15,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".JobListActivity" />
+        <activity android:name=".ManageJobActivity" />
+        <activity android:name=".DateActivity" />
+        <activity android:name=".DetailJobActivity" />
+        <activity android:name=".SignatureActivity" />
+        <activity android:name=".ReturnActivity"></activity>
+        <meta-data android:name="io.fabric.ApiKey" android:value="cb5d4c3d49eea37d1668dc88f85df56d9d55bcce" />
     </application>
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>
