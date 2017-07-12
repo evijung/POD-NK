@@ -162,7 +162,7 @@ public class JobListActivity extends AppCompatActivity {
                 truckLicenseTextView.setText(loginStrings[3]);
                 dateButton.setText(deliveryDateString);
 
-                JobListAdaptor jobListAdaptor = new JobListAdaptor(numberStrings, detailListStrings, arriveTimeStrings);
+                JobListAdaptor jobListAdaptor = new JobListAdaptor(numberStrings, detailListStrings, arriveTimeStrings,context);
                 tripListView.setAdapter(jobListAdaptor);
 
                 for (int i = 0; i < subJobNoStrings.length; i++) {
@@ -179,13 +179,13 @@ public class JobListActivity extends AppCompatActivity {
         String[] numberStrings;
         String[][] detailListStrings, arriveTimeStrings;
         JobListViewHolder jobListViewHolder;
-        LayoutInflater layoutInflater;
+        Context context;
 
-        public JobListAdaptor(String[] numberStrings, String[][] detailListStrings, String[][] arriveTimeStrings, LayoutInflater layoutInflater) {
+        public JobListAdaptor(String[] numberStrings, String[][] detailListStrings, String[][] arriveTimeStrings, Context context) {
             this.numberStrings = numberStrings;
             this.detailListStrings = detailListStrings;
             this.arriveTimeStrings = arriveTimeStrings;
-            this.layoutInflater = layoutInflater;
+            this.context = context;
         }
 
         @Override
@@ -206,7 +206,7 @@ public class JobListActivity extends AppCompatActivity {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             if (convertView == null) {
-                convertView = layoutInflater.inflate(R.layout.job_list_listview,parent);
+                convertView = LayoutInflater.from(context).inflate(R.layout.job_list_listview, parent);
                 jobListViewHolder = new JobListViewHolder(convertView);
                 convertView.setTag(jobListViewHolder);
             } else {
