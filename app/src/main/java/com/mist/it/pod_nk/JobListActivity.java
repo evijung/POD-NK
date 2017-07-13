@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -30,6 +31,7 @@ import java.util.Arrays;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnItemClick;
 
 import static com.mist.it.pod_nk.MyConstant.urlGetJobList;
 
@@ -138,7 +140,7 @@ public class JobListActivity extends AppCompatActivity {
                     clerkStrings[i] = jsonObject1.getString("Clerk");
                     truckTypeStrings[i] = jsonObject1.getString("TruckType");
                     deliveryTripNoStrings[i] = jsonObject1.getString("DeliveryTripNo");
-                    numberStrings[i] = String.valueOf(i);
+                    numberStrings[i] = String.valueOf(i + 1);
 
                     JSONArray deliveryPlaceJsonArray = jsonObject1.getJSONArray("DeliveryPlace");
                     arriveTimeStrings[i] = new String[deliveryPlaceJsonArray.length()];
@@ -162,7 +164,7 @@ public class JobListActivity extends AppCompatActivity {
                 truckLicenseTextView.setText(loginStrings[3]);
                 dateButton.setText(deliveryDateString);
 
-                JobListAdaptor jobListAdaptor = new JobListAdaptor(numberStrings, detailListStrings, arriveTimeStrings,context);
+                JobListAdaptor jobListAdaptor = new JobListAdaptor(numberStrings, detailListStrings, arriveTimeStrings, context);
                 tripListView.setAdapter(jobListAdaptor);
 
                 for (int i = 0; i < subJobNoStrings.length; i++) {
@@ -204,19 +206,25 @@ public class JobListActivity extends AppCompatActivity {
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(final int position, View convertView, ViewGroup parent) {
             if (convertView == null) {
-                convertView = LayoutInflater.from(context).inflate(R.layout.job_list_listview, parent);
+                convertView = LayoutInflater.from(context).inflate(R.layout.job_list_listview, null);
                 jobListViewHolder = new JobListViewHolder(convertView);
                 convertView.setTag(jobListViewHolder);
             } else {
                 jobListViewHolder = (JobListViewHolder) convertView.getTag();
             }
-
-            jobListViewHolder.roundTextView.setText(numberStrings[position]);
+            String s = "Trip " + numberStrings[position];
+            jobListViewHolder.roundTextView.setText(s);
 
             InJobListAdaptor inJobListAdaptor = new InJobListAdaptor(detailListStrings[position], arriveTimeStrings[position]);
             jobListViewHolder.inJobListView.setAdapter(inJobListAdaptor);
+            jobListViewHolder.roundTextView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d("Tag", "Position ==> " + position);
+                }
+            });
 
             return convertView;
         }
@@ -261,7 +269,7 @@ public class JobListActivity extends AppCompatActivity {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             if (convertView == null) {
-                convertView = View.inflate(getBaseContext(), R.layout.in_joblist_listview, parent);
+                convertView = View.inflate(getBaseContext(), R.layout.in_joblist_listview, null);
                 inJobListViewHolder = new InJobListViewHolder(convertView);
                 convertView.setTag(inJobListViewHolder);
             } else {
@@ -291,6 +299,7 @@ public class JobListActivity extends AppCompatActivity {
     @OnClick(R.id.btnJLADate)
     public void onViewClicked() {
         Intent intent = new Intent(JobListActivity.this, DateActivity.class);
+        intent.putExtra("Login", locationStrings);
         startActivity(intent);
 
 

@@ -11,7 +11,5 @@
         android:id="@+id/lisDAJobDate"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="@dimen/margin"
-        android:background="@color/Gainsboro2"
-        android:padding="@dimen/margin" />
+        android:layout_margin="@dimen/margin" />
 </RelativeLayout>

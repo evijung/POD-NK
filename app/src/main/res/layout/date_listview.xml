@@ -1,6 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/BlanchedAlmond2"
+    android:gravity="left"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/txtDLVDate"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/picture_height"
+        android:layout_margin="@dimen/mini_margin"
+        android:layout_weight="2"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/mini_margin"
+        android:text="@string/Date"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/txtDLVSumjob"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/mini_margin"
+        android:layout_marginEnd="@dimen/mini_margin"
+        android:layout_marginTop="@dimen/micro_margin"
+        android:layout_weight="1"
+        android:background="@drawable/round_text"
+        android:gravity="center_horizontal"
+        android:padding="@dimen/mini_margin"
+        android:text="@string/Trip"
+        android:textSize="18sp" />
 
 </LinearLayout>

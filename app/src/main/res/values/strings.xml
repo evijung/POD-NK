@@ -35,7 +35,9 @@
     <string name="Logo">Logo</string>
     <string name="Header">Header</string>
     <string name="Descript">Descript</string>
-    <string name="Number">0</string>
+    <string name="Number" translatable="false">Trip 0</string>
     <string name="Place">Place</string>
     <string name="Time">Time</string>
+    <string name="Job">Job</string>
+    <string name="Trip">Trip</string>
 </resources>

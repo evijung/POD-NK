@@ -48,6 +48,7 @@
             android:gravity="center"
             android:padding="@dimen/mini_margin"
             android:text="@string/Date" />
+
     </LinearLayout>
 
     <ListView
@@ -55,7 +56,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/linJLATopPanel"
-        android:layout_margin="@dimen/margin"
-        android:background="@color/BlanchedAlmond2"
-        android:padding="@dimen/margin" />
+        android:layout_marginBottom="@dimen/margin"
+        android:layout_marginEnd="@dimen/margin"
+        android:layout_marginStart="@dimen/margin" />
+
 </RelativeLayout>
