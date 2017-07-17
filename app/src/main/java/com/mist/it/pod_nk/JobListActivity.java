@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.JsonReader;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.OkHttpClient;
@@ -27,6 +29,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Iterator;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -48,8 +51,7 @@ public class JobListActivity extends AppCompatActivity {
     String[] loginStrings, subJobNoStrings, locationStrings, deliveryTypeStrings, transportStrings, truckStrings, driverNameStrings, driverSurnameStrings;
     String[] clerkStrings, truckTypeStrings, deliveryTripNoStrings, numberStrings;
     String[][] arriveTimeStrings, detailListStrings, invoiceStrings, jobNoStrings;
-    String deliveryDateString, driverNameString, truckString;
-
+    String dateString, driverNameString, truckString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,9 +61,27 @@ public class JobListActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         loginStrings = getIntent().getStringArrayExtra("Login");
+        dateString = getIntent().getStringExtra("Date");
 
-        SynGetJobList synGetJobList = new SynGetJobList(this, loginStrings[0]);
-        synGetJobList.execute();
+        if (driverNameStrings == null) {
+            String name = loginStrings[1] + " " + loginStrings[2];
+            fullNameTextView.setText(name);
+        }
+        truckLicenseTextView.setText(loginStrings[3]);
+
+        Log.d("Tag", "Bool 1 ==> " + (dateString.equals("")) + " Bool 2 ==> " + (dateString == "") + " Date ==> " + dateString);
+        if (dateString.equals("")) {
+            SynGetJobList synGetJobList = new SynGetJobList(this, loginStrings[0]);
+            synGetJobList.execute();
+        } else {
+            SynGetJobList synGetJobList = new SynGetJobList(this, loginStrings[0], dateString);
+            synGetJobList.execute();
+        }
+
+    }
+
+    @Override
+    public void onBackPressed() {
 
     }
 
@@ -159,9 +179,8 @@ public class JobListActivity extends AppCompatActivity {
                         jobNoStrings[i][j] = jsonObject2.getString("JobNo");
                     }
                 }
-
+                Log.d("Tag", "Truck ==> " + loginStrings[3]);
                 fullNameTextView.setText(driverNameString);
-                truckLicenseTextView.setText(loginStrings[3]);
                 dateButton.setText(deliveryDateString);
 
                 JobListAdaptor jobListAdaptor = new JobListAdaptor(numberStrings, detailListStrings, arriveTimeStrings, context);
@@ -217,12 +236,18 @@ public class JobListActivity extends AppCompatActivity {
             String s = "Trip " + numberStrings[position];
             jobListViewHolder.roundTextView.setText(s);
 
-            InJobListAdaptor inJobListAdaptor = new InJobListAdaptor(detailListStrings[position], arriveTimeStrings[position]);
+            final InJobListAdaptor inJobListAdaptor = new InJobListAdaptor(detailListStrings[position], arriveTimeStrings[position]);
             jobListViewHolder.inJobListView.setAdapter(inJobListAdaptor);
             jobListViewHolder.roundTextView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    Intent intent = new Intent(JobListActivity.this, ManageJobActivity.class);
+                    intent.putExtra("Login", loginStrings);
+                    intent.putExtra("Date", dateString);
+                    intent.putExtra("Position", position + 1);
+                    startActivity(intent);
                     Log.d("Tag", "Position ==> " + position);
+
                 }
             });
 
@@ -237,7 +262,6 @@ public class JobListActivity extends AppCompatActivity {
 
             JobListViewHolder(View view) {
                 ButterKnife.bind(this, view);
-
             }
         }
     }
@@ -295,11 +319,11 @@ public class JobListActivity extends AppCompatActivity {
         }
     }
 
-
     @OnClick(R.id.btnJLADate)
     public void onViewClicked() {
         Intent intent = new Intent(JobListActivity.this, DateActivity.class);
-        intent.putExtra("Login", locationStrings);
+        intent.putExtra("Login", loginStrings);
+        intent.putExtra("Date", dateString);
         startActivity(intent);
 
 

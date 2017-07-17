@@ -106,7 +106,9 @@ public class MainActivity extends AppCompatActivity {
 
                     Intent intent = new Intent(MainActivity.this, JobListActivity.class);
                     intent.putExtra("Login", loginStrings);
+                    intent.putExtra("Date", "");
                     startActivity(intent);
+                    finish();
 
                 } catch (JSONException e) {
                     e.printStackTrace();

@@ -1,6 +1,7 @@
 package com.mist.it.pod_nk;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -24,10 +25,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import butterknife.OnItemClick;
 
 import static com.mist.it.pod_nk.MyConstant.urlGetJobListDate;
@@ -37,7 +38,8 @@ public class DateActivity extends AppCompatActivity {
     @BindView(R.id.lisDAJobDate)
     ListView tripDateListView;
 
-    String[] loginStrings;
+    String[] loginStrings, deliveryDateStrings, sumjobStrings;
+    String dateString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,21 +48,37 @@ public class DateActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         loginStrings = getIntent().getStringArrayExtra("Login");
+        dateString = getIntent().getStringExtra("Date");
 
         SyncGetDate syncGetDate = new SyncGetDate(this, loginStrings[0]);
         syncGetDate.execute();
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(DateActivity.this, JobListActivity.class);
+        intent.putExtra("Login", loginStrings);
+        intent.putExtra("Date", dateString);
+        Log.d("Tag", "Send ==> " + dateString + " " + Arrays.toString(loginStrings));
+        startActivity(intent);
+        finish();
+
+    }
+
     @OnItemClick(R.id.lisDAJobDate)
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Log.d("Tag", "Positon ==> " + position);
+        Intent intent = new Intent(DateActivity.this, JobListActivity.class);
+        intent.putExtra("Login", loginStrings);
+        intent.putExtra("Date", deliveryDateStrings[position]);
+        Log.d("Tag", "Send ==> " + deliveryDateStrings[position] + " " + Arrays.toString(loginStrings));
+        startActivity(intent);
+        finish();
     }
 
     class SyncGetDate extends AsyncTask<Void, Void, String> {
         Context context;
         String truckIDString;
 
-        String[] deliveryDateStrings, sumjobStrings;
 
         public SyncGetDate(Context context, String truckIDString) {
             this.context = context;
@@ -70,9 +88,10 @@ public class DateActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(Void... params) {
             try {
+                Log.d("Tag", "Send ==> " + truckIDString);
                 OkHttpClient okHttpClient = new OkHttpClient();
                 RequestBody requestBody = new FormEncodingBuilder()
-                        .add("isAdd", "True")
+                        .add("isAdd", "true")
                         .add("truck_id", truckIDString)
                         .build();
                 Request.Builder builder = new Request.Builder();
@@ -88,7 +107,7 @@ public class DateActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            Log.d("Tag", s);
+            Log.d("Tag", "" + s);
 
             try {
                 JSONArray jsonArray = new JSONArray(s);
