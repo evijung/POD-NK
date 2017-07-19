@@ -171,7 +171,7 @@ public class DateActivity extends AppCompatActivity {
 
             date = getResources().getString(R.string.Date) + " : " + dateStrings[position];
             job = jobStrings[position] + " " + getResources().getString(R.string.Trip);
-
+//            job = jobStrings[position];
             viewHolder.dateTextView.setText(date);
             viewHolder.sumjobTextView.setText(job);
 
