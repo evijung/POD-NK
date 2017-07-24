@@ -1,13 +1,17 @@
 package com.mist.it.pod_nk;
 
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.OkHttpClient;
@@ -26,6 +30,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.mist.it.pod_nk.MyConstant.urlGetJob;
+import static com.mist.it.pod_nk.MyConstant.urlSaveStatusTrip;
 
 public class ManageJobActivity extends AppCompatActivity {
 
@@ -48,6 +53,7 @@ public class ManageJobActivity extends AppCompatActivity {
 
     String dateString, tripNoString, subJobNoString;
     String[] loginStrings;
+    DialogViewHolder dialogViewHolder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +82,6 @@ public class ManageJobActivity extends AppCompatActivity {
         String[][][][] invoiceStrings, amountStrings;
 
         @Override
-
         protected String doInBackground(Void... params) {
             try {
                 OkHttpClient okHttpClient = new OkHttpClient();
@@ -121,7 +126,7 @@ public class ManageJobActivity extends AppCompatActivity {
                 invoiceStrings = new String[dataJsonArray.length()][][][];
                 amountStrings = new String[dataJsonArray.length()][][][];
 
-                for (int i = 0;i < dataJsonArray.length();i++) {
+                for (int i = 0; i < dataJsonArray.length(); i++) {
                     JSONObject jsonObject1 = dataJsonArray.getJSONObject(i);
                     subJobNoStrings[i] = jsonObject1.getString("SubJobNo");
                     deliveryDateStrings[i] = jsonObject1.getString("DeliveryDate");
@@ -143,8 +148,8 @@ public class ManageJobActivity extends AppCompatActivity {
                     invoiceStrings[i] = new String[delivPlaceJsonArray.length()][][];
                     amountStrings[i] = new String[delivPlaceJsonArray.length()][][];
 
-                    for (int j = 0;j < delivPlaceJsonArray.length();j++) {
-                        JSONObject jsonObject2 = delivPlaceJsonArray.getJSONObject(i);
+                    for (int j = 0; j < delivPlaceJsonArray.length(); j++) {
+                        JSONObject jsonObject2 = delivPlaceJsonArray.getJSONObject(j);
                         detailListStrings[i][j] = jsonObject2.getString("DetailList");
                         provinceStrings[i][j] = jsonObject2.getString("PROVINCE");
                         arriveTimeStrings[i][j] = jsonObject2.getString("ArrivalTime");
@@ -155,16 +160,16 @@ public class ManageJobActivity extends AppCompatActivity {
                         invoiceStrings[i][j] = new String[jobNoJsonArray.length()][];
                         amountStrings[i][j] = new String[jobNoJsonArray.length()][];
 
-                        for (int k = 0;k < jobNoJsonArray.length();k++) {
-                            JSONObject jsonObject3 = jobNoJsonArray.getJSONObject(i);
+                        for (int k = 0; k < jobNoJsonArray.length(); k++) {
+                            JSONObject jsonObject3 = jobNoJsonArray.getJSONObject(k);
                             jobNoStrings[i][j][k] = jsonObject3.getString("JobNo");
 
                             JSONArray invoiceJsonArray = jsonObject3.getJSONArray("Invoice");
                             invoiceStrings[i][j][k] = new String[invoiceJsonArray.length()];
                             amountStrings[i][j][k] = new String[invoiceJsonArray.length()];
 
-                            for (int l = 0;l < invoiceJsonArray.length();l++) {
-                                JSONObject jsonObject4 = invoiceJsonArray.getJSONObject(i);
+                            for (int l = 0; l < invoiceJsonArray.length(); l++) {
+                                JSONObject jsonObject4 = invoiceJsonArray.getJSONObject(l);
                                 invoiceStrings[i][j][k][l] = jsonObject4.getString("Invoice");
                                 amountStrings[i][j][k][l] = jsonObject4.getString("Amount");
                             }
@@ -172,7 +177,8 @@ public class ManageJobActivity extends AppCompatActivity {
                     }
                 }
 
-
+                ManageJobAdaptor manageJobAdaptor = new ManageJobAdaptor(ManageJobActivity.this, detailListStrings[0], arriveTimeStrings[0], jobNoStrings[0], invoiceStrings[0], amountStrings[0]);
+                storeListView.setAdapter(manageJobAdaptor);
 
 
             } catch (JSONException e) {
@@ -182,13 +188,146 @@ public class ManageJobActivity extends AppCompatActivity {
         }
     }
 
+    class SynUpdateTripStatus extends AsyncTask<Void, Void, String> {
+        String timeString,odoString,latString,longString, storeIDString;
+
+        public SynUpdateTripStatus(String timeString, String odoString, String latString, String longString, String storeIDString) {
+            this.timeString = timeString;
+            this.odoString = odoString;
+            this.latString = latString;
+            this.longString = longString;
+            this.storeIDString = storeIDString;
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+            try{
+                OkHttpClient okHttpClient = new OkHttpClient();
+                Request.Builder builder = new Request.Builder();
+                RequestBody requestBody = new FormEncodingBuilder()
+                        .add("user_name", "")
+                        .add("truck_id", "")
+                        .add("subjob_no", "")
+                        .add("odo", "")
+                        .add("gps_lat", "")
+                        .add("gps_lon", "")
+                        .add("timeStamp", "")
+                        .add("StoreId", "")
+                        .add("flag", "")
+                        .build();
+                Request request = builder.url(urlSaveStatusTrip).post(requestBody).build();
+                Response response = okHttpClient.newCall(request).execute();
+
+                return response.body().string();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Log.d("Tag", "s ==> " + s);
+        }
+    }
+
+
     @OnClick({R.id.btnMJAStart, R.id.btnMJAStop})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btnMJAStart:
+                final String[] lat = new String[1];
+                final String[] lng = new String[1];
+                final String[] time = new String[1];
+                AlertDialog.Builder builder = new AlertDialog.Builder(ManageJobActivity.this);
+
+                View view1 = View.inflate(getBaseContext(), R.layout.set_odo_dialog, null);
+                Log.d("Tag", String.valueOf(view1 == null));
+                dialogViewHolder = new DialogViewHolder(view1);
+
+                dialogViewHolder.headerTextView.setText("Enter " + getResources().getText(R.string.ODOMeter) + " Start");
+                builder.setView(view1);
+
+                builder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Log.d("Tag", "In edit text ==> " + dialogViewHolder.odoNoEditText.getText());
+                        GPSManager gpsManager = new GPSManager(ManageJobActivity.this);
+                        if (gpsManager.setLatLong(0)) {
+                            lat[0] = gpsManager.getLatString();
+                            lng[0] = gpsManager.getLongString();
+                            time[0] = gpsManager.getDateTime();
+                            Log.d("Tag", "Lat/Long : Time ==> " + lat[0] + "/" + lng[0] + " : " +time[0]);
+
+
+
+                        } else {
+                            Toast.makeText(ManageJobActivity.this, "Sorry Can't Get Latitude, Longitude. Please Try again", Toast.LENGTH_LONG).show();
+                        }
+
+
+
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                builder.show();
+
                 break;
             case R.id.btnMJAStop:
+                final String[] latStrings = new String[1];
+                final String[] lngStrings = new String[1];
+                final String[] timeStrings = new String[1];
+                AlertDialog.Builder builder1 = new AlertDialog.Builder(ManageJobActivity.this);
+                View view2 = View.inflate(getBaseContext(), R.layout.set_odo_dialog, null);
+                dialogViewHolder = new DialogViewHolder(view2);
+                dialogViewHolder.headerTextView.setText("Enter " + getResources().getString(R.string.ODOMeter) + " Finish");
+
+                builder1.setView(view2);
+
+                builder1.setPositiveButton("Save", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Log.d("Tag", "In edit text ==> " + dialogViewHolder.odoNoEditText.getText());
+                        GPSManager gpsManager = new GPSManager(ManageJobActivity.this);
+                        if (gpsManager.setLatLong(0)) {
+                            latStrings[0] = gpsManager.getLatString();
+                            lngStrings[0] = gpsManager.getLongString();
+                            timeStrings[0] = gpsManager.getDateTime();
+                            Log.d("Tag", "Lat/Long : Time ==> " + latStrings[0] + "/" + lngStrings[0] + " : " +timeStrings[0]);
+
+
+
+                        } else {
+                            Toast.makeText(ManageJobActivity.this, "Sorry Can't Get Latitude, Longitude. Please Try again", Toast.LENGTH_LONG).show();
+                        }
+
+                    }
+                });
+                builder1.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                builder1.show();
                 break;
+        }
+    }
+
+    static class DialogViewHolder {
+        @BindView(R.id.txtSODHeader)
+        TextView headerTextView;
+        @BindView(R.id.edtSODNo)
+        EditText odoNoEditText;
+
+        DialogViewHolder(View view) {
+            ButterKnife.bind(this, view);
         }
     }
 }

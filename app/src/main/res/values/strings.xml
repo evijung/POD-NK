@@ -40,4 +40,5 @@
     <string name="Time">Time</string>
     <string name="Job">Job</string>
     <string name="Trip">Trip</string>
+    <string name="ODOHint">Please add ODO Meter</string>
 </resources>

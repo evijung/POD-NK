@@ -245,7 +245,7 @@ public class JobListActivity extends AppCompatActivity {
                     Intent intent = new Intent(JobListActivity.this, ManageJobActivity.class);
                     intent.putExtra("Login", loginStrings);
                     intent.putExtra("Date", dateString);
-                    intent.putExtra("Position", position + 1);
+                    intent.putExtra("Position", "" + (position + 1));
                     intent.putExtra("SubJobNo", subJobNoStrings[position]);
                     startActivity(intent);
                     Log.d("Tag", "Position ==> " + position);
