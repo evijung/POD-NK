@@ -74,7 +74,7 @@ public class ManageJobActivity extends AppCompatActivity {
 
     }
 
-    class SyncGetJob extends AsyncTask<Void, Void, String> {
+    private class SyncGetJob extends AsyncTask<Void, Void, String> {
         String[] subJobNoStrings, deliveryDateStrings, truckStrings, driverNameStrings, driverSirNameStrings, deliveryTripNoStrings, tripStartTimeStrings;
         String[] tripStopTimeStrings, tripStartMileStrings, tripStopMileStrings;
         String[][] detailListStrings, provinceStrings, arriveTimeStrings;
@@ -188,15 +188,15 @@ public class ManageJobActivity extends AppCompatActivity {
         }
     }
 
-    class SynUpdateTripStatus extends AsyncTask<Void, Void, String> {
-        String timeString,odoString,latString,longString, storeIDString;
+    private class SynUpdateTripStatus extends AsyncTask<Void, Void, String> {
+        String timeString,odoString,latString,longString, flagString;
 
-        public SynUpdateTripStatus(String timeString, String odoString, String latString, String longString, String storeIDString) {
+        public SynUpdateTripStatus(String timeString, String odoString, String latString, String longString, String flagString) {
             this.timeString = timeString;
             this.odoString = odoString;
             this.latString = latString;
             this.longString = longString;
-            this.storeIDString = storeIDString;
+            this.flagString = flagString;
         }
 
         @Override
@@ -205,15 +205,15 @@ public class ManageJobActivity extends AppCompatActivity {
                 OkHttpClient okHttpClient = new OkHttpClient();
                 Request.Builder builder = new Request.Builder();
                 RequestBody requestBody = new FormEncodingBuilder()
-                        .add("user_name", "")
-                        .add("truck_id", "")
-                        .add("subjob_no", "")
-                        .add("odo", "")
-                        .add("gps_lat", "")
-                        .add("gps_lon", "")
-                        .add("timeStamp", "")
-                        .add("StoreId", "")
-                        .add("flag", "")
+                        .add("isAdd","true")
+                        .add("user_name", loginStrings[5])
+                        .add("truck_id", loginStrings[0])
+                        .add("subjob_no", subJobNoString)
+                        .add("odo", odoString)
+                        .add("gps_lat", latString)
+                        .add("gps_lon", longString)
+                        .add("timeStamp", timeString)
+                        .add("flag", flagString)
                         .build();
                 Request request = builder.url(urlSaveStatusTrip).post(requestBody).build();
                 Response response = okHttpClient.newCall(request).execute();
@@ -240,7 +240,7 @@ public class ManageJobActivity extends AppCompatActivity {
                 final String[] lat = new String[1];
                 final String[] lng = new String[1];
                 final String[] time = new String[1];
-                AlertDialog.Builder builder = new AlertDialog.Builder(ManageJobActivity.this);
+                final AlertDialog.Builder builder = new AlertDialog.Builder(ManageJobActivity.this);
 
                 View view1 = View.inflate(getBaseContext(), R.layout.set_odo_dialog, null);
                 Log.d("Tag", String.valueOf(view1 == null));
@@ -258,12 +258,15 @@ public class ManageJobActivity extends AppCompatActivity {
                             lat[0] = gpsManager.getLatString();
                             lng[0] = gpsManager.getLongString();
                             time[0] = gpsManager.getDateTime();
+
                             Log.d("Tag", "Lat/Long : Time ==> " + lat[0] + "/" + lng[0] + " : " +time[0]);
 
-
+                            SynUpdateTripStatus synUpdateTripStatus = new SynUpdateTripStatus(time[0], dialogViewHolder.odoNoEditText.getText().toString(), lat[0], lng[0],"start");
+                            synUpdateTripStatus.execute();
 
                         } else {
                             Toast.makeText(ManageJobActivity.this, "Sorry Can't Get Latitude, Longitude. Please Try again", Toast.LENGTH_LONG).show();
+
                         }
 
 
@@ -299,9 +302,10 @@ public class ManageJobActivity extends AppCompatActivity {
                             latStrings[0] = gpsManager.getLatString();
                             lngStrings[0] = gpsManager.getLongString();
                             timeStrings[0] = gpsManager.getDateTime();
-                            Log.d("Tag", "Lat/Long : Time ==> " + latStrings[0] + "/" + lngStrings[0] + " : " +timeStrings[0]);
+                            Log.d("Tag", "Lat/Long : Time ==> " + latStrings[0] + "/" + lngStrings[0] + " : " + timeStrings[0]);
 
-
+                            SynUpdateTripStatus synUpdateTripStatus = new SynUpdateTripStatus(timeStrings[0], dialogViewHolder.odoNoEditText.getText().toString(), latStrings[0], lngStrings[0], "stop");
+                            synUpdateTripStatus.execute();
 
                         } else {
                             Toast.makeText(ManageJobActivity.this, "Sorry Can't Get Latitude, Longitude. Please Try again", Toast.LENGTH_LONG).show();

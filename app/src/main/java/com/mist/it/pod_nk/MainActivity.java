@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
                     String truckTypeIdString = jsonObject.getString("TruckTypeID");
                     String driverNameString = jsonObject.getString("DriverName");
                     String driverSurname = jsonObject.getString("DriverSurname");
-                    String[] loginStrings = new String[]{truckIdString, driverNameString, driverSurname, truckRegString, truckTypeIdString};
+                    String[] loginStrings = new String[]{truckIdString, driverNameString, driverSurname, truckRegString, truckTypeIdString, usernameString};
 
                     Intent intent = new Intent(MainActivity.this, JobListActivity.class);
                     intent.putExtra("Login", loginStrings);
