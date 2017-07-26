@@ -23,5 +23,5 @@ public interface MyConstant extends BaseColumns {
     public static final String urlSaveQuantityReturnByItem = serverString + projectString + "/app/centerservice/saveQuantityReturnByItem.php";
     public static final String urlSaveSignature = serverString + projectString + "/app/centerservice/saveSignature.php";
     public static final String urlSaveStatusTrip = serverString + projectString + "/app/centerservice/saveStatusTrip.php";
-
+    public static final String urlUploadPicture = serverString + projectString + "/app/centerservice/uploadPicture.php";
 }

@@ -177,8 +177,13 @@ public class ManageJobActivity extends AppCompatActivity {
                     }
                 }
 
-                ManageJobAdaptor manageJobAdaptor = new ManageJobAdaptor(ManageJobActivity.this, detailListStrings[0], arriveTimeStrings[0], jobNoStrings[0], invoiceStrings[0], amountStrings[0]);
+                ManageJobAdaptor manageJobAdaptor = new ManageJobAdaptor(ManageJobActivity.this,dateString,tripNoString,subJobNoString, detailListStrings[0], arriveTimeStrings[0], loginStrings, jobNoStrings[0], invoiceStrings[0], amountStrings[0]);
                 storeListView.setAdapter(manageJobAdaptor);
+
+                startMilesTextView.setText(tripStartMileStrings[0]);
+                startTimeTextView.setText(tripStartTimeStrings[0]);
+                stopMilesTextView.setText(tripStopMileStrings[0]);
+                stopTimeTextView.setText(tripStopTimeStrings[0]);
 
 
             } catch (JSONException e) {
@@ -189,7 +194,7 @@ public class ManageJobActivity extends AppCompatActivity {
     }
 
     private class SynUpdateTripStatus extends AsyncTask<Void, Void, String> {
-        String timeString,odoString,latString,longString, flagString;
+        String timeString, odoString, latString, longString, flagString;
 
         public SynUpdateTripStatus(String timeString, String odoString, String latString, String longString, String flagString) {
             this.timeString = timeString;
@@ -201,11 +206,11 @@ public class ManageJobActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(Void... params) {
-            try{
+            try {
                 OkHttpClient okHttpClient = new OkHttpClient();
                 Request.Builder builder = new Request.Builder();
                 RequestBody requestBody = new FormEncodingBuilder()
-                        .add("isAdd","true")
+                        .add("isAdd", "true")
                         .add("user_name", loginStrings[5])
                         .add("truck_id", loginStrings[0])
                         .add("subjob_no", subJobNoString)
@@ -229,6 +234,16 @@ public class ManageJobActivity extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             Log.d("Tag", "s ==> " + s);
+            Log.d("Tag", "s bool ==> " + s.equals("OK"));
+            if (s.equals("OK")) {
+                if (flagString.equals("start")) {
+                    startTimeTextView.setText(timeString);
+                    startMilesTextView.setText(odoString);
+                } else if (flagString.equals("stop")) {
+                    stopTimeTextView.setText(timeString);
+                    stopMilesTextView.setText(odoString);
+                }
+            }
         }
     }
 
@@ -259,17 +274,15 @@ public class ManageJobActivity extends AppCompatActivity {
                             lng[0] = gpsManager.getLongString();
                             time[0] = gpsManager.getDateTime();
 
-                            Log.d("Tag", "Lat/Long : Time ==> " + lat[0] + "/" + lng[0] + " : " +time[0]);
+                            Log.d("Tag", "Lat/Long : Time ==> " + lat[0] + "/" + lng[0] + " : " + time[0]);
 
-                            SynUpdateTripStatus synUpdateTripStatus = new SynUpdateTripStatus(time[0], dialogViewHolder.odoNoEditText.getText().toString(), lat[0], lng[0],"start");
+                            SynUpdateTripStatus synUpdateTripStatus = new SynUpdateTripStatus(time[0], dialogViewHolder.odoNoEditText.getText().toString(), lat[0], lng[0], "start");
                             synUpdateTripStatus.execute();
 
                         } else {
                             Toast.makeText(ManageJobActivity.this, "Sorry Can't Get Latitude, Longitude. Please Try again", Toast.LENGTH_LONG).show();
 
                         }
-
-
 
                     }
                 });
@@ -306,7 +319,6 @@ public class ManageJobActivity extends AppCompatActivity {
 
                             SynUpdateTripStatus synUpdateTripStatus = new SynUpdateTripStatus(timeStrings[0], dialogViewHolder.odoNoEditText.getText().toString(), latStrings[0], lngStrings[0], "stop");
                             synUpdateTripStatus.execute();
-
                         } else {
                             Toast.makeText(ManageJobActivity.this, "Sorry Can't Get Latitude, Longitude. Please Try again", Toast.LENGTH_LONG).show();
                         }

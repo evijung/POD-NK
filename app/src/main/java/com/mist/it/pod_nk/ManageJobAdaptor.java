@@ -1,6 +1,7 @@
 package com.mist.it.pod_nk;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,15 +20,20 @@ import butterknife.ButterKnife;
 
 public class ManageJobAdaptor extends BaseAdapter {
     Context context;
-    String[] storeStrings, timeStrings;
+    String dateString,tripNoString, subJobNoString;
+    String[] storeStrings, timeStrings, loginStrings;
     String[][] jobNoStrings;
     String[][][] invoiceStrings, amountStrings;
     ManageJobViewHolder manageJobViewHolder;
 
-    public ManageJobAdaptor(Context context, String[] storeStrings, String[] timeStrings, String[][] jobNoStrings, String[][][] invoiceStrings, String[][][] amountStrings) {
+    public ManageJobAdaptor(Context context, String dateString, String tripNoString, String subJobNoString, String[] storeStrings, String[] timeStrings, String[] loginStrings, String[][] jobNoStrings, String[][][] invoiceStrings, String[][][] amountStrings) {
         this.context = context;
+        this.dateString = dateString;
+        this.tripNoString = tripNoString;
+        this.subJobNoString = subJobNoString;
         this.storeStrings = storeStrings;
         this.timeStrings = timeStrings;
+        this.loginStrings = loginStrings;
         this.jobNoStrings = jobNoStrings;
         this.invoiceStrings = invoiceStrings;
         this.amountStrings = amountStrings;
@@ -64,10 +70,29 @@ public class ManageJobAdaptor extends BaseAdapter {
         JobNoAdaptor jobNoAdaptor = new JobNoAdaptor(context, jobNoStrings[position], invoiceStrings[position], amountStrings[position]);
         manageJobViewHolder.jobNoListView.setAdapter(jobNoAdaptor);
 
-        manageJobViewHolder.topLinearLayout.setOnClickListener(new View.OnClickListener() {
+        manageJobViewHolder.storeTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("Tag", "Linear Click Position ==> " + position);
+                Intent intent = new Intent(context, DetailJobActivity.class);
+                intent.putExtra("Date", dateString);
+                intent.putExtra("Position", tripNoString);
+                intent.putExtra("Login", loginStrings);
+                intent.putExtra("SubJobNo", subJobNoString);
+                intent.putExtra("Place", storeStrings[position]);
+                context.startActivity(intent);
+            }
+        });
+
+        manageJobViewHolder.timeTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, DetailJobActivity.class);
+                intent.putExtra("Date", dateString);
+                intent.putExtra("Position", tripNoString);
+                intent.putExtra("Login", loginStrings);
+                intent.putExtra("SubJobNo", subJobNoString);
+                intent.putExtra("Place", storeStrings[position]);
+                context.startActivity(intent);
             }
         });
 
@@ -79,8 +104,6 @@ public class ManageJobAdaptor extends BaseAdapter {
         TextView storeTextView;
         @BindView(R.id.txtMJLTime)
         TextView timeTextView;
-        @BindView(R.id.linMJLTop)
-        LinearLayout topLinearLayout;
         @BindView(R.id.lisMJLJobNo)
         ListView jobNoListView;
 

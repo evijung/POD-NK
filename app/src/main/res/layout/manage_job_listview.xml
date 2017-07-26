@@ -18,8 +18,9 @@
         <TextView
             android:id="@+id/txtMJLStore"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/picture_width"
             android:layout_weight="4"
+            android:gravity="center_vertical"
             android:maxLines="3"
             android:text="@string/Store"
             android:textSize="14sp" />
