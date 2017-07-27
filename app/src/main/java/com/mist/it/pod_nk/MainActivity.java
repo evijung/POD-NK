@@ -73,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(Void... params) {
             try {
+                Log.d("Tag", "Send ==> " + usernameString + " , " + passwordString);
                 OkHttpClient okHttpClient = new OkHttpClient();
                 Request.Builder builder = new Request.Builder();
                 RequestBody requestBody = new FormEncodingBuilder()
@@ -92,8 +93,8 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            Log.d("TAG", s);
             if (!s.equals("null")) {
+                Log.d("TAG", s);
                 try {
                     JSONArray jsonArray = new JSONArray(s);
                     JSONObject jsonObject = jsonArray.getJSONObject(0);
@@ -112,6 +113,7 @@ public class MainActivity extends AppCompatActivity {
 
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    Log.d("Tag", String.valueOf(e) + " Line: " + e.getStackTrace()[0].getLineNumber());
                 }
             } else {
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
