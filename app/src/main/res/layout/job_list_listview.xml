@@ -27,5 +27,6 @@
         android:layout_marginEnd="@dimen/mini_margin"
         android:layout_marginRight="@dimen/mini_margin"
         android:layout_marginTop="@dimen/mini_margin"
-        android:padding="@dimen/mini_margin" />
+        android:padding="@dimen/mini_margin"
+        android:nestedScrollingEnabled="true" />
 </LinearLayout>

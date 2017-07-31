@@ -105,6 +105,7 @@ public class GPSManager {
             if (strLat.equals("Unknown") && strLng.equals("Unknown") && rev < 10) {
 
                 rev++;
+                setLatLong(rev);
                 Log.d("ServiceTag", "Repeat");
             } else if (strLat.equals("Unknown") && strLng.equals("Unknown") && rev >= 10) {
                 //Can't get lat/long

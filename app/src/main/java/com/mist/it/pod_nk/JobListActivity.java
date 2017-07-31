@@ -185,6 +185,7 @@ public class JobListActivity extends AppCompatActivity {
 
                 JobListAdaptor jobListAdaptor = new JobListAdaptor(numberStrings, detailListStrings, arriveTimeStrings, subJobNoStrings, context);
                 tripListView.setAdapter(jobListAdaptor);
+                
 
                 for (int i = 0; i < subJobNoStrings.length; i++) {
                     Log.d("Tag", Arrays.toString(invoiceStrings[i]));

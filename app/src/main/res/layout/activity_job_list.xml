@@ -58,6 +58,7 @@
         android:layout_below="@+id/linJLATopPanel"
         android:layout_marginBottom="@dimen/margin"
         android:layout_marginEnd="@dimen/margin"
-        android:layout_marginStart="@dimen/margin" />
+        android:layout_marginStart="@dimen/margin"
+        android:nestedScrollingEnabled="true"  />
 
 </RelativeLayout>

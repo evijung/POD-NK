@@ -17,11 +17,13 @@
         android:elevation="1dp"
         android:gravity="center_vertical"
         android:padding="@dimen/micro_margin"
-        android:text="@string/Invoice" />
+        android:text="@string/Invoice"
+        android:textSize="18sp" />
 
     <ImageView
         android:id="@+id/imgILCamera"
         android:layout_width="@dimen/button_height"
         android:layout_height="@dimen/button_height"
+        android:padding="@dimen/mini_margin"
         app:srcCompat="@drawable/camera" />
 </LinearLayout>

@@ -1,6 +1,7 @@
 package com.mist.it.pod_nk;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,11 +9,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.OkHttpClient;
@@ -29,6 +32,7 @@ import java.io.IOException;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnItemClick;
 
 public class DetailJobActivity extends AppCompatActivity {
 
@@ -79,6 +83,18 @@ public class DetailJobActivity extends AppCompatActivity {
         synGetJobDetail.execute();
     }
 
+    @OnItemClick(R.id.lisDJAInvoiceList)
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Intent intent = new Intent(DetailJobActivity.this,ReturnActivity.class);
+        intent.putExtra("Date", dateString);
+        intent.putExtra("Position", tripNoString);
+        intent.putExtra("Login", loginStrings);
+        intent.putExtra("SubJobNo", subJobNoString);
+        intent.putExtra("Place", storeString);
+        startActivity(intent);
+
+    }
+
     class SynGetJobDetail extends AsyncTask<Void, Void, String> {
         public SynGetJobDetail() {
         }
@@ -123,16 +139,19 @@ public class DetailJobActivity extends AppCompatActivity {
                     invoiceStrings = new String[jsonArray1.length()];
 
                     for (int j = 0; j < jsonArray1.length(); j++) {
-                        JSONObject jsonObject2 = jsonArray.getJSONObject(j);
+                        JSONObject jsonObject2 = jsonArray1.getJSONObject(j);
                         invoiceStrings[j] = jsonObject2.getString("Invoice");
                     }
                 }
 
                 arrivalTimeTextView.setText(getResources().getText(R.string.ArrivalTime) + ": " + arriveTimeString);
+                InvoiceListAdaptor invoiceListAdaptor = new InvoiceListAdaptor(DetailJobActivity.this, invoiceStrings);
+                invoiceListView.setAdapter(invoiceListAdaptor);
 
 
             } catch (JSONException e) {
                 e.printStackTrace();
+                Log.d("Tag", String.valueOf(e) + " Line: " + e.getStackTrace()[0].getLineNumber());
             }
 
         }
@@ -146,6 +165,7 @@ public class DetailJobActivity extends AppCompatActivity {
         public InvoiceListAdaptor(Context context, String[] invoiceStrings) {
             this.context = context;
             this.invoiceStrings = invoiceStrings;
+            Log.d("Tag", String.valueOf(invoiceStrings.length));
         }
 
         @Override
@@ -172,6 +192,7 @@ public class DetailJobActivity extends AppCompatActivity {
             } else {
                 invoiceListViewHolder = (InvoiceListViewHolder) convertView.getTag();
             }
+            Log.d("Tag", invoiceStrings[position]);
 
             invoiceListViewHolder.invoiceTextView.setText(invoiceStrings[position]);
 
@@ -192,26 +213,46 @@ public class DetailJobActivity extends AppCompatActivity {
 
 
     class SynUpdateStatusArrive extends AsyncTask<Void, Void, String> {
+        String latString,longString, timeString;
+
+        public SynUpdateStatusArrive(String latString, String longString, String timeString) {
+            this.latString = latString;
+            this.longString = longString;
+            this.timeString = timeString;
+        }
+
         @Override
         protected String doInBackground(Void... params) {
             try {
-                OkHttpClient okHttpClient = new OkHttpClient();
-                Request.Builder builder = new Request.Builder();
-                RequestBody requestBody = new FormEncodingBuilder()
-                        .add("user_name", loginStrings[5])
-                        .add("dealerName", "")
-                        .add("subjob_no", "")
-                        .add("invoiceNo", "")
-                        .add("gps_lat", "")
-                        .add("gps_lon", "")
-                        .add("timeStamp", "")
-                        .build();
-                Request request = builder.url(MyConstant.urlSaveArrivedToStore).post(requestBody).build();
-                Response response = okHttpClient.newCall(request).execute();
+                    OkHttpClient okHttpClient = new OkHttpClient();
+                    Request.Builder builder = new Request.Builder();
+                    RequestBody requestBody = new FormEncodingBuilder()
+                            .add("user_name", loginStrings[5])
+                            .add("dealerName", storeString)
+                            .add("subjob_no", subJobNoString)
+                            .add("invoiceNo", invoiceStrings[0])
+                            .add("gps_lat", latString)
+                            .add("gps_lon", longString)
+                            .add("timeStamp", timeString)
+                            .build();
+                    Request request = builder.url(MyConstant.urlSaveArrivedToStore).post(requestBody).build();
+                    Response response = okHttpClient.newCall(request).execute();
+
+                    return response.body().string();
+
             } catch (IOException e) {
                 e.printStackTrace();
+                Log.d("Tag", String.valueOf(e) + " Line: " + e.getStackTrace()[0].getLineNumber());
+                return null;
             }
-            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Log.d("Tag", s);
+
+
         }
     }
 
@@ -221,12 +262,25 @@ public class DetailJobActivity extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.btnDJAArrive:
 
+                GPSManager gpsManager = new GPSManager(DetailJobActivity.this);
+                if (gpsManager.setLatLong(0)) {
+                    SynUpdateStatusArrive synUpdateStatusArrive = new SynUpdateStatusArrive(gpsManager.getLatString(), gpsManager.getLongString(), gpsManager.getDateTime());
+                    synUpdateStatusArrive.execute();
+                } else {
+                    Toast.makeText(getBaseContext(), "Try Again", Toast.LENGTH_LONG);
+                }
                 break;
             case R.id.btnDJASavePic:
 
                 break;
             case R.id.btnDJASignature:
-
+                Intent intent = new Intent(DetailJobActivity.this, SignatureActivity.class);
+                intent.putExtra("Date", dateString);
+                intent.putExtra("Position", tripNoString);
+                intent.putExtra("Login", loginStrings);
+                intent.putExtra("SubJobNo", subJobNoString);
+                intent.putExtra("Place", storeString);
+                startActivity(intent);
                 break;
             case R.id.btnDJAConfirm:
 

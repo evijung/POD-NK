@@ -42,4 +42,7 @@
     <string name="Trip">Trip</string>
     <string name="ODOHint">Please add ODO Meter</string>
     <string name="Invoice">Invoice</string>
+    <string name="err_not_name">Please Enter Name</string>
+    <string name="save_comp">Save Complete</string>
+    <string name="save_incomp">Save Incomplete</string>
 </resources>
