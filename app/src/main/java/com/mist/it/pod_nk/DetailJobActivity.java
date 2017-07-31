@@ -261,7 +261,6 @@ public class DetailJobActivity extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btnDJAArrive:
-
                 GPSManager gpsManager = new GPSManager(DetailJobActivity.this);
                 if (gpsManager.setLatLong(0)) {
                     SynUpdateStatusArrive synUpdateStatusArrive = new SynUpdateStatusArrive(gpsManager.getLatString(), gpsManager.getLongString(), gpsManager.getDateTime());
@@ -280,6 +279,7 @@ public class DetailJobActivity extends AppCompatActivity {
                 intent.putExtra("Login", loginStrings);
                 intent.putExtra("SubJobNo", subJobNoString);
                 intent.putExtra("Place", storeString);
+                intent.putExtra("StoreId", storeIdString);
                 startActivity(intent);
                 break;
             case R.id.btnDJAConfirm:

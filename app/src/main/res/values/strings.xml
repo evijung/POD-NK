@@ -45,4 +45,12 @@
     <string name="err_not_name">Please Enter Name</string>
     <string name="save_comp">Save Complete</string>
     <string name="save_incomp">Save Incomplete</string>
+    <string name="ProductDesc">Detail</string>
+    <string name="ProductAmount">Amt</string>
+    <string name="ProductReturn">Return</string>
+    <string name="Desc">Description</string>
+    <string name="retrunBtn">Confirm</string>
+    <string name="loading">Loading</string>
+    <string name="save_img_success">Save Img Success</string>
+    <string name="save_img_unsuccessful">Save Img Unsuccessful</string>
 </resources>

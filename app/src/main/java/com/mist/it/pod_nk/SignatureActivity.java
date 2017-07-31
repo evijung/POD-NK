@@ -22,9 +22,17 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.squareup.okhttp.FormEncodingBuilder;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
+import com.squareup.okhttp.Response;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static com.mist.it.pod_nk.MyConstant.urlUploadPicture;
 
 public class SignatureActivity extends AppCompatActivity {
 
@@ -41,7 +49,8 @@ public class SignatureActivity extends AppCompatActivity {
 
 
     View mView;
-    String stringStoreId, SignName, stringFileName, stringUser, stringTimestamp;
+    String stringStoreId, SignName;
+    String[] loginStrings;
 
 
     @Override
@@ -50,13 +59,18 @@ public class SignatureActivity extends AppCompatActivity {
         setContentView(R.layout.activity_signature);
         ButterKnife.bind(this);
 
+        loginStrings = getIntent().getStringArrayExtra("Login");
+
+        stringStoreId = getIntent().getStringExtra("");
 
         mSignature = new signature(this, null);
         mSignature.setBackgroundColor(Color.WHITE);
         canvasLinearLayout.addView(mSignature, ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT);
         saveButton.setEnabled(false);
         mView = canvasLinearLayout;
+        stringStoreId = "0";
         clearButton.setOnClickListener(new View.OnClickListener() {
+
 
             @Override
             public void onClick(View view) {
@@ -70,7 +84,7 @@ public class SignatureActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Log.v("log_tag", "Panel Saved");
-                boolean error = capturesignature();
+                boolean error = captureSignature();
                 if (!error) {
                     mView.setDrawingCacheEnabled(true);
                     mSignature.save(mView);
@@ -79,7 +93,7 @@ public class SignatureActivity extends AppCompatActivity {
                     Intent intent = new Intent();
                     intent.putExtras(b);
                     setResult(RESULT_OK, intent);
-                    finish();
+//                    finish();
                 }
             }
         });
@@ -87,7 +101,7 @@ public class SignatureActivity extends AppCompatActivity {
 
     }
 
-    private boolean capturesignature() {
+    private boolean captureSignature() {
         boolean error = false;
         String errorMessage = "";
 
@@ -110,7 +124,8 @@ public class SignatureActivity extends AppCompatActivity {
         Context context;
         Bitmap bitmap;
         UploadImageUtils uploadImageUtils;
-        String mUploadedFileName, signNameString;
+        String mUploadedFileName ,signNameString;
+
 
         public SynUploadImage(Context context, Bitmap bitmap, String signNameString) {
             this.context = context;
@@ -125,17 +140,47 @@ public class SignatureActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(Void... voids) {
+            final String[] time = new String[1];
+            GPSManager gpsManager = new GPSManager(SignatureActivity.this);
             uploadImageUtils = new UploadImageUtils();
             mUploadedFileName = "signature.jpg";
+            time[0] = gpsManager.getDateTime();
 
+            Log.d("Data", mUploadedFileName);
+            Log.d("Data", stringStoreId);
+            Log.d("Data", bitmap.toString());
+            Log.d("Data", urlUploadPicture);
 
-            return null;
+            final String result = UploadImageUtils.uploadFile(mUploadedFileName, urlUploadPicture, bitmap, stringStoreId, "S");
+            Log.d("TAG", "Do in back after save:-->" + result);
+            Log.d("TAG", "TIME ==>"+ time[0]);
+            if (result == "NOK") {
+                return "NOK";
+            } else {
+                try {
+                    OkHttpClient okHttpClient = new OkHttpClient();
+                    RequestBody requestBody = new FormEncodingBuilder()
+                            .add("isAdd", "true")
+                            .add("pStoreId", stringStoreId)
+                            .add("pSignName", signNameString)
+                            .add("File_Name", mUploadedFileName)
+                            .add("pUser", loginStrings[5])
+                            .add("pTimestamp", time[0])
+                            .build();
+                    Request.Builder builder = new Request.Builder();
+                    Request request = builder.url(urlUploadPicture).post(requestBody).build();
+                    Response response = okHttpClient.newCall(request).execute();
+                    return response.body().string();
+                } catch (Exception e) {
+                    Log.d("TAG", String.valueOf(e));
+                    return "NOK";
+                }
+            }
         }
 
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-
 
             Log.d("TAG", "JSON_Upload ==> " + s);
             if (s.equals("OK")) {
@@ -188,6 +233,7 @@ public class SignatureActivity extends AppCompatActivity {
 
                 Canvas canvas = new Canvas(mBitmap);
                 try {
+
                     v.draw(canvas);
                     Log.v("log_tag", "Bitmap=++++++++++++++: " + mBitmap);
 
@@ -206,7 +252,6 @@ public class SignatureActivity extends AppCompatActivity {
             saveButton.setEnabled(false);
 
         }
-
 
 
         @Override
@@ -257,8 +302,10 @@ public class SignatureActivity extends AppCompatActivity {
 
             return true;
         }
+
         private void debug(String string) {
         }
+
         private void expandDirtyRect(float historicalX, float historicalY) {
             if (historicalX < dirtyRect.left) {
                 dirtyRect.left = historicalX;
@@ -281,14 +328,4 @@ public class SignatureActivity extends AppCompatActivity {
         }
 
     }
-
-//    @OnClick({R.id.btnSASave, R.id.btnSAClear})
-//    public void onViewClicked(View view) {
-//        switch (view.getId()) {
-//            case R.id.btnSASave:
-//                break;
-//            case R.id.btnSAClear:
-//                break;
-//        }
-//    }
 }
