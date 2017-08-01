@@ -67,8 +67,9 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/button_height"
             android:layout_margin="@dimen/mini_margin"
+            android:layout_marginTop="20dp"
             android:background="@drawable/silver_button"
             android:text="@string/Login"
-            android:textSize="24sp" />
+            android:textSize="18sp" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

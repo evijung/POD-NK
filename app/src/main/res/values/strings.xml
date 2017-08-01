@@ -53,4 +53,8 @@
     <string name="loading">Loading</string>
     <string name="save_img_success">Save Img Success</string>
     <string name="save_img_unsuccessful">Save Img Unsuccessful</string>
+    <string name="err_gps">Sorry Can\'t Get Latitude, Longitude. Please Try again</string>
+    <string name="enter_start">Enter Miles Start</string>
+    <string name="enter_stop">Enter Miles Finish</string>
+    <string name="enter"></string>
 </resources>

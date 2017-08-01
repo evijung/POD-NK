@@ -235,7 +235,7 @@ public class JobListActivity extends AppCompatActivity {
             } else {
                 jobListViewHolder = (JobListViewHolder) convertView.getTag();
             }
-            String s = "Trip " + numberStrings[position];
+            String s = getResources().getText(R.string.Trip) + " " + numberStrings[position];
             jobListViewHolder.roundTextView.setText(s);
 
             final InJobListAdaptor inJobListAdaptor = new InJobListAdaptor(detailListStrings[position], arriveTimeStrings[position]);

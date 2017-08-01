@@ -49,7 +49,7 @@ public class SignatureActivity extends AppCompatActivity {
 
 
     View mView;
-    String stringStoreId, SignName;
+    String stringStoreId, SignName, jobNoString;
     String[] loginStrings;
 
 
@@ -60,8 +60,9 @@ public class SignatureActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         loginStrings = getIntent().getStringArrayExtra("Login");
+        jobNoString = getIntent().getStringExtra("SubJobNo");
+        stringStoreId = getIntent().getStringExtra("StoreId");
 
-        stringStoreId = getIntent().getStringExtra("");
 
         mSignature = new signature(this, null);
         mSignature.setBackgroundColor(Color.WHITE);
@@ -151,7 +152,7 @@ public class SignatureActivity extends AppCompatActivity {
             Log.d("Data", bitmap.toString());
             Log.d("Data", urlUploadPicture);
 
-            final String result = UploadImageUtils.uploadFile(mUploadedFileName, urlUploadPicture, bitmap, stringStoreId, "S");
+            final String result = UploadImageUtils.uploadFile(mUploadedFileName, urlUploadPicture, bitmap, stringStoreId, "S",jobNoString,"");
             Log.d("TAG", "Do in back after save:-->" + result);
             Log.d("TAG", "TIME ==>"+ time[0]);
             if (result == "NOK") {

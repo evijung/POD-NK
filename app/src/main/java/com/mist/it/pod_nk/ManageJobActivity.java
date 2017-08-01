@@ -66,7 +66,7 @@ public class ManageJobActivity extends AppCompatActivity {
         loginStrings = getIntent().getStringArrayExtra("Login");
         subJobNoString = getIntent().getStringExtra("SubJobNo");
 
-        jobNoTextView.setText("Trip " + tripNoString);
+        jobNoTextView.setText(getResources().getText(R.string.Trip) + " " + tripNoString);
 
 
         SyncGetJob syncGetJob = new SyncGetJob();
@@ -177,13 +177,24 @@ public class ManageJobActivity extends AppCompatActivity {
                     }
                 }
 
-                ManageJobAdaptor manageJobAdaptor = new ManageJobAdaptor(ManageJobActivity.this,dateString,tripNoString,subJobNoString, detailListStrings[0], arriveTimeStrings[0], loginStrings, jobNoStrings[0], invoiceStrings[0], amountStrings[0]);
+                ManageJobAdaptor manageJobAdaptor = new ManageJobAdaptor(ManageJobActivity.this, dateString, tripNoString, subJobNoString, detailListStrings[0], arriveTimeStrings[0], loginStrings, jobNoStrings[0], invoiceStrings[0], amountStrings[0]);
                 storeListView.setAdapter(manageJobAdaptor);
 
-                startMilesTextView.setText(tripStartMileStrings[0]);
-                startTimeTextView.setText(tripStartTimeStrings[0]);
-                stopMilesTextView.setText(tripStopMileStrings[0]);
-                stopTimeTextView.setText(tripStopTimeStrings[0]);
+                if (!tripStartMileStrings[0].equals("null")) {
+                    startMilesTextView.setText(tripStartMileStrings[0]);
+                }
+
+                if (!tripStartTimeStrings[0].equals("null")) {
+                    startTimeTextView.setText(tripStartTimeStrings[0]);
+                }
+
+                if (!tripStopMileStrings[0].equals("null")) {
+                    stopMilesTextView.setText(tripStopMileStrings[0]);
+                }
+
+                if (!tripStopTimeStrings[0].equals("null")) {
+                    stopTimeTextView.setText(tripStopTimeStrings[0]);
+                }
 
 
             } catch (JSONException e) {
@@ -261,7 +272,7 @@ public class ManageJobActivity extends AppCompatActivity {
                 Log.d("Tag", String.valueOf(view1 == null));
                 dialogViewHolder = new DialogViewHolder(view1);
 
-                dialogViewHolder.headerTextView.setText("Enter " + getResources().getText(R.string.ODOMeter) + " Start");
+                dialogViewHolder.headerTextView.setText(getResources().getText(R.string.enter_start));
                 builder.setView(view1);
 
                 builder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
@@ -280,7 +291,7 @@ public class ManageJobActivity extends AppCompatActivity {
                             synUpdateTripStatus.execute();
 
                         } else {
-                            Toast.makeText(ManageJobActivity.this, "Sorry Can't Get Latitude, Longitude. Please Try again", Toast.LENGTH_LONG).show();
+                            Toast.makeText(ManageJobActivity.this, getResources().getText(R.string.err_gps), Toast.LENGTH_LONG).show();
 
                         }
 
@@ -302,7 +313,7 @@ public class ManageJobActivity extends AppCompatActivity {
                 AlertDialog.Builder builder1 = new AlertDialog.Builder(ManageJobActivity.this);
                 View view2 = View.inflate(getBaseContext(), R.layout.set_odo_dialog, null);
                 dialogViewHolder = new DialogViewHolder(view2);
-                dialogViewHolder.headerTextView.setText("Enter " + getResources().getString(R.string.ODOMeter) + " Finish");
+                dialogViewHolder.headerTextView.setText(getResources().getText(R.string.enter_stop));
 
                 builder1.setView(view2);
 
@@ -320,7 +331,7 @@ public class ManageJobActivity extends AppCompatActivity {
                             SynUpdateTripStatus synUpdateTripStatus = new SynUpdateTripStatus(timeStrings[0], dialogViewHolder.odoNoEditText.getText().toString(), latStrings[0], lngStrings[0], "stop");
                             synUpdateTripStatus.execute();
                         } else {
-                            Toast.makeText(ManageJobActivity.this, "Sorry Can't Get Latitude, Longitude. Please Try again", Toast.LENGTH_LONG).show();
+                            Toast.makeText(ManageJobActivity.this, getResources().getText(R.string.err_gps), Toast.LENGTH_LONG).show();
                         }
 
                     }

@@ -91,6 +91,8 @@ public class DetailJobActivity extends AppCompatActivity {
         intent.putExtra("Login", loginStrings);
         intent.putExtra("SubJobNo", subJobNoString);
         intent.putExtra("Place", storeString);
+        intent.putExtra("StoreId", storeIdString);
+        intent.putExtra("Invoice", invoiceStrings[position]);
         startActivity(intent);
 
     }
