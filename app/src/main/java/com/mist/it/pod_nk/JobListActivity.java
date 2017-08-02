@@ -329,6 +329,5 @@ public class JobListActivity extends AppCompatActivity {
         intent.putExtra("Date", dateString);
         startActivity(intent);
 
-
     }
 }

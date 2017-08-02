@@ -32,6 +32,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.mist.it.pod_nk.MyConstant.urlSaveSignature;
 import static com.mist.it.pod_nk.MyConstant.urlUploadPicture;
 
 public class SignatureActivity extends AppCompatActivity {
@@ -69,7 +70,6 @@ public class SignatureActivity extends AppCompatActivity {
         canvasLinearLayout.addView(mSignature, ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT);
         saveButton.setEnabled(false);
         mView = canvasLinearLayout;
-        stringStoreId = "0";
         clearButton.setOnClickListener(new View.OnClickListener() {
 
 
@@ -94,7 +94,7 @@ public class SignatureActivity extends AppCompatActivity {
                     Intent intent = new Intent();
                     intent.putExtras(b);
                     setResult(RESULT_OK, intent);
-//                    finish();
+                    finish();
                 }
             }
         });
@@ -125,7 +125,7 @@ public class SignatureActivity extends AppCompatActivity {
         Context context;
         Bitmap bitmap;
         UploadImageUtils uploadImageUtils;
-        String mUploadedFileName ,signNameString;
+        String mUploadedFileName, signNameString;
 
 
         public SynUploadImage(Context context, Bitmap bitmap, String signNameString) {
@@ -152,24 +152,26 @@ public class SignatureActivity extends AppCompatActivity {
             Log.d("Data", bitmap.toString());
             Log.d("Data", urlUploadPicture);
 
-            final String result = UploadImageUtils.uploadFile(mUploadedFileName, urlUploadPicture, bitmap, stringStoreId, "S",jobNoString,"");
+            final String result = UploadImageUtils.uploadFile(mUploadedFileName, urlUploadPicture, bitmap, stringStoreId, "S", jobNoString, "");
             Log.d("TAG", "Do in back after save:-->" + result);
-            Log.d("TAG", "TIME ==>"+ time[0]);
-            if (result == "NOK") {
+            Log.d("TAG", "TIME ==>" + time[0]);
+            Log.d("TAG", String.valueOf(result.equals("NOK")));
+            if (result.equals("NOK")) {
                 return "NOK";
             } else {
                 try {
+                    Log.d("Tag", stringStoreId + " , " + signNameString + " , " + result + " , " + loginStrings[5] + " , " + time[0]);
                     OkHttpClient okHttpClient = new OkHttpClient();
                     RequestBody requestBody = new FormEncodingBuilder()
                             .add("isAdd", "true")
-                            .add("pStoreId", stringStoreId)
-                            .add("pSignName", signNameString)
-                            .add("File_Name", mUploadedFileName)
-                            .add("pUser", loginStrings[5])
-                            .add("pTimestamp", time[0])
+                            .add("StoreId", stringStoreId)
+                            .add("SignName", signNameString)
+                            .add("File_Name", result)
+                            .add("user_name", loginStrings[5])
+                            .add("timeStamp", time[0])
                             .build();
                     Request.Builder builder = new Request.Builder();
-                    Request request = builder.url(urlUploadPicture).post(requestBody).build();
+                    Request request = builder.url(urlSaveSignature).post(requestBody).build();
                     Response response = okHttpClient.newCall(request).execute();
                     return response.body().string();
                 } catch (Exception e) {

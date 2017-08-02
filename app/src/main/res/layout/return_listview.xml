@@ -24,7 +24,7 @@
         android:layout_margin="@dimen/micro_margin"
         android:padding="@dimen/micro_margin"
         android:text="@string/ProductDesc"
-        android:textSize="14sp"
+        android:textSize="16sp"
         tools:text="@string/Desc" />
 
     <LinearLayout
@@ -39,7 +39,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1.5"
             android:padding="@dimen/micro_margin"
-            android:text="@string/ProductAmount" />
+            android:text="@string/ProductAmount"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/textView4"
@@ -47,7 +48,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1.5"
             android:padding="@dimen/micro_margin"
-            android:text="@string/ProductReturn" />
+            android:text="@string/ProductReturn"
+            android:textSize="16sp" />
 
     </LinearLayout>
 

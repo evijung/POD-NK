@@ -518,7 +518,7 @@ public class ReturnActivity extends AppCompatActivity {
 
                     try {
                         firstImgBitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(firstUri));
-                        if (firstImgBitmap.getHeight() < firstImgBitmap.getWidth()) {
+                        if (firstImgBitmap.getHeight() > firstImgBitmap.getWidth()) {
                             firstImgBitmap = rotateBitmap(firstImgBitmap);
                         }
                         firstImageView.setImageBitmap(firstImgBitmap);
@@ -533,7 +533,7 @@ public class ReturnActivity extends AppCompatActivity {
 
                     try {
                         secondImgBitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(secondUri));
-                        if (secondImgBitmap.getHeight() < secondImgBitmap.getWidth()) {
+                        if (secondImgBitmap.getHeight() > secondImgBitmap.getWidth()) {
                             secondImgBitmap = rotateBitmap(secondImgBitmap);
                         }
                         secondImageView.setImageBitmap(secondImgBitmap);

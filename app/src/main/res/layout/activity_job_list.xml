@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg"
+    android:background="@drawable/bg_5"
     tools:context="com.mist.it.pod_nk.JobListActivity">
 
     <LinearLayout
@@ -22,11 +22,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/mini_margin"
-            android:textColor="@color/Black"
             android:gravity="center"
-            android:padding="@dimen/mini_margin"
+            android:padding="@dimen/micro_margin"
             android:text="@string/NameAndSurname"
-            android:textSize="@dimen/text_nm" />
+            android:textColor="@color/Black"
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/txtJLATruckLicense"
@@ -34,10 +34,10 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/mini_margin"
             android:gravity="center"
-            android:padding="@dimen/mini_margin"
+            android:padding="@dimen/micro_margin"
             android:text="@string/TruckLicense"
             android:textColor="@android:color/black"
-            android:textSize="@dimen/text_nm" />
+            android:textSize="18sp" />
 
         <Button
             android:id="@+id/btnJLADate"
@@ -47,7 +47,8 @@
             android:background="@drawable/silver_button"
             android:gravity="center"
             android:padding="@dimen/mini_margin"
-            android:text="@string/Date" />
+            android:text="@string/Date"
+            android:textSize="18sp" />
 
     </LinearLayout>
 
@@ -59,6 +60,6 @@
         android:layout_marginBottom="@dimen/margin"
         android:layout_marginEnd="@dimen/margin"
         android:layout_marginStart="@dimen/margin"
-        android:nestedScrollingEnabled="true"  />
+        android:nestedScrollingEnabled="true" />
 
 </RelativeLayout>

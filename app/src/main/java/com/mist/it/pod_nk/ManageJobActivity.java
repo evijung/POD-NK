@@ -77,7 +77,7 @@ public class ManageJobActivity extends AppCompatActivity {
     private class SyncGetJob extends AsyncTask<Void, Void, String> {
         String[] subJobNoStrings, deliveryDateStrings, truckStrings, driverNameStrings, driverSirNameStrings, deliveryTripNoStrings, tripStartTimeStrings;
         String[] tripStopTimeStrings, tripStartMileStrings, tripStopMileStrings;
-        String[][] detailListStrings, provinceStrings, arriveTimeStrings;
+        String[][] detailListStrings, provinceStrings, arriveTimeStrings, inTimeStrings, outTimeStrings;
         String[][][] jobNoStrings;
         String[][][][] invoiceStrings, amountStrings;
 
@@ -122,6 +122,8 @@ public class ManageJobActivity extends AppCompatActivity {
                 detailListStrings = new String[dataJsonArray.length()][];
                 provinceStrings = new String[dataJsonArray.length()][];
                 arriveTimeStrings = new String[dataJsonArray.length()][];
+                inTimeStrings = new String[dataJsonArray.length()][];
+                outTimeStrings = new String[dataJsonArray.length()][];
                 jobNoStrings = new String[dataJsonArray.length()][][];
                 invoiceStrings = new String[dataJsonArray.length()][][][];
                 amountStrings = new String[dataJsonArray.length()][][][];
@@ -143,6 +145,8 @@ public class ManageJobActivity extends AppCompatActivity {
                     detailListStrings[i] = new String[delivPlaceJsonArray.length()];
                     provinceStrings[i] = new String[delivPlaceJsonArray.length()];
                     arriveTimeStrings[i] = new String[delivPlaceJsonArray.length()];
+                    inTimeStrings[i] = new String[delivPlaceJsonArray.length()];
+                    outTimeStrings[i] = new String[delivPlaceJsonArray.length()];
 
                     jobNoStrings[i] = new String[delivPlaceJsonArray.length()][];
                     invoiceStrings[i] = new String[delivPlaceJsonArray.length()][][];
@@ -153,6 +157,8 @@ public class ManageJobActivity extends AppCompatActivity {
                         detailListStrings[i][j] = jsonObject2.getString("DetailList");
                         provinceStrings[i][j] = jsonObject2.getString("PROVINCE");
                         arriveTimeStrings[i][j] = jsonObject2.getString("ArrivalTime");
+                        inTimeStrings[i][j] = jsonObject2.getString("InTime");
+                        outTimeStrings[i][j] = jsonObject2.getString("OutTime");
 
                         JSONArray jobNoJsonArray = jsonObject2.getJSONArray("JobNo");
                         jobNoStrings[i][j] = new String[jobNoJsonArray.length()];
@@ -177,7 +183,7 @@ public class ManageJobActivity extends AppCompatActivity {
                     }
                 }
 
-                ManageJobAdaptor manageJobAdaptor = new ManageJobAdaptor(ManageJobActivity.this, dateString, tripNoString, subJobNoString, detailListStrings[0], arriveTimeStrings[0], loginStrings, jobNoStrings[0], invoiceStrings[0], amountStrings[0]);
+                ManageJobAdaptor manageJobAdaptor = new ManageJobAdaptor(ManageJobActivity.this, dateString, tripNoString, subJobNoString, detailListStrings[0], arriveTimeStrings[0], loginStrings, jobNoStrings[0], invoiceStrings[0], amountStrings[0], outTimeStrings[0]);
                 storeListView.setAdapter(manageJobAdaptor);
 
                 if (!tripStartMileStrings[0].equals("null")) {

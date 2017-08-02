@@ -76,4 +76,15 @@
     <color name="Cornsilk2">#78fff8dc</color>
 
 
+    <color name="blue1">#57b1df</color>
+    <color name="blue2">#67b8e2</color>
+    <color name="blue3">#9ad0eb</color>
+
+
+    <color name="green1">#33cc33</color>
+    <color name="green2">#70db70</color>
+    <color name="green3">#c2f0c2</color>
+    <color name="IndianRed2">#50cd5c5c</color>
+    <color name="LightSlateGrey2">#50778899</color>
+
 </resources>

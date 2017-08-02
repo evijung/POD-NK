@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg"
+    android:background="@drawable/bg_5"
     tools:context="com.mist.it.pod_nk.SignatureActivity">
 
     <LinearLayout
@@ -34,8 +34,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/nano_margin"
             android:ems="10"
+            android:hint="@string/NameAndSurname"
             android:inputType="textPersonName"
-            android:text="@string/NameAndSurname"
             android:textSize="@dimen/text_nm" />
 
     </LinearLayout>
@@ -60,20 +60,32 @@
 
         <Button
             android:id="@+id/btnSASave"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="@dimen/button_height"
             android:layout_margin="@dimen/mini_margin"
             android:layout_weight="1"
-            android:background="@drawable/silver_button"
-            android:text="@string/Save" />
+            android:background="@drawable/blue_button"
+            android:drawableLeft="@android:drawable/ic_menu_save"
+            android:drawableStart="@android:drawable/ic_menu_save"
+            android:paddingEnd="20dp"
+            android:paddingStart="20dp"
+            android:text="@string/Save"
+            android:textSize="@dimen/text_nm"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/btnSAClear"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="@dimen/button_height"
             android:layout_margin="@dimen/mini_margin"
             android:layout_weight="1"
-            android:background="@drawable/silver_button"
-            android:text="@string/Clear" />
+            android:background="@drawable/salmon_button"
+            android:drawableLeft="@android:drawable/ic_delete"
+            android:drawableStart="@android:drawable/ic_delete"
+            android:paddingEnd="20dp"
+            android:paddingStart="20dp"
+            android:text="@string/Clear"
+            android:textSize="@dimen/text_nm"
+            android:textStyle="bold" />
     </LinearLayout>
 </RelativeLayout>

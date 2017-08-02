@@ -56,5 +56,8 @@
     <string name="err_gps">Sorry Can\'t Get Latitude, Longitude. Please Try again</string>
     <string name="enter_start">Enter Miles Start</string>
     <string name="enter_stop">Enter Miles Finish</string>
-    <string name="enter"></string>
+    <string name="finish_store">The store is complete.</string>
+    <string name="arrive_comp">Arrive Complete</string>
+    <string name="err_arr">Some Thing Wrong. Arrive Incomplete. Please Try Again.</string>
+    <string name="Back">Back</string>
 </resources>

@@ -25,6 +25,7 @@
         android:layout_height="@dimen/picture_width"
         android:layout_marginBottom="@dimen/mini_margin"
         android:layout_marginEnd="@dimen/mini_margin"
+        android:layout_marginRight="@dimen/mini_margin"
         android:layout_marginTop="@dimen/mini_margin"
         android:layout_weight="1.5"
         android:gravity="center"

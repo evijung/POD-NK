@@ -86,7 +86,7 @@ public class GPSManager {
         boolean result = false;
 
         do {
-            Log.d("ServiceTag", "Do");
+            Log.d("ServiceTag", "Do " + rev);
             String strLat = "Unknown";
             String strLng = "Unknown";
             setupLocation();
@@ -105,7 +105,7 @@ public class GPSManager {
             if (strLat.equals("Unknown") && strLng.equals("Unknown") && rev < 10) {
 
                 rev++;
-                setLatLong(rev);
+//                setLatLong(rev);
                 Log.d("ServiceTag", "Repeat");
             } else if (strLat.equals("Unknown") && strLng.equals("Unknown") && rev >= 10) {
                 //Can't get lat/long

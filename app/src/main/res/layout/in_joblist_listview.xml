@@ -12,8 +12,10 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/nano_margin"
         android:layout_weight="3"
+        android:maxLines="4"
         android:padding="@dimen/micro_margin"
-        android:text="@string/Place" />
+        android:text="@string/Place"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/txtIJLLTime"
@@ -22,6 +24,7 @@
         android:layout_margin="@dimen/nano_margin"
         android:layout_weight="1"
         android:padding="@dimen/micro_margin"
-        android:text="@string/Time" />
+        android:text="@string/Time"
+        android:textSize="18sp" />
 
 </LinearLayout>

@@ -8,7 +8,7 @@
     <string name="NameAndSurname">ชื่อ - นามสกุล</string>
     <string name="TruckLicense">ทะเบียนรถ</string>
     <string name="JobNo">เลขที่งาน</string>
-    <string name="StartTime">เวลาเริ่มงาน ::</string>
+    <string name="StartTime">เริ่มงาน ::</string>
     <string name="Logo">Logo</string>
     <string name="Job">งาน</string>
     <string name="Arrival">ถึงที่หมาย</string>
@@ -22,7 +22,7 @@
     <string name="Header">หัวช้อ</string>
     <string name="Invoice">ใบเสร็จ</string>
     <string name="InvoiceNo">เลขที่ใบเสร็จ</string>
-    <string name="Mile">"เลขไมล์ :: "</string>
+    <string name="Mile">"ไมล์ :: "</string>
     <string name="Model">รุ่นสินค้า</string>
     <string name="ODOHint">กรุณาใส่เลขไมล์ปัจจุบัน</string>
     <string name="OK">ตกลง</string>
@@ -39,7 +39,7 @@
     <string name="Signature">ลายเซ็นต์</string>
     <string name="Start">เริ่ม</string>
     <string name="Stop">จบ</string>
-    <string name="StopTime">เวลาจบงาน ::</string>
+    <string name="StopTime">จบงาน ::</string>
     <string name="Store">สถานที่ส่ง</string>
     <string name="Time">เวลา</string>
     <string name="Trip">เที่ยว</string>

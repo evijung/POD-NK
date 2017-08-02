@@ -21,7 +21,7 @@
         android:layout_margin="@dimen/margin"
         android:ems="10"
         android:hint="@string/ODOHint"
-        android:inputType="textPersonName|numberSigned"
+        android:inputType="numberSigned"
         android:padding="@dimen/mini_margin" />
 
 </LinearLayout>
