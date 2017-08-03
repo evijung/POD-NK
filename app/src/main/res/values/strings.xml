@@ -60,4 +60,6 @@
     <string name="arrive_comp">Arrive Complete</string>
     <string name="err_arr">Some Thing Wrong. Arrive Incomplete. Please Try Again.</string>
     <string name="Back">Back</string>
+    <string name="Refresh">Refresh</string>
+    <string name="logout">Logout</string>
 </resources>

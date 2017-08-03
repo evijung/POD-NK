@@ -29,7 +29,7 @@
     <ListView
         android:id="@+id/linJLLInJobListView"
         android:layout_width="match_parent"
-        android:layout_height="140dp"
+        android:layout_height="170dp"
         android:layout_marginBottom="@dimen/mini_margin"
         android:layout_marginEnd="@dimen/mini_margin"
         android:layout_marginRight="@dimen/mini_margin"

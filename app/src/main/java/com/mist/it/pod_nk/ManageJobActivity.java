@@ -51,6 +51,7 @@ public class ManageJobActivity extends AppCompatActivity {
     @BindView(R.id.btnMJAStop)
     Button stopButton;
 
+    Boolean startABoolean;
     String dateString, tripNoString, subJobNoString;
     String[] loginStrings;
     DialogViewHolder dialogViewHolder;
@@ -61,6 +62,7 @@ public class ManageJobActivity extends AppCompatActivity {
         setContentView(R.layout.activity_manage_job);
         ButterKnife.bind(this);
 
+        startABoolean = true;
         dateString = getIntent().getStringExtra("Date");
         tripNoString = getIntent().getStringExtra("Position");
         loginStrings = getIntent().getStringArrayExtra("Login");
@@ -188,6 +190,9 @@ public class ManageJobActivity extends AppCompatActivity {
 
                 if (!tripStartMileStrings[0].equals("null")) {
                     startMilesTextView.setText(tripStartMileStrings[0]);
+                    startABoolean = false;
+                } else {
+                    startABoolean = true;
                 }
 
                 if (!tripStartTimeStrings[0].equals("null")) {
@@ -264,52 +269,54 @@ public class ManageJobActivity extends AppCompatActivity {
         }
     }
 
-
     @OnClick({R.id.btnMJAStart, R.id.btnMJAStop})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btnMJAStart:
-                final String[] lat = new String[1];
-                final String[] lng = new String[1];
-                final String[] time = new String[1];
-                final AlertDialog.Builder builder = new AlertDialog.Builder(ManageJobActivity.this);
+                if (startABoolean) {
 
-                View view1 = View.inflate(getBaseContext(), R.layout.set_odo_dialog, null);
-                Log.d("Tag", String.valueOf(view1 == null));
-                dialogViewHolder = new DialogViewHolder(view1);
+                    final String[] lat = new String[1];
+                    final String[] lng = new String[1];
+                    final String[] time = new String[1];
+                    final AlertDialog.Builder builder = new AlertDialog.Builder(ManageJobActivity.this);
 
-                dialogViewHolder.headerTextView.setText(getResources().getText(R.string.enter_start));
-                builder.setView(view1);
+                    View view1 = View.inflate(getBaseContext(), R.layout.set_odo_dialog, null);
+                    Log.d("Tag", String.valueOf(view1 == null));
+                    dialogViewHolder = new DialogViewHolder(view1);
 
-                builder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Log.d("Tag", "In edit text ==> " + dialogViewHolder.odoNoEditText.getText());
-                        GPSManager gpsManager = new GPSManager(ManageJobActivity.this);
-                        if (gpsManager.setLatLong(0)) {
-                            lat[0] = gpsManager.getLatString();
-                            lng[0] = gpsManager.getLongString();
-                            time[0] = gpsManager.getDateTime();
+                    dialogViewHolder.headerTextView.setText(getResources().getText(R.string.enter_start));
+                    builder.setView(view1);
 
-                            Log.d("Tag", "Lat/Long : Time ==> " + lat[0] + "/" + lng[0] + " : " + time[0]);
+                    builder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Log.d("Tag", "In edit text ==> " + dialogViewHolder.odoNoEditText.getText());
+                            GPSManager gpsManager = new GPSManager(ManageJobActivity.this);
+                            if (gpsManager.setLatLong(0)) {
+                                lat[0] = gpsManager.getLatString();
+                                lng[0] = gpsManager.getLongString();
+                                time[0] = gpsManager.getDateTime();
 
-                            SynUpdateTripStatus synUpdateTripStatus = new SynUpdateTripStatus(time[0], dialogViewHolder.odoNoEditText.getText().toString(), lat[0], lng[0], "start");
-                            synUpdateTripStatus.execute();
+                                Log.d("Tag", "Lat/Long : Time ==> " + lat[0] + "/" + lng[0] + " : " + time[0] + dialogViewHolder.odoNoEditText.getText());
 
-                        } else {
-                            Toast.makeText(ManageJobActivity.this, getResources().getText(R.string.err_gps), Toast.LENGTH_LONG).show();
+                                SynUpdateTripStatus synUpdateTripStatus = new SynUpdateTripStatus(time[0], dialogViewHolder.odoNoEditText.getText().toString(), lat[0], lng[0], "start");
+                                synUpdateTripStatus.execute();
+
+                            } else {
+                                Toast.makeText(ManageJobActivity.this, getResources().getText(R.string.err_gps), Toast.LENGTH_LONG).show();
+
+                            }
 
                         }
+                    });
+                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
 
-                    }
-                });
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });
-                builder.show();
+                        }
+                    });
+                    builder.show();
+                }
 
                 break;
             case R.id.btnMJAStop:

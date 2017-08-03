@@ -76,9 +76,9 @@
                 android:layout_height="@dimen/button_height"
                 android:layout_margin="@dimen/mini_margin"
                 android:layout_weight="1"
-                android:background="@drawable/silver_button"
+                android:background="@drawable/plum_button"
                 android:text="@string/Save"
-                android:textSize="@dimen/text_nm" />
+                android:textSize="18sp" />
 
             <Button
                 android:id="@+id/btnRAReturnAll"
@@ -86,9 +86,9 @@
                 android:layout_height="@dimen/button_height"
                 android:layout_margin="@dimen/mini_margin"
                 android:layout_weight="1"
-                android:background="@drawable/silver_button"
+                android:background="@drawable/blue_button"
                 android:text="@string/ReturnAll"
-                android:textSize="@dimen/text_nm" />
+                android:textSize="18sp" />
 
             <Button
                 android:id="@+id/btnRAConfirm"
@@ -96,9 +96,9 @@
                 android:layout_height="@dimen/button_height"
                 android:layout_margin="@dimen/mini_margin"
                 android:layout_weight="1"
-                android:background="@drawable/silver_button"
+                android:background="@drawable/green_button"
                 android:text="@string/Finish"
-                android:textSize="@dimen/text_nm" />
+                android:textSize="18sp" />
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

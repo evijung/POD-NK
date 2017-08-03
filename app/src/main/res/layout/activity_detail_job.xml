@@ -117,9 +117,10 @@
                 android:layout_height="@dimen/button_height"
                 android:layout_margin="@dimen/micro_margin"
                 android:layout_weight="1"
-                android:background="@drawable/salmon_button"
+                android:background="@drawable/goldenrod_button"
                 android:text="@string/Arrival"
-                android:textSize="@dimen/text_nm" />
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/button2"
@@ -129,7 +130,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/silver_button"
                 android:text="@string/Back"
-                android:textSize="@dimen/text_nm" />
+                android:textSize="24sp" />
 
             <Button
                 android:id="@+id/btnDJASavePic"
@@ -139,7 +140,8 @@
                 android:layout_weight="1"
                 android:background="@drawable/plum_button"
                 android:text="@string/SavePicture"
-                android:textSize="@dimen/text_nm" />
+                android:textSize="24sp"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
@@ -157,7 +159,8 @@
                 android:layout_weight="1"
                 android:background="@drawable/turquoise_button"
                 android:text="@string/Signature"
-                android:textSize="@dimen/text_nm" />
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/btnDJAConfirm"
@@ -165,9 +168,11 @@
                 android:layout_height="@dimen/button_height"
                 android:layout_margin="@dimen/micro_margin"
                 android:layout_weight="1"
-                android:background="@drawable/goldenrod_button"
+                android:background="@drawable/red_button"
                 android:text="@string/Confirm"
-                android:textSize="@dimen/text_nm" />
+                android:textColor="@color/GhostWhite"
+                android:textSize="24sp"
+                android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>
