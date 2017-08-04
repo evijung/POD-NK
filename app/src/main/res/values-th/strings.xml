@@ -63,4 +63,7 @@
     <string name="finish_store">ส่งสินค้าเรียบร้อยแล้ว</string>
     <string name="logout">ลงชื่อออก</string>
     <string name="cancel">ยกเลิก</string>
+    <string name="Information">วิธีการใช้งาน</string>
+    <string name="return_dlg_desc">ยืนยันการคืนสินค้า ใช่ไหม...?</string>
+    <string name="return_dlg_header">คืนสินค้าทั้งหมด</string>
 </resources>

@@ -102,7 +102,28 @@ public class DetailJobActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
+        switch (item.getItemId()) {
+            case R.id.refresh:
+                Intent intent = new Intent(DetailJobActivity.this, DetailJobActivity.class);
+                intent.putExtra("Date", dateString);
+                intent.putExtra("Position", tripNoString);
+                intent.putExtra("Login", loginStrings);
+                intent.putExtra("SubJobNo", subJobNoString);
+                intent.putExtra("Place", storeString);
+                startActivity(intent);
+                finish();
+                break;
+            case R.id.information:
+                intent = new Intent(DetailJobActivity.this, VideoViewerActivity.class);
+                startActivity(intent);
+                break;
+        }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+
     }
 
     @Override
@@ -123,6 +144,8 @@ public class DetailJobActivity extends AppCompatActivity {
         subJobNoString = getIntent().getStringExtra("SubJobNo");
         storeString = getIntent().getStringExtra("Place");
 
+        Log.d("Tag", storeString);
+
         dateTextView.setText(getResources().getText(R.string.Date) + " " + dateString);
 
         SynGetJobDetail synGetJobDetail = new SynGetJobDetail();
@@ -138,7 +161,6 @@ public class DetailJobActivity extends AppCompatActivity {
         intent.putExtra("SubJobNo", subJobNoString);
         startActivity(intent);
         finish();
-
     }
 
     class SynGetJobDetail extends AsyncTask<Void, Void, String> {
@@ -218,6 +240,7 @@ public class DetailJobActivity extends AppCompatActivity {
                     secondImageView.setVisibility(View.INVISIBLE);
                     thirdImageView.setVisibility(View.INVISIBLE);
                     fourthImageView.setVisibility(View.INVISIBLE);
+
                 } else if (outTimeString.equals("null")) {
                     arriveButton.setVisibility(View.GONE);
                     backButton.setVisibility(View.VISIBLE);
@@ -264,7 +287,6 @@ public class DetailJobActivity extends AppCompatActivity {
                         Glide.with(DetailJobActivity.this).load(serverString + projectString + "/app/CenterService/" + pathImgFourthString).into(fourthImageView);
                     }
                 }
-
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -316,28 +338,36 @@ public class DetailJobActivity extends AppCompatActivity {
             invoiceListViewHolder.invoiceTextView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if (inTimeString.equals("null")) {
 
-                    Intent intent = new Intent(DetailJobActivity.this, ReturnActivity.class);
-                    intent.putExtra("Date", dateString);
-                    intent.putExtra("Position", tripNoString);
-                    intent.putExtra("Login", loginStrings);
-                    intent.putExtra("SubJobNo", subJobNoString);
-                    intent.putExtra("Place", storeString);
-                    intent.putExtra("StoreId", storeIdString);
-                    intent.putExtra("Invoice", invoiceStrings[position]);
-                    startActivity(intent);
+                    } else {
+
+                        Intent intent = new Intent(DetailJobActivity.this, ReturnActivity.class);
+                        intent.putExtra("Date", dateString);
+                        intent.putExtra("Position", tripNoString);
+                        intent.putExtra("Login", loginStrings);
+                        intent.putExtra("SubJobNo", subJobNoString);
+                        intent.putExtra("Place", storeString);
+                        intent.putExtra("StoreId", storeIdString);
+                        intent.putExtra("Invoice", invoiceStrings[position]);
+                        startActivity(intent);
+                    }
                 }
             });
 
             invoiceListViewHolder.cameraImageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    File originalFile1 = new File(Environment.getExternalStorageDirectory() + "/DCIM/", "inv_first.png");
-                    Intent cameraIntent5 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    invFirstUri = Uri.fromFile(originalFile1);
-                    cameraIntent5.putExtra(MediaStore.EXTRA_OUTPUT, invFirstUri);
-                    startActivityForResult(cameraIntent5, 5);
+                    if (inTimeString.equals("null")) {
 
+                    } else {
+
+                        File originalFile1 = new File(Environment.getExternalStorageDirectory() + "/DCIM/", "inv_first.png");
+                        Intent cameraIntent5 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        invFirstUri = Uri.fromFile(originalFile1);
+                        cameraIntent5.putExtra(MediaStore.EXTRA_OUTPUT, invFirstUri);
+                        startActivityForResult(cameraIntent5, 5);
+                    }
                 }
             });
 
@@ -401,6 +431,7 @@ public class DetailJobActivity extends AppCompatActivity {
                 intent.putExtra("Login", loginStrings);
                 intent.putExtra("SubJobNo", subJobNoString);
                 startActivity(intent);
+                finish();
 
             } else if (s.equals("NOK")) {
                 Toast.makeText(getBaseContext(), getResources().getText(R.string.save_incomp), Toast.LENGTH_LONG).show();
@@ -420,7 +451,7 @@ public class DetailJobActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(Void... params) {
             try {
-                Log.d("Tag", "Send ==> " + loginStrings[5] + " , " + storeString + " , " + subJobNoString + " , " + invoiceStrings[0] + " , " + latString + " , " + longString + " , " + timeString);
+//                Log.d("Tag", "Send ==> " + loginStrings[5] + " , " + storeString + " , " + subJobNoString + " , " + invoiceStrings[0] + " , " + latString + " , " + longString + " , " + timeString);
                 OkHttpClient okHttpClient = new OkHttpClient();
                 Request.Builder builder = new Request.Builder();
                 RequestBody requestBody = new FormEncodingBuilder()

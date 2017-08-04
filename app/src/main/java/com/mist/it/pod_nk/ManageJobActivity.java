@@ -1,6 +1,7 @@
 package com.mist.it.pod_nk;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -69,7 +70,21 @@ public class ManageJobActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
+        switch (item.getItemId()) {
+            case R.id.refresh:
+                Intent intent = new Intent(ManageJobActivity.this, ManageJobActivity.class);
+                intent.putExtra("Date", dateString);
+                intent.putExtra("Position", tripNoString);
+                intent.putExtra("Login", loginStrings);
+                intent.putExtra("SubJobNo", subJobNoString);
+                startActivity(intent);
+                finish();
+                break;
+            case R.id.information:
+                intent = new Intent(ManageJobActivity.this, VideoViewerActivity.class);
+                startActivity(intent);
+                break;
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -91,6 +106,15 @@ public class ManageJobActivity extends AppCompatActivity {
         SyncGetJob syncGetJob = new SyncGetJob();
         syncGetJob.execute();
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(ManageJobActivity.this, JobListActivity.class);
+        intent.putExtra("Login", loginStrings);
+        intent.putExtra("Date", dateString);
+        startActivity(intent);
+        finish();
     }
 
     private class SyncGetJob extends AsyncTask<Void, Void, String> {
@@ -222,6 +246,7 @@ public class ManageJobActivity extends AppCompatActivity {
 
                 if (!tripStopMileStrings[0].equals("null")) {
                     stopMilesTextView.setText(tripStopMileStrings[0]);
+                    stopButton.setVisibility(View.INVISIBLE);
                 }
 
                 if (!tripStopTimeStrings[0].equals("null")) {
@@ -282,9 +307,13 @@ public class ManageJobActivity extends AppCompatActivity {
                 if (flagString.equals("start")) {
                     startTimeTextView.setText(timeString);
                     startMilesTextView.setText(odoString);
+
+                    startButton.setVisibility(View.INVISIBLE);
                 } else if (flagString.equals("stop")) {
                     stopTimeTextView.setText(timeString);
                     stopMilesTextView.setText(odoString);
+
+                    stopButton.setVisibility(View.INVISIBLE);
 
                 }
             }

@@ -1,9 +1,11 @@
 package com.mist.it.pod_nk;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.content.IntentCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.JsonReader;
 import android.util.Log;
@@ -65,7 +67,25 @@ public class JobListActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
+        switch (item.getItemId()) {
+            case R.id.logout:
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                ComponentName componentName = intent.getComponent();
+                Intent backToMainIntent = IntentCompat.makeRestartActivityTask(componentName);
+                startActivity(backToMainIntent);
+                break;
+            case R.id.refresh:
+                Intent intent1 = new Intent(JobListActivity.this, JobListActivity.class);
+                intent1.putExtra("Login", loginStrings);
+                intent1.putExtra("Date", dateString);
+                startActivity(intent1);
+                finish();
+                break;
+            case R.id.information:
+                intent = new Intent(JobListActivity.this, VideoViewerActivity.class);
+                startActivity(intent);
+                break;
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -268,6 +288,7 @@ public class JobListActivity extends AppCompatActivity {
                     intent.putExtra("Position", "" + (position + 1));
                     intent.putExtra("SubJobNo", subJobNoStrings[position]);
                     startActivity(intent);
+                    finish();
                     Log.d("Tag", "Position ==> " + position);
 
                 }
@@ -347,6 +368,5 @@ public class JobListActivity extends AppCompatActivity {
         intent.putExtra("Login", loginStrings);
         intent.putExtra("Date", dateString);
         startActivity(intent);
-
     }
 }

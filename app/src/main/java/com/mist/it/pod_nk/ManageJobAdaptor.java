@@ -1,5 +1,6 @@
 package com.mist.it.pod_nk;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -95,6 +96,7 @@ public class ManageJobAdaptor extends BaseAdapter {
                     intent.putExtra("SubJobNo", subJobNoString);
                     intent.putExtra("Place", storeStrings[position]);
                     context.startActivity(intent);
+                    ((Activity)context).finish();
                 }
             }
         });
@@ -112,6 +114,7 @@ public class ManageJobAdaptor extends BaseAdapter {
                     intent.putExtra("SubJobNo", subJobNoString);
                     intent.putExtra("Place", storeStrings[position]);
                     context.startActivity(intent);
+                    ((Activity)context).finish();
                 }
             }
         });

@@ -52,7 +52,17 @@ public class DateActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
+        switch (item.getItemId()) {
+            case R.id.refresh:
+                Intent intent = new Intent(DateActivity.this, DateActivity.class);
+                intent.putExtra("Login", loginStrings);
+                intent.putExtra("Date", dateString);
+                startActivity(intent);
+                finish();
+                break;
+            case R.id.information:
+                break;
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -67,17 +77,6 @@ public class DateActivity extends AppCompatActivity {
 
         SyncGetDate syncGetDate = new SyncGetDate(this, loginStrings[0]);
         syncGetDate.execute();
-    }
-
-    @Override
-    public void onBackPressed() {
-        Intent intent = new Intent(DateActivity.this, JobListActivity.class);
-        intent.putExtra("Login", loginStrings);
-        intent.putExtra("Date", dateString);
-        Log.d("Tag", "Send ==> " + dateString + " " + Arrays.toString(loginStrings));
-        startActivity(intent);
-        finish();
-
     }
 
     @OnItemClick(R.id.lisDAJobDate)
@@ -106,7 +105,7 @@ public class DateActivity extends AppCompatActivity {
                 Log.d("Tag", "Send ==> " + truckIDString);
                 OkHttpClient okHttpClient = new OkHttpClient();
                 RequestBody requestBody = new FormEncodingBuilder()
-                        .add("isAdd", "true")
+                        .add("isAd dd", "true")
                         .add("truck_id", truckIDString)
                         .build();
                 Request.Builder builder = new Request.Builder();
@@ -186,7 +185,6 @@ public class DateActivity extends AppCompatActivity {
 
             date = getResources().getString(R.string.Date) + " : " + dateStrings[position];
             job = jobStrings[position] + " " + getResources().getString(R.string.Trip);
-//            job = jobStrings[position];
             viewHolder.dateTextView.setText(date);
             viewHolder.sumjobTextView.setText(job);
 

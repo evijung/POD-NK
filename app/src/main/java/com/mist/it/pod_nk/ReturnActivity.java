@@ -101,6 +101,24 @@ public class ReturnActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
+        switch (item.getItemId()) {
+            case R.id.refresh:
+                Intent intent = new Intent(ReturnActivity.this, ReturnActivity.class);
+                intent.putExtra("Invoice", invoiceNoString);
+                intent.putExtra("Login", loginStrings);
+                intent.putExtra("SubJobNo", subJobString);
+                intent.putExtra("Date", dateString);
+                intent.putExtra("Position", tripNoString);
+                intent.putExtra("Place", placeString);
+                intent.putExtra("StoreId", storeIdString);
+                startActivity(intent);
+                finish();
+                break;
+            case R.id.information:
+                intent = new Intent(ReturnActivity.this, VideoViewerActivity.class);
+                startActivity(intent);
+                break;
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -165,9 +183,7 @@ public class ReturnActivity extends AppCompatActivity {
 
                 break;
             case R.id.btnRAReturnAll:
-
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(ReturnActivity.this,R.style.ReturnAlertDialogTheme);
+                 AlertDialog.Builder builder = new AlertDialog.Builder(ReturnActivity.this,R.style.ReturnAlertDialogTheme);
                 View view1 = View.inflate(getBaseContext(), R.layout.custom_alert, null);
 
                 confirmReturnAllViewHolder = new ConfirmReturnAllViewHolder(view1);
