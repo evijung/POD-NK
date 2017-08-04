@@ -23,7 +23,7 @@
             android:layout_margin="@dimen/mini_margin"
             android:text="@string/InvoiceNo"
             android:textColor="@color/MediumBlue"
-            android:textSize="20sp"
+            android:textSize="24sp"
             android:textStyle="bold" />
 
     </LinearLayout>
@@ -78,8 +78,8 @@
                 android:layout_margin="@dimen/mini_margin"
                 android:layout_weight="1"
                 android:background="@drawable/plum_button"
-                android:text="@string/Save"
-                android:textSize="@dimen/text_h3"
+                android:text="@string/SavePicture"
+                android:textSize="24sp"
                 android:textStyle="bold" />
 
             <Button
@@ -90,7 +90,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/blue_button"
                 android:text="@string/ReturnAll"
-                android:textSize="@dimen/text_h3"
+                android:textSize="24sp"
                 android:textStyle="bold" />
 
             <Button
@@ -101,8 +101,9 @@
                 android:layout_weight="1"
                 android:background="@drawable/green_button"
                 android:text="@string/Finish"
-                android:textSize="@dimen/text_h3"
-                android:textStyle="bold" />
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:visibility="gone" />
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

@@ -13,6 +13,9 @@ import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -74,13 +77,13 @@ public class DetailJobActivity extends AppCompatActivity {
     Button signatureButton;
     @BindView(R.id.btnDJAConfirm)
     Button confirmButton;
-
-    String dateString,placeString, subJobNoString, inTimeString, outTimeString, tripNoString, storeString, storeIdString, arriveTimeString, pathImgFirstString, pathImgSecondString, pathImgThirdString, pathImgFourthString, pathImgInviceFirstString;
-    String[] loginStrings, invoiceStrings;
-    @BindView(R.id.button2)
+    @BindView(R.id.btnDJABack)
     Button backButton;
     @BindView(R.id.linDJABottom)
     LinearLayout linDJABottom;
+
+    String dateString, placeString, subJobNoString, inTimeString, outTimeString, tripNoString, storeString, storeIdString, arriveTimeString, pathImgFirstString, pathImgSecondString, pathImgThirdString, pathImgFourthString, pathImgInviceFirstString;
+    String[] loginStrings, invoiceStrings;
     private Uri firstUri, secondUri, thirdUri, fourthUri, invFirstUri;
     private Boolean imgFirstFlagABoolean, imgSecondFlagABoolean, imgThirdFlagABoolean, imgFourthFlagABoolean, imgInvoiceFirstABoolean, flagSaveABoolean;
     private Bitmap imgFirstBitmap = null;
@@ -88,6 +91,19 @@ public class DetailJobActivity extends AppCompatActivity {
     private Bitmap imgThirdBitmap = null;
     private Bitmap imgFourthBitmap = null;
     private Bitmap imgInvoiceFirstBitmap = null;
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,10 +123,22 @@ public class DetailJobActivity extends AppCompatActivity {
         subJobNoString = getIntent().getStringExtra("SubJobNo");
         storeString = getIntent().getStringExtra("Place");
 
-        dateTextView.setText(getResources().getText(R.string.Date) + ": " + dateString);
+        dateTextView.setText(getResources().getText(R.string.Date) + " " + dateString);
 
         SynGetJobDetail synGetJobDetail = new SynGetJobDetail();
         synGetJobDetail.execute();
+    }
+
+    @OnClick(R.id.btnDJABack)
+    public void onViewClicked() {
+        Intent intent = new Intent(DetailJobActivity.this, ManageJobActivity.class);
+        intent.putExtra("Date", dateString);
+        intent.putExtra("Position", tripNoString);
+        intent.putExtra("Login", loginStrings);
+        intent.putExtra("SubJobNo", subJobNoString);
+        startActivity(intent);
+        finish();
+
     }
 
     class SynGetJobDetail extends AsyncTask<Void, Void, String> {
@@ -172,12 +200,10 @@ public class DetailJobActivity extends AppCompatActivity {
                     }
                 }
 
-                storeTextView.setText(placeString);
-                arrivalTimeTextView.setText(getResources().getText(R.string.ArrivalTime) + ": " + arriveTimeString);
+                storeTextView.setText(getResources().getText(R.string.Store) + " : " + placeString);
+                arrivalTimeTextView.setText(getResources().getText(R.string.ArrivalTime) + " " + arriveTimeString);
                 InvoiceListAdaptor invoiceListAdaptor = new InvoiceListAdaptor(DetailJobActivity.this, invoiceStrings);
                 invoiceListView.setAdapter(invoiceListAdaptor);
-
-
 
 
                 Log.d("Tag", inTimeString + outTimeString);
@@ -238,8 +264,6 @@ public class DetailJobActivity extends AppCompatActivity {
                         Glide.with(DetailJobActivity.this).load(serverString + projectString + "/app/CenterService/" + pathImgFourthString).into(fourthImageView);
                     }
                 }
-
-
 
 
             } catch (JSONException e) {

@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -56,6 +59,19 @@ public class ManageJobActivity extends AppCompatActivity {
     String dateString, tripNoString, subJobNoString;
     String[] loginStrings;
     DialogViewHolder dialogViewHolder;
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -293,7 +309,7 @@ public class ManageJobActivity extends AppCompatActivity {
                     dialogViewHolder.headerTextView.setTextColor(Color.parseColor("#f5f5f5"));
                     builder.setView(view1);
 
-                    builder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
+                    builder.setPositiveButton(getResources().getText(R.string.OK), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                            // Log.d("Tag", "In edit text ==> " + dialogViewHolder.odoNoEditText.getText().toString());
@@ -322,7 +338,7 @@ public class ManageJobActivity extends AppCompatActivity {
 
                         }
                     });
-                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    builder.setNegativeButton(getResources().getText(R.string.cancel), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
 
@@ -343,7 +359,7 @@ public class ManageJobActivity extends AppCompatActivity {
 
                 builder1.setView(view2);
 
-                builder1.setPositiveButton("Save", new DialogInterface.OnClickListener() {
+                builder1.setPositiveButton(getResources().getText(R.string.OK), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Log.d("Tag", "In edit text ==> " + dialogViewHolder.odoNoEditText.getText());
@@ -367,7 +383,7 @@ public class ManageJobActivity extends AppCompatActivity {
 
                     }
                 });
-                builder1.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                builder1.setNegativeButton(getResources().getText(R.string.cancel), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 

@@ -15,7 +15,8 @@
         android:elevation="1dp"
         android:padding="@dimen/micro_margin"
         android:text="@string/Model"
-        android:textSize="18sp" />
+        android:textSize="24sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/textView2"

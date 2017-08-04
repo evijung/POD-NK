@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.location.Criteria;
 import android.net.Uri;
@@ -17,6 +18,9 @@ import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -88,6 +92,19 @@ public class ReturnActivity extends AppCompatActivity {
     ConfirmReturnAllViewHolder confirmReturnAllViewHolder;
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_return);
@@ -156,8 +173,10 @@ public class ReturnActivity extends AppCompatActivity {
                 confirmReturnAllViewHolder = new ConfirmReturnAllViewHolder(view1);
 
                 confirmReturnAllViewHolder.imgRtnAImageView.setImageResource(R.drawable.caution);
-                confirmReturnAllViewHolder.headerRtnTextView.setText("return all product");
-                confirmReturnAllViewHolder.descriptRtnTextView.setText("Are you sure return all...?");
+                confirmReturnAllViewHolder.headerRtnTextView.setText(getResources().getText(R.string.return_dlg_header));
+                confirmReturnAllViewHolder.descriptRtnTextView.setText(getResources().getText(R.string.return_dlg_desc));
+                confirmReturnAllViewHolder.headerRtnTextView.setTextColor(Color.parseColor("#f5f5f5"));
+                confirmReturnAllViewHolder.descriptRtnTextView.setTextColor(Color.parseColor("#f5f5f5"));
                 builder.setPositiveButton(getResources().getText(R.string.OK), new DialogInterface.OnClickListener() {
 
                     @Override
@@ -174,7 +193,7 @@ public class ReturnActivity extends AppCompatActivity {
                         // }
                     }
                 });
-                builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton(getResources().getText(R.string.cancel), new DialogInterface.OnClickListener() {
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -226,10 +245,12 @@ public class ReturnActivity extends AppCompatActivity {
         dialogViewHolder = new DialogViewHolder(view1);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(ReturnActivity.this,R.style.ReturnListAlertDialogTheme);
-        dialogViewHolder.titleTextview.setText("Return : " + returnItems.get(position).getModelString());
-        dialogViewHolder.amtTxtTextview.setText("Amount : ");
+        dialogViewHolder.titleTextview.setText(getResources().getText(R.string.ProductReturn) + ": " + returnItems.get(position).getModelString());
+        dialogViewHolder.titleTextview.setTextColor(Color.parseColor("#f5f5f5"));
+        dialogViewHolder.amtTxtTextview.setText(getResources().getText(R.string.ProductAmount) + ": ");
+        dialogViewHolder.amtTxtTextview.setTextColor(Color.parseColor("#f5f5f5"));
         dialogViewHolder.amtRtnEditText.setText(returnItems.get(position).getRetrunAmountString());
-        builder.setPositiveButton("SAVE", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(getResources().getText(R.string.OK), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
@@ -245,19 +266,13 @@ public class ReturnActivity extends AppCompatActivity {
                 } else {
                     Toast toast = Toast.makeText(ReturnActivity.this, "over amount", Toast.LENGTH_LONG);
                     toast.show();
-//                        AlertDialog.Builder builder1 = new AlertDialog.Builder(ReturnActivity.this);
-//                       // alertMessageViewHolder.imgAlertImageView.setImageResource(R.drawable.caution);
-//                        alertMessageViewHolder.headerTextView.setText("Over amount");
-//                        alertMessageViewHolder.descriptTextView.setText("Please check return amount is over");
-//                        builder1.setView(view2);
-//                        builder1.show();
                 }
 
 
             }
         });
 
-        builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(getResources().getText(R.string.cancel), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 

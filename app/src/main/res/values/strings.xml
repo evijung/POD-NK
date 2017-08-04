@@ -63,4 +63,8 @@
     <string name="Refresh">Refresh</string>
     <string name="logout">Logout</string>
     <string name="err_odo">Error not get ODO</string>
+    <string name="cancel">Cancel</string>
+    <string name="return_dlg_header">Return all product</string>
+    <string name="return_dlg_desc">Are you sure return all...?</string>
+
 </resources>
