@@ -66,5 +66,6 @@
     <string name="cancel">Cancel</string>
     <string name="return_dlg_header">Return all product</string>
     <string name="return_dlg_desc">Are you sure return all...?</string>
+    <string name="Information">Information</string>
 
 </resources>
