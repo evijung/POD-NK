@@ -18,7 +18,9 @@
         android:gravity="center_vertical"
         android:padding="@dimen/micro_margin"
         android:text="@string/Invoice"
-        android:textSize="20sp" />
+        android:textColor="@color/MediumBlue"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
     <ImageView
         android:id="@+id/imgILCamera"

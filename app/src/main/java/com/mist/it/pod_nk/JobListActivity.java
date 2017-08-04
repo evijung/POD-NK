@@ -53,7 +53,7 @@ public class JobListActivity extends AppCompatActivity {
     ListView tripListView;
     String[] loginStrings, subJobNoStrings, locationStrings, deliveryTypeStrings, transportStrings, truckStrings, driverNameStrings, driverSurnameStrings;
     String[] clerkStrings, truckTypeStrings, deliveryTripNoStrings, numberStrings;
-    String[][] arriveTimeStrings, detailListStrings, invoiceStrings, jobNoStrings;
+    String[][] arriveTimeStrings, detailListStrings, invoiceStrings, jobNoStrings, placeStrings;
     String dateString, driverNameString, truckString;
 
     @Override
@@ -161,6 +161,7 @@ public class JobListActivity extends AppCompatActivity {
                 numberStrings = new String[dataJsonArray.length()];
                 arriveTimeStrings = new String[dataJsonArray.length()][];
                 detailListStrings = new String[dataJsonArray.length()][];
+                placeStrings = new String[dataJsonArray.length()][];
                 invoiceStrings = new String[dataJsonArray.length()][];
                 jobNoStrings = new String[dataJsonArray.length()][];
 
@@ -181,6 +182,7 @@ public class JobListActivity extends AppCompatActivity {
                     JSONArray deliveryPlaceJsonArray = jsonObject1.getJSONArray("DeliveryPlace");
                     arriveTimeStrings[i] = new String[deliveryPlaceJsonArray.length()];
                     detailListStrings[i] = new String[deliveryPlaceJsonArray.length()];
+                    placeStrings[i] = new String[deliveryPlaceJsonArray.length()];
                     invoiceStrings[i] = new String[deliveryPlaceJsonArray.length()];
                     jobNoStrings[i] = new String[deliveryPlaceJsonArray.length()];
 
@@ -190,7 +192,8 @@ public class JobListActivity extends AppCompatActivity {
                         JSONObject jsonObject2 = deliveryPlaceJsonArray.getJSONObject(j);
                         Log.d("Tag", "i ==> " + String.valueOf(i) + " j ==> " + String.valueOf(j) + " invoice ==> " + jsonObject2.getString("Invoice"));
                         arriveTimeStrings[i][j] = jsonObject2.getString("ArrivalTime");
-                        detailListStrings[i][j] = jsonObject2.getString("DetailList");
+                        placeStrings[i][j] = jsonObject2.getString("DetailList");
+                        detailListStrings[i][j] = jsonObject2.getString("DetailDesc");
                         invoiceStrings[i][j] = jsonObject2.getString("Invoice");
                         jobNoStrings[i][j] = jsonObject2.getString("JobNo");
                     }

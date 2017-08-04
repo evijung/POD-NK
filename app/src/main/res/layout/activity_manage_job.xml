@@ -76,6 +76,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="2.5"
                     android:paddingLeft="10dp"
+                    android:textColor="@color/Crimson"
                     android:textSize="18sp" />
 
             </LinearLayout>
@@ -89,7 +90,7 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.6"
+                    android:layout_weight="1"
                     android:text="@string/Mile"
                     android:textSize="18sp" />
 
@@ -99,6 +100,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="2.5"
                     android:paddingLeft="10dp"
+                    android:textColor="@color/Crimson"
                     android:textSize="18sp" />
             </LinearLayout>
 
@@ -121,6 +123,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="2.5"
                     android:paddingLeft="10dp"
+                    android:textColor="@color/Crimson"
                     android:textSize="18sp" />
 
             </LinearLayout>
@@ -134,7 +137,7 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.6"
+                    android:layout_weight="1"
                     android:text="@string/Mile"
                     android:textSize="18sp" />
 
@@ -144,6 +147,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="2.5"
                     android:paddingLeft="10dp"
+                    android:textColor="@color/Crimson"
                     android:textSize="18sp" />
             </LinearLayout>
         </LinearLayout>
@@ -162,7 +166,8 @@
                 android:layout_weight="2.93"
                 android:background="@drawable/green_button"
                 android:text="@string/Start"
-                android:textSize="@dimen/text_h3" />
+                android:textSize="@dimen/text_h3"
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/button"
@@ -180,7 +185,8 @@
                 android:layout_weight="2.86"
                 android:background="@drawable/salmon_button"
                 android:text="@string/Stop"
-                android:textSize="@dimen/text_h3" />
+                android:textSize="@dimen/text_h3"
+                android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

@@ -42,7 +42,7 @@
     <color name="Orchid">#da70d6</color>
     <color name="GoldenRod">#DAA520</color>
     <color name="PaleVioletRed">#DB7093</color>
-    <color name="Crimson">#DC143C</color>
+    <color name="Crimson">#dc143c</color>
     <color name="Gainsboro">#dcdcdc</color>
     <color name="Plum">#DDA0DD</color>
     <color name="BurlyWood">#deb887</color>
@@ -52,7 +52,7 @@
     <color name="PaleGoldenRod">#eee8aa</color>
     <color name="LightCoral">#F08080</color>
     <color name="Wheat">#F5DEB3</color>
-    <color name="WhiteSmoke">#F5F5F5</color>
+    <color name="WhiteSmoke">#f5f5f5</color>
     <color name="GhostWhite">#fbfbfc</color>
     <color name="Salmon">#FA8072</color>
     <color name="AntiqueWhite">#FAEBD7</color>
@@ -86,5 +86,13 @@
     <color name="green3">#c2f0c2</color>
     <color name="IndianRed2">#50cd5c5c</color>
     <color name="LightSlateGrey2">#50778899</color>
+    <color name="HoneyDew">#F0FFF0</color>
+    <color name="Khaki">#F0E68C</color>
+    <color name="MediumBlue">#0000cd</color>
+    <color name="DarkOliveGreen">#556B2F</color>
+    <color name="CadetBlue2">#785f9ea0</color>
+    <color name="saddlebrown">#8B4513</color>
+    <color name="peru">#CD853F</color>
+    <color name="Black_L">#78000000</color>
 
 </resources>

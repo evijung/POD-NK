@@ -62,4 +62,5 @@
     <string name="Back">Back</string>
     <string name="Refresh">Refresh</string>
     <string name="logout">Logout</string>
+    <string name="err_odo">Error not get ODO</string>
 </resources>

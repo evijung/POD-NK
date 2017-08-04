@@ -26,12 +26,12 @@ import butterknife.ButterKnife;
 public class ManageJobAdaptor extends BaseAdapter {
     Context context;
     String dateString, tripNoString, subJobNoString;
-    String[] storeStrings, timeStrings, loginStrings, outTimeStrings;
+    String[] storeStrings, timeStrings, loginStrings, outTimeStrings, placeStrings;
     String[][] jobNoStrings;
     String[][][] invoiceStrings, amountStrings;
     ManageJobViewHolder manageJobViewHolder;
 
-    public ManageJobAdaptor(Context context, String dateString, String tripNoString, String subJobNoString, String[] storeStrings, String[] timeStrings, String[] loginStrings, String[][] jobNoStrings, String[][][] invoiceStrings, String[][][] amountStrings, String[] outTimeStrings) {
+    public ManageJobAdaptor(Context context, String dateString, String tripNoString, String subJobNoString, String[] storeStrings, String[] timeStrings, String[] loginStrings, String[][] jobNoStrings, String[][][] invoiceStrings, String[][][] amountStrings, String[] outTimeStrings, String [] placeStrings) {
         this.context = context;
         this.dateString = dateString;
         this.tripNoString = tripNoString;
@@ -43,6 +43,7 @@ public class ManageJobAdaptor extends BaseAdapter {
         this.invoiceStrings = invoiceStrings;
         this.amountStrings = amountStrings;
         this.outTimeStrings = outTimeStrings;
+        this.placeStrings = placeStrings;
     }
 
     @Override
@@ -71,7 +72,7 @@ public class ManageJobAdaptor extends BaseAdapter {
             manageJobViewHolder = (ManageJobViewHolder) convertView.getTag();
         }
 
-        manageJobViewHolder.storeTextView.setText(storeStrings[position]);
+        manageJobViewHolder.storeTextView.setText(placeStrings[position]);
         manageJobViewHolder.timeTextView.setText(timeStrings[position]);
 
         JobNoAdaptor jobNoAdaptor = new JobNoAdaptor(context, jobNoStrings[position], invoiceStrings[position], amountStrings[position]);

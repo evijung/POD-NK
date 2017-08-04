@@ -15,10 +15,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,12 +37,10 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.OnItemClick;
 
 import static com.mist.it.pod_nk.MyConstant.projectString;
 import static com.mist.it.pod_nk.MyConstant.serverString;
@@ -77,8 +75,12 @@ public class DetailJobActivity extends AppCompatActivity {
     @BindView(R.id.btnDJAConfirm)
     Button confirmButton;
 
-    String dateString, subJobNoString, tripNoString, storeString, storeIdString, arriveTimeString, pathImgFirstString, pathImgSecondString, pathImgThirdString, pathImgFourthString, pathImgInviceFirstString;
+    String dateString,placeString, subJobNoString, inTimeString, outTimeString, tripNoString, storeString, storeIdString, arriveTimeString, pathImgFirstString, pathImgSecondString, pathImgThirdString, pathImgFourthString, pathImgInviceFirstString;
     String[] loginStrings, invoiceStrings;
+    @BindView(R.id.button2)
+    Button backButton;
+    @BindView(R.id.linDJABottom)
+    LinearLayout linDJABottom;
     private Uri firstUri, secondUri, thirdUri, fourthUri, invFirstUri;
     private Boolean imgFirstFlagABoolean, imgSecondFlagABoolean, imgThirdFlagABoolean, imgFourthFlagABoolean, imgInvoiceFirstABoolean, flagSaveABoolean;
     private Bitmap imgFirstBitmap = null;
@@ -105,7 +107,6 @@ public class DetailJobActivity extends AppCompatActivity {
         subJobNoString = getIntent().getStringExtra("SubJobNo");
         storeString = getIntent().getStringExtra("Place");
 
-        storeTextView.setText(getResources().getText(R.string.Store) + ": " + storeString);
         dateTextView.setText(getResources().getText(R.string.Date) + ": " + dateString);
 
         SynGetJobDetail synGetJobDetail = new SynGetJobDetail();
@@ -152,12 +153,15 @@ public class DetailJobActivity extends AppCompatActivity {
 
                     storeIdString = jsonObject1.getString("StoreId");
                     arriveTimeString = jsonObject1.getString("ArrivalTime");
+                    placeString = jsonObject1.getString("DetailDesc");
 
                     pathImgFirstString = jsonObject1.getString("ImgFileName_1");
                     pathImgSecondString = jsonObject1.getString("ImgFileName_2");
                     pathImgThirdString = jsonObject1.getString("ImgFileName_3");
                     pathImgFourthString = jsonObject1.getString("ImgFileName_4");
 
+                    inTimeString = jsonObject1.getString("InTime");
+                    outTimeString = jsonObject1.getString("OutTime");
 
                     JSONArray jsonArray1 = jsonObject1.getJSONArray("Invoice");
                     invoiceStrings = new String[jsonArray1.length()];
@@ -168,20 +172,76 @@ public class DetailJobActivity extends AppCompatActivity {
                     }
                 }
 
+                storeTextView.setText(placeString);
                 arrivalTimeTextView.setText(getResources().getText(R.string.ArrivalTime) + ": " + arriveTimeString);
                 InvoiceListAdaptor invoiceListAdaptor = new InvoiceListAdaptor(DetailJobActivity.this, invoiceStrings);
                 invoiceListView.setAdapter(invoiceListAdaptor);
 
 
-                if (!pathImgFirstString.equals("")) {
-                    Glide.with(DetailJobActivity.this).load(serverString + projectString + "/app/CenterService/" + pathImgFirstString).into(firstImageView);
-                }if (!pathImgSecondString.equals("")) {
-                    Glide.with(DetailJobActivity.this).load(serverString + projectString + "/app/CenterService/" + pathImgSecondString).into(secondImageView);
-                }if (!pathImgThirdString.equals("")) {
-                    Glide.with(DetailJobActivity.this).load(serverString + projectString + "/app/CenterService/" + pathImgThirdString).into(thirdImageView);
-                }if (!pathImgFourthString.equals("")) {
-                    Glide.with(DetailJobActivity.this).load(serverString + projectString + "/app/CenterService/" + pathImgFourthString).into(fourthImageView);
+
+
+                Log.d("Tag", inTimeString + outTimeString);
+
+                if (inTimeString.equals("null")) {
+                    arriveButton.setVisibility(View.VISIBLE);
+                    backButton.setVisibility(View.VISIBLE);
+                    confirmButton.setVisibility(View.GONE);
+                    savePicButton.setVisibility(View.GONE);
+                    signatureButton.setVisibility(View.GONE);
+                    firstImageView.setVisibility(View.INVISIBLE);
+                    secondImageView.setVisibility(View.INVISIBLE);
+                    thirdImageView.setVisibility(View.INVISIBLE);
+                    fourthImageView.setVisibility(View.INVISIBLE);
+                } else if (outTimeString.equals("null")) {
+                    arriveButton.setVisibility(View.GONE);
+                    backButton.setVisibility(View.VISIBLE);
+                    confirmButton.setVisibility(View.VISIBLE);
+                    savePicButton.setVisibility(View.VISIBLE);
+                    signatureButton.setVisibility(View.VISIBLE);
+                    firstImageView.setVisibility(View.VISIBLE);
+                    secondImageView.setVisibility(View.VISIBLE);
+                    thirdImageView.setVisibility(View.VISIBLE);
+                    fourthImageView.setVisibility(View.VISIBLE);
+                    if (!pathImgFirstString.equals("")) {
+                        Glide.with(DetailJobActivity.this).load(serverString + projectString + "/app/CenterService/" + pathImgFirstString).into(firstImageView);
+                    }
+                    if (!pathImgSecondString.equals("")) {
+                        Glide.with(DetailJobActivity.this).load(serverString + projectString + "/app/CenterService/" + pathImgSecondString).into(secondImageView);
+                    }
+                    if (!pathImgThirdString.equals("")) {
+                        Glide.with(DetailJobActivity.this).load(serverString + projectString + "/app/CenterService/" + pathImgThirdString).into(thirdImageView);
+                    }
+                    if (!pathImgFourthString.equals("")) {
+                        Glide.with(DetailJobActivity.this).load(serverString + projectString + "/app/CenterService/" + pathImgFourthString).into(fourthImageView);
+                    }
+
+                } else {
+                    arriveButton.setVisibility(View.GONE);
+                    backButton.setVisibility(View.VISIBLE);
+                    confirmButton.setVisibility(View.GONE);
+                    savePicButton.setVisibility(View.VISIBLE);
+                    signatureButton.setVisibility(View.GONE);
+                    firstImageView.setVisibility(View.VISIBLE);
+                    secondImageView.setVisibility(View.VISIBLE);
+                    thirdImageView.setVisibility(View.VISIBLE);
+                    fourthImageView.setVisibility(View.VISIBLE);
+                    if (!pathImgFirstString.equals("")) {
+                        Glide.with(DetailJobActivity.this).load(serverString + projectString + "/app/CenterService/" + pathImgFirstString).into(firstImageView);
+                    }
+                    if (!pathImgSecondString.equals("")) {
+                        Glide.with(DetailJobActivity.this).load(serverString + projectString + "/app/CenterService/" + pathImgSecondString).into(secondImageView);
+                    }
+                    if (!pathImgThirdString.equals("")) {
+                        Glide.with(DetailJobActivity.this).load(serverString + projectString + "/app/CenterService/" + pathImgThirdString).into(thirdImageView);
+                    }
+                    if (!pathImgFourthString.equals("")) {
+                        Glide.with(DetailJobActivity.this).load(serverString + projectString + "/app/CenterService/" + pathImgFourthString).into(fourthImageView);
+                    }
                 }
+
+
+
+
             } catch (JSONException e) {
                 e.printStackTrace();
                 Log.d("Tag", String.valueOf(e) + " Line: " + e.getStackTrace()[0].getLineNumber());
@@ -376,6 +436,16 @@ public class DetailJobActivity extends AppCompatActivity {
                     Log.d("Tag", String.valueOf(e) + " Line: " + e.getStackTrace()[0].getLineNumber());
                 }
 
+                arriveButton.setVisibility(View.GONE);
+                backButton.setVisibility(View.VISIBLE);
+                confirmButton.setVisibility(View.VISIBLE);
+                savePicButton.setVisibility(View.VISIBLE);
+                signatureButton.setVisibility(View.VISIBLE);
+                firstImageView.setVisibility(View.VISIBLE);
+                secondImageView.setVisibility(View.VISIBLE);
+                thirdImageView.setVisibility(View.VISIBLE);
+                fourthImageView.setVisibility(View.VISIBLE);
+
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -568,7 +638,7 @@ public class DetailJobActivity extends AppCompatActivity {
                     //pathImgInviceFirstString = invFirstUri.getPath().toString();
                     try {
                         imgInvoiceFirstBitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(invFirstUri));
-                        Log.d("Tag", "Before Call  ==> " + imgInvoiceFirstBitmap + " , " + invoiceStrings[0].toString() + " , " + subJobNoString );
+                        Log.d("Tag", "Before Call  ==> " + imgInvoiceFirstBitmap + " , " + invoiceStrings[0].toString() + " , " + subJobNoString);
 
 
                         SynUploadImagePerInv synUploadImage = new SynUploadImagePerInv(DetailJobActivity.this, imgInvoiceFirstBitmap, invoiceStrings[0].toString(), subJobNoString, "inv_first.png");
@@ -656,7 +726,7 @@ public class DetailJobActivity extends AppCompatActivity {
         }
     }
 
-    private  class SynUploadImagePerInv extends AsyncTask<Void, Void, String> {
+    private class SynUploadImagePerInv extends AsyncTask<Void, Void, String> {
         private Context context;
         private Bitmap bitmap;
         private String invoiceNoString, subjobNoString, mFileNameString;
@@ -675,7 +745,7 @@ public class DetailJobActivity extends AppCompatActivity {
         protected String doInBackground(Void... params) {
 
             uploadImageUtils = new UploadImageUtils();
-            final String result = uploadImageUtils.uploadFile(mFileNameString, urlUploadPicture, bitmap, storeIdString, "I",subjobNoString, invoiceNoString);
+            final String result = uploadImageUtils.uploadFile(mFileNameString, urlUploadPicture, bitmap, storeIdString, "I", subjobNoString, invoiceNoString);
             if (result == "NOK") {
                 return "NOK";
 

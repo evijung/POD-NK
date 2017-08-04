@@ -150,7 +150,7 @@ public class ReturnActivity extends AppCompatActivity {
             case R.id.btnRAReturnAll:
 
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(ReturnActivity.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(ReturnActivity.this,R.style.ReturnAlertDialogTheme);
                 View view1 = View.inflate(getBaseContext(), R.layout.custom_alert, null);
 
                 confirmReturnAllViewHolder = new ConfirmReturnAllViewHolder(view1);
@@ -225,7 +225,7 @@ public class ReturnActivity extends AppCompatActivity {
 
         dialogViewHolder = new DialogViewHolder(view1);
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(ReturnActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(ReturnActivity.this,R.style.ReturnListAlertDialogTheme);
         dialogViewHolder.titleTextview.setText("Return : " + returnItems.get(position).getModelString());
         dialogViewHolder.amtTxtTextview.setText("Amount : ");
         dialogViewHolder.amtRtnEditText.setText(returnItems.get(position).getRetrunAmountString());
@@ -233,7 +233,7 @@ public class ReturnActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                if (Integer.parseInt(dialogViewHolder.amtRtnEditText.getText().toString()) < Integer.parseInt(returnItems.get(position).getAmountString())) {
+                if (Integer.parseInt(dialogViewHolder.amtRtnEditText.getText().toString()) <= Integer.parseInt(returnItems.get(position).getAmountString())) {
                     SyncUpdateTurn syncUpdateTurn = new SyncUpdateTurn(ReturnActivity.this, returnItems.get(position).getInvoiceNoString(),
                             returnItems.get(position).getInvoiceSeqString(), returnItems.get(position).getModelString(),
                             dialogViewHolder.amtRtnEditText.getText().toString());
@@ -329,9 +329,6 @@ public class ReturnActivity extends AppCompatActivity {
                     JSONObject jsonObject1 = jsonArray.getJSONObject(i);
                     invoiceNoStrings[i] = jsonObject1.getString("Invoice");
                     subJobStrings[i] = jsonObject1.getString("SubJobNo");
-                    //imgFileNameStrings[i] = jsonObject1.getString("ImgPath");
-
-                    //imgFileStrings[i] = jsonObject1.getString("InvoiceImg");
 
                     JSONArray productArray = jsonObject1.getJSONArray("Product");
 
@@ -380,12 +377,10 @@ public class ReturnActivity extends AppCompatActivity {
 
                 //set adapter Listview
                 invoiceNoTextView.setText(getResources().getString(R.string.InvoiceNo) + " : " + invoiceNoStrings[0]);
-                // ReturnProductAdaptor returnProductAdaptor = new ReturnProductAdaptor(context, modelStrings[0], detailStrings[0], amountStrings[0], returnAmountStrings[0]);
                 ReturnProductAdaptor returnProductAdaptor = new ReturnProductAdaptor(context, returnItmes);
 
                 itemListView.setAdapter(returnProductAdaptor);
                 // set image
-                //firstImageView.setImageBitmap();
                 Log.d("Tag", "Image Path :::  " + serverString + projectString + "/app/CenterService/" + imgFirstPathString);
 
                 if (!imgFirstPathString.equals("null")) {

@@ -48,7 +48,7 @@
         android:layout_below="@+id/linSATop"
         android:layout_margin="@dimen/margin"
         android:background="@android:color/background_light"
-        android:orientation="vertical"></LinearLayout>
+        android:orientation="vertical" />
 
     <LinearLayout
         android:id="@+id/linSAButtom"
@@ -70,7 +70,7 @@
             android:paddingEnd="20dp"
             android:paddingStart="20dp"
             android:text="@string/Save"
-            android:textSize="@dimen/text_nm"
+            android:textSize="@dimen/text_h3"
             android:textStyle="bold" />
 
         <Button
@@ -85,7 +85,7 @@
             android:paddingEnd="20dp"
             android:paddingStart="20dp"
             android:text="@string/Clear"
-            android:textSize="@dimen/text_nm"
+            android:textSize="@dimen/text_h3"
             android:textStyle="bold" />
     </LinearLayout>
 </RelativeLayout>

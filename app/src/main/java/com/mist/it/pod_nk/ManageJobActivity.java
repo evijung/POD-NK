@@ -1,6 +1,7 @@
 package com.mist.it.pod_nk;
 
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -79,7 +80,7 @@ public class ManageJobActivity extends AppCompatActivity {
     private class SyncGetJob extends AsyncTask<Void, Void, String> {
         String[] subJobNoStrings, deliveryDateStrings, truckStrings, driverNameStrings, driverSirNameStrings, deliveryTripNoStrings, tripStartTimeStrings;
         String[] tripStopTimeStrings, tripStartMileStrings, tripStopMileStrings;
-        String[][] detailListStrings, provinceStrings, arriveTimeStrings, inTimeStrings, outTimeStrings;
+        String[][] detailListStrings, provinceStrings, arriveTimeStrings, inTimeStrings, outTimeStrings, placeStrings;
         String[][][] jobNoStrings;
         String[][][][] invoiceStrings, amountStrings;
 
@@ -122,6 +123,7 @@ public class ManageJobActivity extends AppCompatActivity {
                 tripStopTimeStrings = new String[dataJsonArray.length()];
 
                 detailListStrings = new String[dataJsonArray.length()][];
+                placeStrings = new String[dataJsonArray.length()][];
                 provinceStrings = new String[dataJsonArray.length()][];
                 arriveTimeStrings = new String[dataJsonArray.length()][];
                 inTimeStrings = new String[dataJsonArray.length()][];
@@ -149,6 +151,7 @@ public class ManageJobActivity extends AppCompatActivity {
                     arriveTimeStrings[i] = new String[delivPlaceJsonArray.length()];
                     inTimeStrings[i] = new String[delivPlaceJsonArray.length()];
                     outTimeStrings[i] = new String[delivPlaceJsonArray.length()];
+                    placeStrings[i] = new String[delivPlaceJsonArray.length()];
 
                     jobNoStrings[i] = new String[delivPlaceJsonArray.length()][];
                     invoiceStrings[i] = new String[delivPlaceJsonArray.length()][][];
@@ -157,6 +160,7 @@ public class ManageJobActivity extends AppCompatActivity {
                     for (int j = 0; j < delivPlaceJsonArray.length(); j++) {
                         JSONObject jsonObject2 = delivPlaceJsonArray.getJSONObject(j);
                         detailListStrings[i][j] = jsonObject2.getString("DetailList");
+                        placeStrings[i][j] = jsonObject2.getString("DetailDesc");
                         provinceStrings[i][j] = jsonObject2.getString("PROVINCE");
                         arriveTimeStrings[i][j] = jsonObject2.getString("ArrivalTime");
                         inTimeStrings[i][j] = jsonObject2.getString("InTime");
@@ -185,12 +189,13 @@ public class ManageJobActivity extends AppCompatActivity {
                     }
                 }
 
-                ManageJobAdaptor manageJobAdaptor = new ManageJobAdaptor(ManageJobActivity.this, dateString, tripNoString, subJobNoString, detailListStrings[0], arriveTimeStrings[0], loginStrings, jobNoStrings[0], invoiceStrings[0], amountStrings[0], outTimeStrings[0]);
+                ManageJobAdaptor manageJobAdaptor = new ManageJobAdaptor(ManageJobActivity.this, dateString, tripNoString, subJobNoString, detailListStrings[0], arriveTimeStrings[0], loginStrings, jobNoStrings[0], invoiceStrings[0], amountStrings[0], outTimeStrings[0], placeStrings[0]);
                 storeListView.setAdapter(manageJobAdaptor);
 
                 if (!tripStartMileStrings[0].equals("null")) {
                     startMilesTextView.setText(tripStartMileStrings[0]);
                     startABoolean = false;
+                    startButton.setVisibility(View.INVISIBLE);
                 } else {
                     startABoolean = true;
                 }
@@ -264,6 +269,7 @@ public class ManageJobActivity extends AppCompatActivity {
                 } else if (flagString.equals("stop")) {
                     stopTimeTextView.setText(timeString);
                     stopMilesTextView.setText(odoString);
+
                 }
             }
         }
@@ -273,39 +279,46 @@ public class ManageJobActivity extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btnMJAStart:
-                if (startABoolean) {
 
                     final String[] lat = new String[1];
                     final String[] lng = new String[1];
                     final String[] time = new String[1];
-                    final AlertDialog.Builder builder = new AlertDialog.Builder(ManageJobActivity.this);
+                    final AlertDialog.Builder builder = new AlertDialog.Builder(ManageJobActivity.this, R.style.AlertDialogTheme);
 
                     View view1 = View.inflate(getBaseContext(), R.layout.set_odo_dialog, null);
                     Log.d("Tag", String.valueOf(view1 == null));
                     dialogViewHolder = new DialogViewHolder(view1);
 
                     dialogViewHolder.headerTextView.setText(getResources().getText(R.string.enter_start));
+                    dialogViewHolder.headerTextView.setTextColor(Color.parseColor("#f5f5f5"));
                     builder.setView(view1);
 
                     builder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            Log.d("Tag", "In edit text ==> " + dialogViewHolder.odoNoEditText.getText());
-                            GPSManager gpsManager = new GPSManager(ManageJobActivity.this);
-                            if (gpsManager.setLatLong(0)) {
-                                lat[0] = gpsManager.getLatString();
-                                lng[0] = gpsManager.getLongString();
-                                time[0] = gpsManager.getDateTime();
+                           // Log.d("Tag", "In edit text ==> " + dialogViewHolder.odoNoEditText.getText().toString());
+                            if (dialogViewHolder.odoNoEditText.getText().toString().equals("")) {
+                                Toast.makeText(ManageJobActivity.this, getResources().getText(R.string.err_odo), Toast.LENGTH_LONG).show();
 
-                                Log.d("Tag", "Lat/Long : Time ==> " + lat[0] + "/" + lng[0] + " : " + time[0] + dialogViewHolder.odoNoEditText.getText());
+                            }else{
+                                GPSManager gpsManager = new GPSManager(ManageJobActivity.this);
+                                if (gpsManager.setLatLong(0)) {
+                                    lat[0] = gpsManager.getLatString();
+                                    lng[0] = gpsManager.getLongString();
+                                    time[0] = gpsManager.getDateTime();
 
-                                SynUpdateTripStatus synUpdateTripStatus = new SynUpdateTripStatus(time[0], dialogViewHolder.odoNoEditText.getText().toString(), lat[0], lng[0], "start");
-                                synUpdateTripStatus.execute();
+                                    Log.d("Tag", "Lat/Long : Time ==> " + lat[0] + "/" + lng[0] + " : " + time[0] + dialogViewHolder.odoNoEditText.getText());
 
-                            } else {
-                                Toast.makeText(ManageJobActivity.this, getResources().getText(R.string.err_gps), Toast.LENGTH_LONG).show();
+                                    SynUpdateTripStatus synUpdateTripStatus = new SynUpdateTripStatus(time[0], dialogViewHolder.odoNoEditText.getText().toString(), lat[0], lng[0], "start");
+                                    synUpdateTripStatus.execute();
+
+                                } else {
+                                    Toast.makeText(ManageJobActivity.this, getResources().getText(R.string.err_gps), Toast.LENGTH_LONG).show();
+
+                                }
 
                             }
+
 
                         }
                     });
@@ -316,17 +329,17 @@ public class ManageJobActivity extends AppCompatActivity {
                         }
                     });
                     builder.show();
-                }
 
                 break;
             case R.id.btnMJAStop:
                 final String[] latStrings = new String[1];
                 final String[] lngStrings = new String[1];
                 final String[] timeStrings = new String[1];
-                AlertDialog.Builder builder1 = new AlertDialog.Builder(ManageJobActivity.this);
+                AlertDialog.Builder builder1 = new AlertDialog.Builder(ManageJobActivity.this, R.style.AlertDialogTheme);
                 View view2 = View.inflate(getBaseContext(), R.layout.set_odo_dialog, null);
                 dialogViewHolder = new DialogViewHolder(view2);
                 dialogViewHolder.headerTextView.setText(getResources().getText(R.string.enter_stop));
+                dialogViewHolder.headerTextView.setTextColor(Color.parseColor("#f5f5f5"));
 
                 builder1.setView(view2);
 
@@ -334,17 +347,22 @@ public class ManageJobActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Log.d("Tag", "In edit text ==> " + dialogViewHolder.odoNoEditText.getText());
-                        GPSManager gpsManager = new GPSManager(ManageJobActivity.this);
-                        if (gpsManager.setLatLong(0)) {
-                            latStrings[0] = gpsManager.getLatString();
-                            lngStrings[0] = gpsManager.getLongString();
-                            timeStrings[0] = gpsManager.getDateTime();
-                            Log.d("Tag", "Lat/Long : Time ==> " + latStrings[0] + "/" + lngStrings[0] + " : " + timeStrings[0]);
+                        if (dialogViewHolder.odoNoEditText.getText().toString().equals("")) {
+                            Toast.makeText(ManageJobActivity.this, getResources().getText(R.string.err_odo), Toast.LENGTH_LONG).show();
 
-                            SynUpdateTripStatus synUpdateTripStatus = new SynUpdateTripStatus(timeStrings[0], dialogViewHolder.odoNoEditText.getText().toString(), latStrings[0], lngStrings[0], "stop");
-                            synUpdateTripStatus.execute();
-                        } else {
-                            Toast.makeText(ManageJobActivity.this, getResources().getText(R.string.err_gps), Toast.LENGTH_LONG).show();
+                        }else {
+                            GPSManager gpsManager = new GPSManager(ManageJobActivity.this);
+                            if (gpsManager.setLatLong(0)) {
+                                latStrings[0] = gpsManager.getLatString();
+                                lngStrings[0] = gpsManager.getLongString();
+                                timeStrings[0] = gpsManager.getDateTime();
+                                Log.d("Tag", "Lat/Long : Time ==> " + latStrings[0] + "/" + lngStrings[0] + " : " + timeStrings[0]);
+
+                                SynUpdateTripStatus synUpdateTripStatus = new SynUpdateTripStatus(timeStrings[0], dialogViewHolder.odoNoEditText.getText().toString(), latStrings[0], lngStrings[0], "stop");
+                                synUpdateTripStatus.execute();
+                            } else {
+                                Toast.makeText(ManageJobActivity.this, getResources().getText(R.string.err_gps), Toast.LENGTH_LONG).show();
+                            }
                         }
 
                     }
