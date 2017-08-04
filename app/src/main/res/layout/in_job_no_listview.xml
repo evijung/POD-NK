@@ -19,7 +19,7 @@
         android:layout_weight="2"
         android:text="@string/InvoiceNo"
         android:textColor="@color/MediumBlue"
-        android:textSize="14sp"
+        android:textSize="18sp"
         android:textStyle="bold" />
 
     <TextView
@@ -29,6 +29,6 @@
         android:layout_weight="1"
         android:text="TextView"
         android:textColor="@color/MediumBlue"
-        android:textSize="14sp"
+        android:textSize="18sp"
         android:textStyle="bold" />
 </LinearLayout>

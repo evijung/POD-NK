@@ -15,7 +15,7 @@
         android:padding="@dimen/mini_margin"
         android:text="@string/JobNo"
         android:textColor="@color/MediumBlue"
-        android:textSize="16sp"
+        android:textSize="18sp"
         android:textStyle="bold" />
 
     <ListView
