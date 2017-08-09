@@ -20,8 +20,6 @@
     <string name="Description">รายละเอียด</string>
     <string name="Finish">เสร็จ</string>
     <string name="Header">หัวข้อ</string>
-    <string name="Invoice">ใบเสร็จ</string>
-    <string name="InvoiceNo">เลขที่ใบเสร็จ</string>
     <string name="Mile">"ไมล์ :: "</string>
     <string name="Model">รุ่นสินค้า</string>
     <string name="ODOHint">กรุณาใส่เลขไมล์ปัจจุบัน</string>

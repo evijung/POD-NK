@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_margin="@dimen/mini_margin"
-        android:background="@color/Cornsilk2"
+        android:background="@color/Cornsilk3"
         android:orientation="vertical">
 
         <TextView

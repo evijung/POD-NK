@@ -191,8 +191,8 @@ public class ReturnActivity extends AppCompatActivity {
                 confirmReturnAllViewHolder.imgRtnAImageView.setImageResource(R.drawable.caution);
                 confirmReturnAllViewHolder.headerRtnTextView.setText(getResources().getText(R.string.return_dlg_header));
                 confirmReturnAllViewHolder.descriptRtnTextView.setText(getResources().getText(R.string.return_dlg_desc));
-                confirmReturnAllViewHolder.headerRtnTextView.setTextColor(Color.parseColor("#f5f5f5"));
-                confirmReturnAllViewHolder.descriptRtnTextView.setTextColor(Color.parseColor("#f5f5f5"));
+                confirmReturnAllViewHolder.headerRtnTextView.setTextColor(Color.parseColor("#0000cd"));
+                confirmReturnAllViewHolder.descriptRtnTextView.setTextColor(Color.parseColor("#0000cd"));
                 builder.setPositiveButton(getResources().getText(R.string.OK), new DialogInterface.OnClickListener() {
 
                     @Override
@@ -403,7 +403,7 @@ public class ReturnActivity extends AppCompatActivity {
                         }
                     }
 
-                    Log.d("Tag", "imgFirstPathString: " + imgFirstPathString);
+                    Log.d("Tag", "imgFirstPathString: " + imgFirstPathString + " " + imgSecondPathString );
                 }
 
                 //set adapter Listview
@@ -544,7 +544,7 @@ public class ReturnActivity extends AppCompatActivity {
 
                     try {
                         firstImgBitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(firstUri));
-                        if (firstImgBitmap.getHeight() > firstImgBitmap.getWidth()) {
+                        if (firstImgBitmap.getHeight() < firstImgBitmap.getWidth()) {
                             firstImgBitmap = rotateBitmap(firstImgBitmap);
                         }
                         firstImageView.setImageBitmap(firstImgBitmap);
@@ -559,7 +559,7 @@ public class ReturnActivity extends AppCompatActivity {
 
                     try {
                         secondImgBitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(secondUri));
-                        if (secondImgBitmap.getHeight() > secondImgBitmap.getWidth()) {
+                        if (secondImgBitmap.getHeight() < secondImgBitmap.getWidth()) {
                             secondImgBitmap = rotateBitmap(secondImgBitmap);
                         }
                         secondImageView.setImageBitmap(secondImgBitmap);

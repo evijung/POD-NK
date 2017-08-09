@@ -144,9 +144,9 @@ public class DetailJobActivity extends AppCompatActivity {
         subJobNoString = getIntent().getStringExtra("SubJobNo");
         storeString = getIntent().getStringExtra("Place");
 
-        Log.d("Tag", storeString);
+        Log.d("Tag", dateString);
 
-        dateTextView.setText(getResources().getText(R.string.Date) + " " + dateString);
+        dateTextView.setText(dateString);
 
         SynGetJobDetail synGetJobDetail = new SynGetJobDetail();
         synGetJobDetail.execute();
@@ -222,8 +222,8 @@ public class DetailJobActivity extends AppCompatActivity {
                     }
                 }
 
-                storeTextView.setText(getResources().getText(R.string.Store) + " : " + placeString);
-                arrivalTimeTextView.setText(getResources().getText(R.string.ArrivalTime) + " " + arriveTimeString);
+                storeTextView.setText(placeString);
+                arrivalTimeTextView.setText(arriveTimeString);
                 InvoiceListAdaptor invoiceListAdaptor = new InvoiceListAdaptor(DetailJobActivity.this, invoiceStrings);
                 invoiceListView.setAdapter(invoiceListAdaptor);
 
@@ -338,6 +338,7 @@ public class DetailJobActivity extends AppCompatActivity {
             invoiceListViewHolder.invoiceTextView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    Log.d("Tag", inTimeString);
                     if (inTimeString.equals("null")) {
 
                     } else {
@@ -358,6 +359,7 @@ public class DetailJobActivity extends AppCompatActivity {
             invoiceListViewHolder.cameraImageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
                     if (inTimeString.equals("null")) {
 
                     } else {
@@ -440,18 +442,19 @@ public class DetailJobActivity extends AppCompatActivity {
     }
 
     class SynUpdateStatusArrive extends AsyncTask<Void, Void, String> {
-        String latString, longString, timeString;
+        String latString, longString, timeString, t;
 
-        public SynUpdateStatusArrive(String latString, String longString, String timeString) {
+        public SynUpdateStatusArrive(String latString, String longString, String timeString, String t) {
             this.latString = latString;
             this.longString = longString;
             this.timeString = timeString;
+            this.t = t;
         }
 
         @Override
         protected String doInBackground(Void... params) {
             try {
-//                Log.d("Tag", "Send ==> " + loginStrings[5] + " , " + storeString + " , " + subJobNoString + " , " + invoiceStrings[0] + " , " + latString + " , " + longString + " , " + timeString);
+                Log.d("Tag", "Send ==> " + loginStrings[5] + " , " + storeString + " , " + subJobNoString + " , " + invoiceStrings[0] + " , " + latString + " , " + longString + " , " + timeString);
                 OkHttpClient okHttpClient = new OkHttpClient();
                 Request.Builder builder = new Request.Builder();
                 RequestBody requestBody = new FormEncodingBuilder()
@@ -501,6 +504,9 @@ public class DetailJobActivity extends AppCompatActivity {
                 thirdImageView.setVisibility(View.VISIBLE);
                 fourthImageView.setVisibility(View.VISIBLE);
 
+                inTimeString = t;
+
+
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -528,7 +534,7 @@ public class DetailJobActivity extends AppCompatActivity {
             case R.id.btnDJAArrive:
                 GPSManager gpsManager = new GPSManager(DetailJobActivity.this);
                 if (gpsManager.setLatLong(0)) {
-                    SynUpdateStatusArrive synUpdateStatusArrive = new SynUpdateStatusArrive(gpsManager.getLatString(), gpsManager.getLongString(), gpsManager.getDateTime());
+                    SynUpdateStatusArrive synUpdateStatusArrive = new SynUpdateStatusArrive(gpsManager.getLatString(), gpsManager.getLongString(), gpsManager.getDateTime(),gpsManager.getTimeString());
                     synUpdateStatusArrive.execute();
                 } else {
                     Toast.makeText(getBaseContext(), getResources().getText(R.string.err_gps), Toast.LENGTH_LONG).show();
@@ -694,6 +700,9 @@ public class DetailJobActivity extends AppCompatActivity {
                     try {
                         imgInvoiceFirstBitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(invFirstUri));
                         Log.d("Tag", "Before Call  ==> " + imgInvoiceFirstBitmap + " , " + invoiceStrings[0].toString() + " , " + subJobNoString);
+                        if (imgInvoiceFirstBitmap.getHeight() < imgInvoiceFirstBitmap.getWidth()) {
+                            imgInvoiceFirstBitmap = rotateBitmap(imgInvoiceFirstBitmap);
+                        }
 
 
                         SynUploadImagePerInv synUploadImage = new SynUploadImagePerInv(DetailJobActivity.this, imgInvoiceFirstBitmap, invoiceStrings[0].toString(), subJobNoString, "inv_first.png");

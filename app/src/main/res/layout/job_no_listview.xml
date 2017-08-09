@@ -21,7 +21,7 @@
     <ListView
         android:id="@+id/lisJNLInvoice"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="80dp"
         android:layout_margin="@dimen/micro_margin"
         android:padding="@dimen/mini_margin" />
 </LinearLayout>

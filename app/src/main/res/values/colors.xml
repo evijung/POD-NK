@@ -94,5 +94,9 @@
     <color name="saddlebrown">#8B4513</color>
     <color name="peru">#CD853F</color>
     <color name="Black_L">#78000000</color>
+    <color name="DarkSeaGreenLight2">#78cfe2cf</color>
+    <color name="FireBrick2">#78b22222</color>
+    <color name="DarkViolet2">#789400d3</color>
+    <color name="Cornsilk3">#c8fff8dc</color>
 
 </resources>

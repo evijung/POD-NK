@@ -262,14 +262,15 @@ public class ManageJobActivity extends AppCompatActivity {
     }
 
     private class SynUpdateTripStatus extends AsyncTask<Void, Void, String> {
-        String timeString, odoString, latString, longString, flagString;
+        String timeString, odoString, latString, longString, flagString, t;
 
-        public SynUpdateTripStatus(String timeString, String odoString, String latString, String longString, String flagString) {
+        public SynUpdateTripStatus(String timeString, String odoString, String latString, String longString, String flagString, String t) {
             this.timeString = timeString;
             this.odoString = odoString;
             this.latString = latString;
             this.longString = longString;
             this.flagString = flagString;
+            this.t = t;
         }
 
         @Override
@@ -305,12 +306,12 @@ public class ManageJobActivity extends AppCompatActivity {
             Log.d("Tag", "s bool ==> " + s.equals("OK"));
             if (s.equals("OK")) {
                 if (flagString.equals("start")) {
-                    startTimeTextView.setText(timeString);
+                    startTimeTextView.setText(t);
                     startMilesTextView.setText(odoString);
 
                     startButton.setVisibility(View.INVISIBLE);
                 } else if (flagString.equals("stop")) {
-                    stopTimeTextView.setText(timeString);
+                    stopTimeTextView.setText(t);
                     stopMilesTextView.setText(odoString);
 
                     stopButton.setVisibility(View.INVISIBLE);
@@ -328,6 +329,7 @@ public class ManageJobActivity extends AppCompatActivity {
                     final String[] lat = new String[1];
                     final String[] lng = new String[1];
                     final String[] time = new String[1];
+                final String[] t = new String[1];
                     final AlertDialog.Builder builder = new AlertDialog.Builder(ManageJobActivity.this, R.style.AlertDialogTheme);
 
                     View view1 = View.inflate(getBaseContext(), R.layout.set_odo_dialog, null);
@@ -351,10 +353,11 @@ public class ManageJobActivity extends AppCompatActivity {
                                     lat[0] = gpsManager.getLatString();
                                     lng[0] = gpsManager.getLongString();
                                     time[0] = gpsManager.getDateTime();
+                                    t[0] = gpsManager.getTimeString();
 
                                     Log.d("Tag", "Lat/Long : Time ==> " + lat[0] + "/" + lng[0] + " : " + time[0] + dialogViewHolder.odoNoEditText.getText());
 
-                                    SynUpdateTripStatus synUpdateTripStatus = new SynUpdateTripStatus(time[0], dialogViewHolder.odoNoEditText.getText().toString(), lat[0], lng[0], "start");
+                                    SynUpdateTripStatus synUpdateTripStatus = new SynUpdateTripStatus(time[0], dialogViewHolder.odoNoEditText.getText().toString(), lat[0], lng[0], "start",t[0]);
                                     synUpdateTripStatus.execute();
 
                                 } else {
@@ -380,6 +383,7 @@ public class ManageJobActivity extends AppCompatActivity {
                 final String[] latStrings = new String[1];
                 final String[] lngStrings = new String[1];
                 final String[] timeStrings = new String[1];
+                final String[] tStrings = new String[1];
                 AlertDialog.Builder builder1 = new AlertDialog.Builder(ManageJobActivity.this, R.style.AlertDialogTheme);
                 View view2 = View.inflate(getBaseContext(), R.layout.set_odo_dialog, null);
                 dialogViewHolder = new DialogViewHolder(view2);
@@ -401,9 +405,10 @@ public class ManageJobActivity extends AppCompatActivity {
                                 latStrings[0] = gpsManager.getLatString();
                                 lngStrings[0] = gpsManager.getLongString();
                                 timeStrings[0] = gpsManager.getDateTime();
+                                tStrings[0] = gpsManager.getTimeString();
                                 Log.d("Tag", "Lat/Long : Time ==> " + latStrings[0] + "/" + lngStrings[0] + " : " + timeStrings[0]);
 
-                                SynUpdateTripStatus synUpdateTripStatus = new SynUpdateTripStatus(timeStrings[0], dialogViewHolder.odoNoEditText.getText().toString(), latStrings[0], lngStrings[0], "stop");
+                                SynUpdateTripStatus synUpdateTripStatus = new SynUpdateTripStatus(timeStrings[0], dialogViewHolder.odoNoEditText.getText().toString(), latStrings[0], lngStrings[0], "stop", tStrings[0]);
                                 synUpdateTripStatus.execute();
                             } else {
                                 Toast.makeText(ManageJobActivity.this, getResources().getText(R.string.err_gps), Toast.LENGTH_LONG).show();

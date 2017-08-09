@@ -80,9 +80,7 @@ public class ManageJobAdaptor extends BaseAdapter {
         manageJobViewHolder.jobNoListView.setAdapter(jobNoAdaptor);
         if (!outTimeStrings[position].equals("null")) {
             manageJobViewHolder.itemLinearLayout.setForeground(context.getDrawable(R.drawable.layout_bg_3));
-
         }
-
         manageJobViewHolder.storeTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

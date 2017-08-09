@@ -221,6 +221,7 @@ public class JobListActivity extends AppCompatActivity {
                 Log.d("Tag", "Truck ==> " + loginStrings[3]);
                 fullNameTextView.setText(driverNameString);
                 dateButton.setText(deliveryDateString);
+                dateString = deliveryDateString;
 
                 JobListAdaptor jobListAdaptor = new JobListAdaptor(numberStrings, detailListStrings, arriveTimeStrings, subJobNoStrings, context);
                 tripListView.setAdapter(jobListAdaptor);

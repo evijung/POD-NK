@@ -31,7 +31,7 @@
     <string name="RetQuantity">Return QTY</string>
     <string name="ReturnAll">Return All</string>
     <string name="Finish">Finish</string>
-    <string name="InvoiceNo">Invoice No</string>
+    <string name="InvoiceNo" translatable="false">Invoice No</string>
     <string name="Logo">Logo</string>
     <string name="Header">Header</string>
     <string name="Descript">Descript</string>
@@ -41,7 +41,7 @@
     <string name="Job">Job</string>
     <string name="Trip">Trip</string>
     <string name="ODOHint">Please add ODO Meter</string>
-    <string name="Invoice">Invoice</string>
+    <string name="Invoice" translatable="false">Invoice</string>
     <string name="err_not_name">Please Enter Name</string>
     <string name="save_comp">Save Complete</string>
     <string name="save_incomp">Save Incomplete</string>

@@ -25,8 +25,7 @@
     <style name="ReturnAlertDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="buttonBarNegativeButtonStyle">@style/NegativeButtonStyle</item>
         <item name="buttonBarPositiveButtonStyle">@style/PositiveButtonStyle</item>
-        <item name="android:background">@color/DarkOliveGreen</item>
-        <item name="android:textColor">@color/WhiteSmoke</item>
+        <item name="android:background">@color/WhiteSmoke</item>
         <item name="android:textSize">@dimen/text_h3</item>
     </style>
 

@@ -109,10 +109,10 @@ public class SignatureActivity extends AppCompatActivity {
         String errorMessage = "";
 
 
-        if (fullNameEditText.getText().toString().equalsIgnoreCase("")) {
-            errorMessage = errorMessage + getResources().getString(R.string.err_not_name);
-            error = true;
-        }
+//        if (fullNameEditText.getText().toString().equalsIgnoreCase("")) {
+//            errorMessage = errorMessage + getResources().getString(R.string.err_not_name);
+//            error = true;
+//        }
 
         if (error) {
             Toast toast = Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT);

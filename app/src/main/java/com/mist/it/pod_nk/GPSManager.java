@@ -22,7 +22,7 @@ import java.util.Locale;
 public class GPSManager {
     private LocationManager locationManager;
     private Context context;
-    private String latString, longString;
+    private String latString, longString , timeString;
 
     public GPSManager(Context context) {
         this.context = context;
@@ -81,6 +81,10 @@ public class GPSManager {
 
     }   // setupLocation
 
+    public String getTimeString() {
+        return timeString;
+    }
+
     public boolean setLatLong(int rev) {
         boolean b = true;
         boolean result = false;
@@ -135,7 +139,9 @@ public class GPSManager {
 
     public String getDateTime() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS", Locale.getDefault());
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
         Date date = new Date();
+        timeString = timeFormat.format(date);
         return dateFormat.format(date);
     }
 }
