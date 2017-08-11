@@ -82,7 +82,7 @@ public class DetailJobActivity extends AppCompatActivity {
     @BindView(R.id.linDJABottom)
     LinearLayout linDJABottom;
 
-    String dateString, placeString, subJobNoString, inTimeString, outTimeString, tripNoString, storeString, storeIdString, arriveTimeString, pathImgFirstString, pathImgSecondString, pathImgThirdString, pathImgFourthString, pathImgInviceFirstString;
+    String invFirstPosition, dateString, placeString, subJobNoString, inTimeString, outTimeString, tripNoString, storeString, storeIdString, arriveTimeString, pathImgFirstString, pathImgSecondString, pathImgThirdString, pathImgFourthString, pathImgInviceFirstString;
     String[] loginStrings, invoiceStrings;
     private Uri firstUri, secondUri, thirdUri, fourthUri, invFirstUri;
     private Boolean imgFirstFlagABoolean, imgSecondFlagABoolean, imgThirdFlagABoolean, imgFourthFlagABoolean, imgInvoiceFirstABoolean, flagSaveABoolean;
@@ -90,7 +90,6 @@ public class DetailJobActivity extends AppCompatActivity {
     private Bitmap imgSecondBitmap = null;
     private Bitmap imgThirdBitmap = null;
     private Bitmap imgFourthBitmap = null;
-    private Bitmap imgInvoiceFirstBitmap = null;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -163,7 +162,7 @@ public class DetailJobActivity extends AppCompatActivity {
         finish();
     }
 
-    class SynGetJobDetail extends AsyncTask<Void, Void, String> {
+    private class SynGetJobDetail extends AsyncTask<Void, Void, String> {
         public SynGetJobDetail() {
         }
 
@@ -301,7 +300,7 @@ public class DetailJobActivity extends AppCompatActivity {
         String[] invoiceStrings;
         InvoiceListViewHolder invoiceListViewHolder;
 
-        public InvoiceListAdaptor(Context context, String[] invoiceStrings) {
+        InvoiceListAdaptor(Context context, String[] invoiceStrings) {
             this.context = context;
             this.invoiceStrings = invoiceStrings;
             Log.d("Tag", String.valueOf(invoiceStrings.length));
@@ -339,10 +338,7 @@ public class DetailJobActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     Log.d("Tag", inTimeString);
-                    if (inTimeString.equals("null")) {
-
-                    } else {
-
+                    if (!inTimeString.equals("null")) {
                         Intent intent = new Intent(DetailJobActivity.this, ReturnActivity.class);
                         intent.putExtra("Date", dateString);
                         intent.putExtra("Position", tripNoString);
@@ -360,11 +356,10 @@ public class DetailJobActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
 
-                    if (inTimeString.equals("null")) {
-
-                    } else {
+                    if (!inTimeString.equals("null")) {
 
                         File originalFile1 = new File(Environment.getExternalStorageDirectory() + "/DCIM/", "inv_first.png");
+                        invFirstPosition = String.valueOf(position);
                         Intent cameraIntent5 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                         invFirstUri = Uri.fromFile(originalFile1);
                         cameraIntent5.putExtra(MediaStore.EXTRA_OUTPUT, invFirstUri);
@@ -388,10 +383,10 @@ public class DetailJobActivity extends AppCompatActivity {
         }
     }
 
-    class SynUpdateConfirmStatus extends AsyncTask<Void, Void, String> {
+    private class SynUpdateConfirmStatus extends AsyncTask<Void, Void, String> {
         String latString, longString, timeString;
 
-        public SynUpdateConfirmStatus(String latString, String longString, String timeString) {
+        SynUpdateConfirmStatus(String latString, String longString, String timeString) {
             this.latString = latString;
             this.longString = longString;
             this.timeString = timeString;
@@ -441,10 +436,10 @@ public class DetailJobActivity extends AppCompatActivity {
         }
     }
 
-    class SynUpdateStatusArrive extends AsyncTask<Void, Void, String> {
+    private class SynUpdateStatusArrive extends AsyncTask<Void, Void, String> {
         String latString, longString, timeString, t;
 
-        public SynUpdateStatusArrive(String latString, String longString, String timeString, String t) {
+        SynUpdateStatusArrive(String latString, String longString, String timeString, String t) {
             this.latString = latString;
             this.longString = longString;
             this.timeString = timeString;
@@ -633,7 +628,7 @@ public class DetailJobActivity extends AppCompatActivity {
         switch (requestCode) {
             case 1:
                 if (resultCode == RESULT_OK) {
-                    pathImgFirstString = firstUri.getPath().toString();
+                    pathImgFirstString = firstUri.getPath();
                     try {
                         imgFirstBitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(firstUri));
                         if (imgFirstBitmap.getHeight() < imgFirstBitmap.getWidth()) {
@@ -649,7 +644,7 @@ public class DetailJobActivity extends AppCompatActivity {
                 break;
             case 2:
                 if (resultCode == RESULT_OK) {
-                    pathImgSecondString = secondUri.getPath().toString();
+                    pathImgSecondString = secondUri.getPath();
                     try {
                         imgSecondBitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(secondUri));
                         if (imgSecondBitmap.getHeight() < imgSecondBitmap.getWidth()) {
@@ -665,7 +660,7 @@ public class DetailJobActivity extends AppCompatActivity {
 
             case 3:
                 if (resultCode == RESULT_OK) {
-                    pathImgThirdString = thirdUri.getPath().toString();
+                    pathImgThirdString = thirdUri.getPath();
                     try {
                         imgThirdBitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(thirdUri));
                         if (imgThirdBitmap.getHeight() < imgThirdBitmap.getWidth()) {
@@ -680,7 +675,7 @@ public class DetailJobActivity extends AppCompatActivity {
 
             case 4:
                 if (resultCode == RESULT_OK) {
-                    pathImgFourthString = fourthUri.getPath().toString();
+                    pathImgFourthString = fourthUri.getPath();
                     try {
                         imgFourthBitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(fourthUri));
                         if (imgFourthBitmap.getHeight() < imgFourthBitmap.getWidth()) {
@@ -698,14 +693,14 @@ public class DetailJobActivity extends AppCompatActivity {
                 if (resultCode == RESULT_OK) {
                     //pathImgInviceFirstString = invFirstUri.getPath().toString();
                     try {
-                        imgInvoiceFirstBitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(invFirstUri));
-                        Log.d("Tag", "Before Call  ==> " + imgInvoiceFirstBitmap + " , " + invoiceStrings[0].toString() + " , " + subJobNoString);
+                        Bitmap imgInvoiceFirstBitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(invFirstUri));
+                        Log.d("Tag", "Before Call  ==> " + imgInvoiceFirstBitmap + " , " + invoiceStrings[Integer.parseInt(invFirstPosition)] + " , " + subJobNoString);
                         if (imgInvoiceFirstBitmap.getHeight() < imgInvoiceFirstBitmap.getWidth()) {
                             imgInvoiceFirstBitmap = rotateBitmap(imgInvoiceFirstBitmap);
                         }
 
 
-                        SynUploadImagePerInv synUploadImage = new SynUploadImagePerInv(DetailJobActivity.this, imgInvoiceFirstBitmap, invoiceStrings[0].toString(), subJobNoString, "inv_first.png");
+                        SynUploadImagePerInv synUploadImage = new SynUploadImagePerInv(DetailJobActivity.this, imgInvoiceFirstBitmap, invoiceStrings[Integer.parseInt(invFirstPosition)], subJobNoString, "inv_first.png");
                         synUploadImage.execute();
 
 
@@ -724,7 +719,7 @@ public class DetailJobActivity extends AppCompatActivity {
         private UploadImageUtils uploadImageUtils;
 
 
-        public SynUploadImage(Context context, Bitmap bitmap, String invoiceNoString, String subjobNoString, String mFileNameString, String storeIdString) {
+        SynUploadImage(Context context, Bitmap bitmap, String invoiceNoString, String subjobNoString, String mFileNameString, String storeIdString) {
             this.context = context;
             this.bitmap = bitmap;
             this.invoiceNoString = invoiceNoString;
@@ -797,7 +792,7 @@ public class DetailJobActivity extends AppCompatActivity {
         private UploadImageUtils uploadImageUtils;
 
 
-        public SynUploadImagePerInv(Context context, Bitmap bitmap, String invoiceNoString, String subjobNoString, String mFileNameString) {
+        SynUploadImagePerInv(Context context, Bitmap bitmap, String invoiceNoString, String subjobNoString, String mFileNameString) {
             this.context = context;
             this.bitmap = bitmap;
             this.invoiceNoString = invoiceNoString;
@@ -810,7 +805,7 @@ public class DetailJobActivity extends AppCompatActivity {
 
             uploadImageUtils = new UploadImageUtils();
             final String result = uploadImageUtils.uploadFile(mFileNameString, urlUploadPicture, bitmap, storeIdString, "I", subjobNoString, invoiceNoString);
-            if (result == "NOK") {
+            if (result.equals("NOK")) {
                 return "NOK";
 
             } else {

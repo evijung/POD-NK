@@ -19,12 +19,12 @@ import java.util.Locale;
  * Created by Tunyaporn on 7/24/2017.
  */
 
-public class GPSManager {
+class GPSManager {
     private LocationManager locationManager;
     private Context context;
     private String latString, longString , timeString;
 
-    public GPSManager(Context context) {
+    GPSManager(Context context) {
         this.context = context;
     }
 
@@ -81,11 +81,11 @@ public class GPSManager {
 
     }   // setupLocation
 
-    public String getTimeString() {
+    String getTimeString() {
         return timeString;
     }
 
-    public boolean setLatLong(int rev) {
+    boolean setLatLong(int rev) {
         boolean b = true;
         boolean result = false;
 
@@ -129,15 +129,15 @@ public class GPSManager {
 
     }
 
-    public String getLatString() {
+    String getLatString() {
         return latString;
     }
 
-    public String getLongString() {
+    String getLongString() {
         return longString;
     }
 
-    public String getDateTime() {
+    String getDateTime() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS", Locale.getDefault());
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
         Date date = new Date();

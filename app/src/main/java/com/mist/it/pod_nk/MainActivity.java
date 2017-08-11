@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -71,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
             case 101:
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -97,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
         return result == PackageManager.PERMISSION_GRANTED;
     }
 
-    protected class SynGetUser extends AsyncTask<Void, Void, String> {
+    class SynGetUser extends AsyncTask<Void, Void, String> {
         @BindView(R.id.imgCAAlert)
         ImageView alertImageView;
         @BindView(R.id.txtCAHeader)

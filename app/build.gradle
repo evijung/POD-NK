@@ -28,8 +28,8 @@ android {
         applicationId "com.mist.it.pod_nk"
         minSdkVersion 23
         targetSdkVersion 23
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName '2.0'
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     dataBinding {

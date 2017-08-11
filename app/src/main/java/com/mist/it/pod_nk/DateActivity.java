@@ -89,12 +89,12 @@ public class DateActivity extends AppCompatActivity {
         finish();
     }
 
-    class SyncGetDate extends AsyncTask<Void, Void, String> {
+    private class SyncGetDate extends AsyncTask<Void, Void, String> {
         Context context;
         String truckIDString;
 
 
-        public SyncGetDate(Context context, String truckIDString) {
+        SyncGetDate(Context context, String truckIDString) {
             this.context = context;
             this.truckIDString = truckIDString;
         }
@@ -144,12 +144,12 @@ public class DateActivity extends AppCompatActivity {
         }
     }
 
-    protected class TripDateAdaptor extends BaseAdapter {
+    class TripDateAdaptor extends BaseAdapter {
         Context context;
         String[] dateStrings, jobStrings;
         ViewHolder viewHolder;
 
-        public TripDateAdaptor(Context context, String[] dateStrings, String[] jobStrings) {
+        TripDateAdaptor(Context context, String[] dateStrings, String[] jobStrings) {
             this.context = context;
             this.dateStrings = dateStrings;
             this.jobStrings = jobStrings;

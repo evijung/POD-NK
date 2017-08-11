@@ -24,15 +24,15 @@ import butterknife.ButterKnife;
  * Created by Tunyaporn on 7/20/2017.
  */
 
-public class ManageJobAdaptor extends BaseAdapter {
+class ManageJobAdaptor extends BaseAdapter {
     Context context;
-    String dateString, tripNoString, subJobNoString;
-    String[] storeStrings, timeStrings, loginStrings, outTimeStrings, placeStrings;
-    String[][] jobNoStrings;
-    String[][][] invoiceStrings, amountStrings;
+    private String dateString, tripNoString, subJobNoString;
+    private String[] storeStrings, timeStrings, loginStrings, outTimeStrings, placeStrings;
+    private String[][] jobNoStrings;
+    private String[][][] invoiceStrings, amountStrings;
     ManageJobViewHolder manageJobViewHolder;
 
-    public ManageJobAdaptor(Context context, String dateString, String tripNoString, String subJobNoString, String[] storeStrings, String[] timeStrings, String[] loginStrings, String[][] jobNoStrings, String[][][] invoiceStrings, String[][][] amountStrings, String[] outTimeStrings, String [] placeStrings) {
+    ManageJobAdaptor(Context context, String dateString, String tripNoString, String subJobNoString, String[] storeStrings, String[] timeStrings, String[] loginStrings, String[][] jobNoStrings, String[][][] invoiceStrings, String[][][] amountStrings, String[] outTimeStrings, String[] placeStrings) {
         this.context = context;
         this.dateString = dateString;
         this.tripNoString = tripNoString;
@@ -78,8 +78,11 @@ public class ManageJobAdaptor extends BaseAdapter {
 
         JobNoAdaptor jobNoAdaptor = new JobNoAdaptor(context, jobNoStrings[position], invoiceStrings[position], amountStrings[position]);
         manageJobViewHolder.jobNoListView.setAdapter(jobNoAdaptor);
+        Log.d("Tag", outTimeStrings[position] + " : " + position);
         if (!outTimeStrings[position].equals("null")) {
             manageJobViewHolder.itemLinearLayout.setForeground(context.getDrawable(R.drawable.layout_bg_3));
+        } else {
+            manageJobViewHolder.itemLinearLayout.setForeground(null);
         }
         manageJobViewHolder.storeTextView.setOnClickListener(new View.OnClickListener() {
             @Override
