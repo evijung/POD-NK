@@ -67,9 +67,9 @@ public class ReturnProductAdaptor extends BaseAdapter {
         productListViewHolder.modelTextView.setText(text);
         text = convertView.getResources().getString(R.string.Desc) + " : " + returnItems.get(position).getDescriptionString();
         productListViewHolder.detailTextView.setText(text);
-        text = convertView.getResources().getString(R.string.Quantity) + " : " + returnItems.get(position).getAmountString();
+        text = returnItems.get(position).getAmountString();
         productListViewHolder.amountTextView.setText(text);
-        text = convertView.getResources().getString(R.string.RetQuantity) + " : " + returnItems.get(position).getRetrunAmountString();
+        text = returnItems.get(position).getRetrunAmountString();
         productListViewHolder.returnAmtTextView.setText(text);
 
 

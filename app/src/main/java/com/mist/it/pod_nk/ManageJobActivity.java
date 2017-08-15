@@ -315,6 +315,11 @@ public class ManageJobActivity extends AppCompatActivity {
                     stopMilesTextView.setText(odoString);
 
                     stopButton.setVisibility(View.INVISIBLE);
+                    Intent intent = new Intent(ManageJobActivity.this, JobListActivity.class);
+                    intent.putExtra("Login", loginStrings);
+                    intent.putExtra("Date", dateString);
+                    startActivity(intent);
+                    finish();
 
                 }
             }
