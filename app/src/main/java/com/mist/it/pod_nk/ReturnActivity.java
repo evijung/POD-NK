@@ -540,7 +540,7 @@ public class ReturnActivity extends AppCompatActivity {
         switch (requestCode) {
             case 1: // From take  photo
                 if (resultCode == RESULT_OK) {
-                    pathFirstImgString = firstUri.getPath().toString();
+                    pathFirstImgString = firstUri.getPath();
 
                     try {
                         firstImgBitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(firstUri));
@@ -555,7 +555,7 @@ public class ReturnActivity extends AppCompatActivity {
                 break;
             case 2:
                 if (resultCode == RESULT_OK) {
-                    pathSecondImgString = secondUri.getPath().toString();
+                    pathSecondImgString = secondUri.getPath();
 
                     try {
                         secondImgBitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(secondUri));
@@ -574,7 +574,6 @@ public class ReturnActivity extends AppCompatActivity {
     }
 
     static class DialogViewHolder {
-        //        @Nullable
         @BindView(R.id.editText)
         EditText amtRtnEditText;
         @BindView(R.id.textView5)

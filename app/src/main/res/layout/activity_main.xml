@@ -11,10 +11,10 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginBottom="@dimen/containt_size"
+        android:layout_marginLeft="@dimen/containt_size"
+        android:layout_marginRight="@dimen/containt_size"
+        android:layout_marginTop="@dimen/containt_size"
         android:background="@color/Gainsboro2"
         android:gravity="center"
         android:orientation="vertical"
@@ -51,7 +51,7 @@
             android:ems="10"
             android:hint="@string/username"
             android:inputType="textPersonName"
-            android:textSize="24sp" />
+            android:textSize="@dimen/text_h3" />
 
         <EditText
             android:id="@+id/edtMAPassword"
@@ -61,7 +61,7 @@
             android:ems="10"
             android:hint="@string/password"
             android:inputType="textPassword"
-            android:textSize="24sp" />
+            android:textSize="@dimen/text_h3" />
 
         <Button
             android:id="@+id/btnMALogin"
@@ -71,6 +71,6 @@
             android:layout_marginTop="20dp"
             android:background="@drawable/silver_button"
             android:text="@string/Login"
-            android:textSize="18sp" />
+            android:textSize="@dimen/text_h3" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
