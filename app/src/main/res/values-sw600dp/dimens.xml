@@ -1,18 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="text_h1">48sp</dimen>
+    <dimen name="text_h1">44sp</dimen>
     <dimen name="mini_margin">10dp</dimen>
     <dimen name="margin">15dp</dimen>
-    <dimen name="text_h2">32sp</dimen>
-    <dimen name="text_h3">24sp</dimen>
-    <dimen name="text_nm">20sp</dimen>
-    <dimen name="picture_width">57dp</dimen>
-    <dimen name="picture_height">94dp</dimen>
+    <dimen name="text_h2">40sp</dimen>
+    <dimen name="text_h3">32sp</dimen>
+    <dimen name="text_nm">28sp</dimen>
+    <dimen name="picture_width">171dp</dimen>
+    <dimen name="picture_height">282dp</dimen>
     <dimen name="micro_margin">8dp</dimen>
     <dimen name="nano_margin">6dp</dimen>
     <dimen name="button_width">120dp</dimen>
-    <dimen name="button_height">64dp</dimen>
+    <dimen name="button_height">100dp</dimen>
     <dimen name="textview_width">200dp</dimen>
     <dimen name="text_h2_height">30dp</dimen>
-    <dimen name="containt_size">16dp</dimen>
+    <dimen name="containt_size">8dp</dimen>
+    <dimen name="main_layout_width">600dp</dimen>
+    <dimen name="main_layout_height">750dp</dimen>
+    <dimen name="logo_width">600dp</dimen>
+    <dimen name="logo_height">200dp</dimen>
+    <dimen name="lbl1_width">190dp</dimen>
+    <dimen name="listview_height">340dp</dimen>
 </resources>

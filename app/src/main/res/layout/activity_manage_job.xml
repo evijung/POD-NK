@@ -67,11 +67,12 @@
                 android:padding="@dimen/mini_margin">
 
                 <TextView
+                    android:id="@+id/textView8"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="1.2"
                     android:text="@string/StartTime"
-                    android:textSize="18sp" />
+                    android:textSize="@dimen/text_h3" />
 
                 <TextView
                     android:id="@+id/txtMJAStartTime"
@@ -80,14 +81,14 @@
                     android:layout_weight="1"
                     android:paddingLeft="10dp"
                     android:textColor="@color/Crimson"
-                    android:textSize="18sp" />
+                    android:textSize="@dimen/text_h3" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.7"
                     android:text="@string/Mile"
-                    android:textSize="18sp" />
+                    android:textSize="@dimen/text_h3" />
 
                 <TextView
                     android:id="@+id/txtMJAStartMiles"
@@ -96,7 +97,7 @@
                     android:layout_weight="1"
                     android:paddingLeft="10dp"
                     android:textColor="@color/Crimson"
-                    android:textSize="18sp" />
+                    android:textSize="@dimen/text_h3" />
 
             </LinearLayout>
 
@@ -111,7 +112,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/StopTime"
-                    android:textSize="18sp" />
+                    android:textSize="@dimen/text_h3" />
 
                 <TextView
                     android:id="@+id/txtMJAStopTime"
@@ -120,14 +121,14 @@
                     android:layout_weight="1"
                     android:paddingLeft="10dp"
                     android:textColor="@color/Crimson"
-                    android:textSize="18sp" />
+                    android:textSize="@dimen/text_h3" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.7"
                     android:text="@string/Mile"
-                    android:textSize="18sp" />
+                    android:textSize="@dimen/text_h3" />
 
                 <TextView
                     android:id="@+id/txtMJAStopMiles"
@@ -136,7 +137,7 @@
                     android:layout_weight="1"
                     android:paddingLeft="10dp"
                     android:textColor="@color/Crimson"
-                    android:textSize="18sp" />
+                    android:textSize="@dimen/text_h3" />
 
             </LinearLayout>
 
@@ -156,7 +157,7 @@
                 android:layout_weight="2.93"
                 android:background="@drawable/green_button"
                 android:text="@string/Start"
-                android:textSize="24sp"
+                android:textSize="@dimen/text_h2"
                 android:textStyle="bold" />
 
             <Button
@@ -164,6 +165,7 @@
                 android:layout_height="@dimen/button_height"
                 android:layout_margin="@dimen/mini_margin"
                 android:layout_weight="1"
+                android:textSize="@dimen/text_h2"
                 android:visibility="invisible" />
 
             <Button
@@ -174,7 +176,7 @@
                 android:layout_weight="2.93"
                 android:background="@drawable/salmon_button"
                 android:text="@string/Stop"
-                android:textSize="24sp"
+                android:textSize="@dimen/text_h2"
                 android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
