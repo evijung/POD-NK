@@ -146,7 +146,7 @@ public class ManageJobActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            Log.d("Tag", s);
+            Log.d("NK-Tag-MJA", s);
             try {
                 JSONObject jsonObject = new JSONObject(s);
 
@@ -302,8 +302,8 @@ public class ManageJobActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            Log.d("Tag", "s ==> " + s);
-            Log.d("Tag", "s bool ==> " + s.equals("OK"));
+            Log.d("NK-Tag-MJA", "s ==> " + s);
+            Log.d("NK-Tag-MJA", "s bool ==> " + s.equals("OK"));
             if (s.equals("OK")) {
                 if (flagString.equals("start")) {
                     startTimeTextView.setText(t);
@@ -338,7 +338,7 @@ public class ManageJobActivity extends AppCompatActivity {
                     final AlertDialog.Builder builder = new AlertDialog.Builder(ManageJobActivity.this, R.style.AlertDialogTheme);
 
                     View view1 = View.inflate(getBaseContext(), R.layout.set_odo_dialog, null);
-                    Log.d("Tag", String.valueOf(view1 == null));
+                    Log.d("NK-Tag-MJA", String.valueOf(view1 == null));
                     dialogViewHolder = new DialogViewHolder(view1);
 
                     dialogViewHolder.headerTextView.setText(getResources().getText(R.string.enter_start));
@@ -360,7 +360,7 @@ public class ManageJobActivity extends AppCompatActivity {
                                     time[0] = gpsManager.getDateTime();
                                     t[0] = gpsManager.getTimeString();
 
-                                    Log.d("Tag", "Lat/Long : Time ==> " + lat[0] + "/" + lng[0] + " : " + time[0] + dialogViewHolder.odoNoEditText.getText());
+                                    Log.d("NK-Tag-MJA", "Lat/Long : Time ==> " + lat[0] + "/" + lng[0] + " : " + time[0] + dialogViewHolder.odoNoEditText.getText());
 
                                     SynUpdateTripStatus synUpdateTripStatus = new SynUpdateTripStatus(time[0], dialogViewHolder.odoNoEditText.getText().toString(), lat[0], lng[0], "start",t[0]);
                                     synUpdateTripStatus.execute();
@@ -400,7 +400,7 @@ public class ManageJobActivity extends AppCompatActivity {
                 builder1.setPositiveButton(getResources().getText(R.string.OK), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Log.d("Tag", "In edit text ==> " + dialogViewHolder.odoNoEditText.getText());
+                        Log.d("NK-Tag-MJA", "In edit text ==> " + dialogViewHolder.odoNoEditText.getText());
                         if (dialogViewHolder.odoNoEditText.getText().toString().equals("")) {
                             Toast.makeText(ManageJobActivity.this, getResources().getText(R.string.err_odo), Toast.LENGTH_LONG).show();
 
@@ -411,7 +411,7 @@ public class ManageJobActivity extends AppCompatActivity {
                                 lngStrings[0] = gpsManager.getLongString();
                                 timeStrings[0] = gpsManager.getDateTime();
                                 tStrings[0] = gpsManager.getTimeString();
-                                Log.d("Tag", "Lat/Long : Time ==> " + latStrings[0] + "/" + lngStrings[0] + " : " + timeStrings[0]);
+                                Log.d("NK-Tag-MJA", "Lat/Long : Time ==> " + latStrings[0] + "/" + lngStrings[0] + " : " + timeStrings[0]);
 
                                 SynUpdateTripStatus synUpdateTripStatus = new SynUpdateTripStatus(timeStrings[0], dialogViewHolder.odoNoEditText.getText().toString(), latStrings[0], lngStrings[0], "stop", tStrings[0]);
                                 synUpdateTripStatus.execute();

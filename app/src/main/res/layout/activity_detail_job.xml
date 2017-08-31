@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_5"
+    android:gravity="center"
     tools:context="com.mist.it.pod_nk.DetailJobActivity">
 
     <LinearLayout
@@ -109,7 +110,7 @@
         android:layout_above="@+id/linDJABottom"
         android:layout_alignStart="@+id/linDJATop"
         android:layout_below="@+id/linDJATop"
-        android:layout_marginLeft="@dimen/mini_margin"
+        android:layout_marginEnd="@dimen/mini_margin"
         android:layout_marginRight="@dimen/mini_margin"
         android:background="@color/Cornsilk2" />
 
@@ -179,13 +180,13 @@
                 android:textStyle="bold" />
 
             <Button
-                android:id="@+id/btnDJABack"
+                android:id="@+id/btnDJAReject"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/button_height"
                 android:layout_margin="@dimen/micro_margin"
                 android:layout_weight="1"
                 android:background="@drawable/silver_button"
-                android:text="@string/Back"
+                android:text="@string/Reject"
                 android:textSize="@dimen/text_h2"
                 android:textStyle="bold" />
 

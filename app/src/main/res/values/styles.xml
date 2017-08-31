@@ -29,12 +29,28 @@
         <item name="android:textSize">@dimen/text_h3</item>
     </style>
 
-    <!--Dialog  Return List-->
+    <!--Dialog Return List-->
     <style name="ReturnListAlertDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="buttonBarNegativeButtonStyle">@style/NegativeButtonStyle</item>
         <item name="buttonBarPositiveButtonStyle">@style/PositiveButtonStyle</item>
         <item name="android:background">#182125</item>
         <item name="android:textColor">@color/WhiteSmoke</item>
+        <item name="android:textSize">@dimen/text_h3</item>
+    </style>
+
+    <!--Dialog Confirm-->
+    <style name="ConfirmAlertDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="buttonBarNegativeButtonStyle">@style/NegativeButtonStyle</item>
+        <item name="buttonBarPositiveButtonStyle">@style/PositiveButtonStyle</item>
+        <item name="android:background">@color/BurlyWood</item>
+        <item name="android:textSize">@dimen/text_h3</item>
+    </style>
+
+    <!--Dialog Reject-->
+    <style name="RejectAlertDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="buttonBarNegativeButtonStyle">@style/NegativeButtonStyle</item>
+        <item name="buttonBarPositiveButtonStyle">@style/PositiveButtonStyle</item>
+        <item name="android:background">@color/Azure</item>
         <item name="android:textSize">@dimen/text_h3</item>
     </style>
 

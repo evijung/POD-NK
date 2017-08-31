@@ -84,7 +84,7 @@ public class DateActivity extends AppCompatActivity {
         Intent intent = new Intent(DateActivity.this, JobListActivity.class);
         intent.putExtra("Login", loginStrings);
         intent.putExtra("Date", deliveryDateStrings[position]);
-        Log.d("Tag", "Send ==> " + deliveryDateStrings[position] + " " + Arrays.toString(loginStrings));
+        Log.d("NK-Tag-DA", "Send ==> " + deliveryDateStrings[position] + " " + Arrays.toString(loginStrings));
         startActivity(intent);
         finish();
     }
@@ -102,7 +102,7 @@ public class DateActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(Void... params) {
             try {
-                Log.d("Tag", "Send ==> " + truckIDString);
+                Log.d("NK-Tag-DA", "Send ==> " + truckIDString);
                 OkHttpClient okHttpClient = new OkHttpClient();
                 RequestBody requestBody = new FormEncodingBuilder()
                         .add("isAd dd", "true")
@@ -113,7 +113,7 @@ public class DateActivity extends AppCompatActivity {
                 Response response = okHttpClient.newCall(request).execute();
                 return response.body().string();
             } catch (IOException e) {
-                Log.d("Tag", "Error Date Activity SyncGetDate do in back ==> " + e);
+                Log.d("NK-Tag-DA", "Error Date Activity SyncGetDate do in back ==> " + e);
                 return null;
             }
         }
@@ -121,7 +121,7 @@ public class DateActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            Log.d("Tag", "" + s);
+            Log.d("NK-Tag-DA", "" + s);
 
             try {
                 JSONArray jsonArray = new JSONArray(s);
@@ -138,7 +138,7 @@ public class DateActivity extends AppCompatActivity {
                 tripDateListView.setAdapter(tripDateAdaptor);
 
             } catch (JSONException e) {
-                Log.d("Tag", "Error Date Activity SyncGetDate on post JSONArray ==> " + e);
+                Log.d("NK-Tag-DA", "Error Date Activity SyncGetDate on post JSONArray ==> " + e);
 
             }
         }

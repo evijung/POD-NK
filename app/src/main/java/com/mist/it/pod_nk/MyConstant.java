@@ -8,8 +8,8 @@ import android.provider.BaseColumns;
 
 public interface MyConstant extends BaseColumns {
     public static final String projectString = "DMS_NK";
-    public static final String serverString = "http://203.154.103.43/";
-//    public static final String serverString = "http://service.eternity.co.th/";
+//    public static final String serverString = "http://203.154.103.43/";
+    public static final String serverString = "http://service.eternity.co.th/";
     public static final String urlGetUser = serverString + projectString + "/app/centerservice/getuser.php";
     public static final String urlGetJobList = serverString + projectString + "/app/centerservice/getJobList.php";
     public static final String urlGetJobListDate = serverString + projectString + "/app/centerservice/getListJobDate.php";
@@ -26,4 +26,6 @@ public interface MyConstant extends BaseColumns {
     public static final String urlSaveStatusTrip = serverString + projectString + "/app/centerservice/saveStatusTrip.php";
     public static final String urlUploadPicture = serverString + projectString + "/app/centerservice/uploadPicture.php";
     public static final String urlVideo = serverString + projectString + "/app/centerservice/video/vdo.mp4";
+    public static final String urlClearArrivedData = serverString + projectString + "/app/centerservice/ClearArrivedData.php";
+    public static final String urlUpdateArrivedData = serverString + projectString + "/app/centerservice/UpdateArrivedData.php";
 }

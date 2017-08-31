@@ -78,7 +78,7 @@ class ManageJobAdaptor extends BaseAdapter {
 
         JobNoAdaptor jobNoAdaptor = new JobNoAdaptor(context, jobNoStrings[position], invoiceStrings[position], amountStrings[position]);
         manageJobViewHolder.jobNoListView.setAdapter(jobNoAdaptor);
-        Log.d("Tag", outTimeStrings[position] + " : " + position);
+        Log.d("NK-Tag-MJAd", outTimeStrings[position] + " : " + position);
         if (!outTimeStrings[position].equals("null")) {
             manageJobViewHolder.itemLinearLayout.setForeground(context.getDrawable(R.drawable.layout_bg_3));
         } else {

@@ -14,27 +14,29 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
 
+import java.io.IOException;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
+import static com.mist.it.pod_nk.MyConstant.projectString;
+import static com.mist.it.pod_nk.MyConstant.serverString;
 import static com.mist.it.pod_nk.MyConstant.urlSaveSignature;
 import static com.mist.it.pod_nk.MyConstant.urlUploadPicture;
 
@@ -48,13 +50,29 @@ public class SignatureActivity extends AppCompatActivity {
     Button saveButton;
     @BindView(R.id.btnSAClear)
     Button clearButton;
+    @BindView(R.id.imgSASignature)
+    ImageView signatureImageView;
+
     signature mSignature;
     Bitmap mBitmap;
-
-
     View mView;
-    String stringStoreId, SignName, jobNoString;
+    String stringStoreId, SignName, jobNoString, urlString, fileNameString, consigneeNameString,dateString,tripNoString,placeString;
     String[] loginStrings;
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        Intent intent1 = new Intent(SignatureActivity.this, DetailJobActivity.class);
+        intent1.putExtra("Date", dateString);
+        intent1.putExtra("Position", tripNoString);
+        intent1.putExtra("Login", loginStrings);
+        intent1.putExtra("SubJobNo", jobNoString);
+        intent1.putExtra("Place", placeString);
+        startActivity(intent1);
+        finish();
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,43 +83,156 @@ public class SignatureActivity extends AppCompatActivity {
         loginStrings = getIntent().getStringArrayExtra("Login");
         jobNoString = getIntent().getStringExtra("SubJobNo");
         stringStoreId = getIntent().getStringExtra("StoreId");
+        dateString = getIntent().getStringExtra("Date");
+        tripNoString = getIntent().getStringExtra("Position");
+        placeString = getIntent().getStringExtra("Place");
+        fileNameString = getIntent().getStringExtra("SignatureFileName");
+        consigneeNameString = getIntent().getStringExtra("ConsigneeName");
+        Log.d("NK-Tag-SA", "StoreId ==> " + stringStoreId);
 
+        fullNameEditText.setText("");
+
+        urlString = serverString + projectString + "/app/CenterService/uploadsImg/" + jobNoString + "/" + stringStoreId + "/Signature/signature.jpg";
 
         mSignature = new signature(this, null);
         mSignature.setBackgroundColor(Color.WHITE);
-        canvasLinearLayout.addView(mSignature, ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT);
-        saveButton.setEnabled(false);
-        mView = canvasLinearLayout;
+
+        Log.d("NK-Tag-SA", "Bool ==> " + (fileNameString.equals("null")) + " FileName ==> " + fileNameString);
+        if (fileNameString.equals("null")) {
+            signatureImageView.setVisibility(View.GONE);
+
+            canvasLinearLayout.addView(mSignature, ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT);
+            saveButton.setEnabled(false);
+            mView = canvasLinearLayout;
+        } else {
+            signatureImageView.setVisibility(View.VISIBLE);
+            canvasLinearLayout.setVisibility(View.GONE);
+            clearButton.setVisibility(View.GONE);
+            Log.d("NK-Tag-SA", "URL ==> " + urlString);
+            Glide.with(SignatureActivity.this).load(urlString).into(signatureImageView);
+            fullNameEditText.setText(consigneeNameString);
+
+        }
+
+
         clearButton.setOnClickListener(new View.OnClickListener() {
 
 
             @Override
             public void onClick(View view) {
-                Log.v("log_tag", "Panel Clear");
+                Log.d("NK-Tag-SA", "Panel Clear");
                 mSignature.clear();
-//                clearButton.setEnabled(false);
             }
         });
 
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.v("log_tag", "Panel Saved");
+                Log.d("NK-Tag-SA", "Panel Saved");
                 boolean error = captureSignature();
-                if (!error) {
-                    mView.setDrawingCacheEnabled(true);
-                    mSignature.save(mView);
-                    Bundle b = new Bundle();
-                    b.putString("status", "done");
-                    Intent intent = new Intent();
-                    intent.putExtras(b);
-                    setResult(RESULT_OK, intent);
-                    finish();
+                if (fileNameString.equals("null")) {
+                    if (!error) {
+                        mView.setDrawingCacheEnabled(true);
+                        mSignature.save(mView);
+                        Bundle b = new Bundle();
+                        b.putString("status", "done");
+                        Intent intent = new Intent();
+                        intent.putExtras(b);
+                        setResult(RESULT_OK, intent);
+
+                        Intent intent1 = new Intent(SignatureActivity.this, DetailJobActivity.class);
+                        intent1.putExtra("Date", dateString);
+                        intent1.putExtra("Position", tripNoString);
+                        intent1.putExtra("Login", loginStrings);
+                        intent1.putExtra("SubJobNo", jobNoString);
+                        intent1.putExtra("Place", placeString);
+                        startActivity(intent1);
+                        finish();
+                    }
+                } else {
+                    SignName = fullNameEditText.getText().toString();
+                    try {
+                        Log.d("NK-Tag-SA", "SignName ==> " + SignName);
+                        SyncUploadSignature syncUploadSignature = new SyncUploadSignature(SignatureActivity.this, fileNameString, SignName);
+                        syncUploadSignature.execute();
+
+                        Intent intent1 = new Intent(SignatureActivity.this, DetailJobActivity.class);
+                        intent1.putExtra("Date", dateString);
+                        intent1.putExtra("Position", tripNoString);
+                        intent1.putExtra("Login", loginStrings);
+                        intent1.putExtra("SubJobNo", jobNoString);
+                        intent1.putExtra("Place", placeString);
+                        startActivity(intent1);
+                        finish();
+                        finish();
+                    } catch (Exception e) {
+
+                        Log.d("NK-Tag-SA", "Line ==> " + e.getStackTrace()[0].getLineNumber() + " Error ==> " + e);
+                    }
                 }
             }
         });
 
 
+    }
+
+    private class SyncUploadSignature extends AsyncTask<Void, Void, String> {
+        Context context;
+        String signatureFileString, signNameString;
+
+        public SyncUploadSignature(Context context, String signatureFileString, String signNameString) {
+            this.context = context;
+            this.signatureFileString = signatureFileString;
+            this.signNameString = signNameString;
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+            try {
+                GPSManager gpsManager = new GPSManager(SignatureActivity.this);
+                String time;
+                time = gpsManager.getDateTime();
+
+                OkHttpClient okHttpClient = new OkHttpClient();
+                RequestBody requestBody = new FormEncodingBuilder()
+                        .add("isAdd", "true")
+                        .add("StoreId",stringStoreId)
+                        .add("Sign_Name", signNameString)
+                        .add("File_Name",signatureFileString)
+                        .add("user_name",loginStrings[5])
+                        .add("timeStamp",time)
+                        .build();
+                Request.Builder builder = new Request.Builder();
+                Request request = builder.url(urlSaveSignature).post(requestBody).build();
+                Response response = okHttpClient.newCall(request).execute();
+                return response.body().string();
+            } catch (IOException e) {
+                Log.d("NK-Tag-SA", "Line ==> " + e.getStackTrace()[0].getLineNumber() + " Error ==> " + e);
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Log.d("NK-Tag-SA", "On Post JSON ==> " + s);
+            if (s.equals("OK")) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(context, getResources().getText(R.string.save_comp), Toast.LENGTH_LONG).show();
+                    }
+                });
+            } else {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        Toast.makeText(context, getResources().getText(R.string.save_incomp), Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+        }
     }
 
     private boolean captureSignature() {
@@ -149,20 +280,20 @@ public class SignatureActivity extends AppCompatActivity {
             mUploadedFileName = "signature.jpg";
             time[0] = gpsManager.getDateTime();
 
-            Log.d("Data", mUploadedFileName);
-            Log.d("Data", stringStoreId);
-            Log.d("Data", bitmap.toString());
-            Log.d("Data", urlUploadPicture);
+            Log.d("NK-Tag-SA", mUploadedFileName);
+            Log.d("NK-Tag-SA", stringStoreId);
+            Log.d("NK-Tag-SA", bitmap.toString());
+            Log.d("NK-Tag-SA", urlUploadPicture);
 
             final String result = UploadImageUtils.uploadFile(mUploadedFileName, urlUploadPicture, bitmap, stringStoreId, "S", jobNoString, "");
-            Log.d("TAG", "Do in back after save:-->" + result);
-            Log.d("TAG", "TIME ==>" + time[0]);
-            Log.d("TAG", String.valueOf(result.equals("NOK")));
+            Log.d("NK-Tag-SA", "Do in back after save:-->" + result);
+            Log.d("NK-Tag-SA", "TIME ==>" + time[0]);
+            Log.d("NK-Tag-SA", String.valueOf(result.equals("NOK")));
             if (result.equals("NOK")) {
                 return "NOK";
             } else {
                 try {
-                    Log.d("Tag", stringStoreId + " , " + signNameString + " , " + result + " , " + loginStrings[5] + " , " + time[0]);
+                    Log.d("NK-Tag-SA", stringStoreId + " , " + signNameString + " , " + result + " , " + loginStrings[5] + " , " + time[0]);
                     OkHttpClient okHttpClient = new OkHttpClient();
                     RequestBody requestBody = new FormEncodingBuilder()
                             .add("isAdd", "true")
@@ -177,7 +308,7 @@ public class SignatureActivity extends AppCompatActivity {
                     Response response = okHttpClient.newCall(request).execute();
                     return response.body().string();
                 } catch (Exception e) {
-                    Log.d("TAG", String.valueOf(e));
+                    Log.d("NK-Tag-SA", String.valueOf(e));
                     return "NOK";
                 }
             }
@@ -187,7 +318,7 @@ public class SignatureActivity extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
 
-            Log.d("TAG", "JSON_Upload ==> " + s);
+            Log.d("NK-Tag-SA", "JSON_Upload ==> " + s);
             if (s.equals("OK")) {
                 runOnUiThread(new Runnable() {
                     @Override
@@ -229,8 +360,8 @@ public class SignatureActivity extends AppCompatActivity {
         }
 
         public void save(View v) {
-            Log.v("log_tag", "Width: " + v.getWidth());
-            Log.v("log_tag", "Height: " + v.getHeight());
+            Log.d("NK-Tag-SA", "Width: " + v.getWidth());
+            Log.d("NK-Tag-SA", "Height: " + v.getHeight());
             if (mBitmap == null) {
                 mBitmap = Bitmap.createBitmap(canvasLinearLayout.getWidth(), canvasLinearLayout.getHeight(), Bitmap.Config.RGB_565);
 
@@ -240,13 +371,13 @@ public class SignatureActivity extends AppCompatActivity {
                 try {
 
                     v.draw(canvas);
-                    Log.v("log_tag", "Bitmap=++++++++++++++: " + mBitmap);
+                    Log.d("NK-Tag-SA", "Bitmap=++++++++++++++: " + mBitmap);
 
                     SynUploadImage synUploadImage = new SynUploadImage(SignatureActivity.this, mBitmap, SignName);
                     synUploadImage.execute();
 
                 } catch (Exception e) {
-                    Log.v("log_tag", e.toString());
+                    Log.d("NK-Tag-SA", e.toString());
                 }
             }//end if
         }

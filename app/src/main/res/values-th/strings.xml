@@ -64,4 +64,11 @@
     <string name="Information">วิธีการใช้งาน</string>
     <string name="return_dlg_desc">ยืนยันการคืนสินค้า ใช่ไหม...?</string>
     <string name="return_dlg_header">คืนสินค้าทั้งหมด</string>
+    <string name="confirm_h">ยืนยัน</string>
+    <string name="confirm_d">คุณแน่ใจที่จะยืนยันการทำงานที่สาขานี้ใช่ไหม?</string>
+    <string name="reject_h">ยกเลิกถึงที่หมาย</string>
+    <string name="reject_d">คุณแน่ใจที่จะยกเลิกถึงที่หมายการทำงานที่สาขานี้ใช่ไหม?</string>
+    <string name="Reject">เลื่อนส่ง</string>
+    <string name="err_confirm_h">ยืนยันการจัดส่งผิดพลาด</string>
+    <string name="err_confirm_d">กรุณาถ่ายรูปให้ครบทุกรูป ก่อนกดยืนยัน</string>
 </resources>

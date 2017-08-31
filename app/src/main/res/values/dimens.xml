@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="text_h1">32sp</dimen>
+    <dimen name="text_h1">34sp</dimen>
     <dimen name="mini_margin">5dp</dimen>
     <dimen name="margin">10dp</dimen>
-    <dimen name="text_h2">24sp</dimen>
-    <dimen name="text_h3">18sp</dimen>
-    <dimen name="text_nm">14sp</dimen>
+    <dimen name="text_h2">26sp</dimen>
+    <dimen name="text_h3">22sp</dimen>
+    <dimen name="text_nm">18sp</dimen>
     <dimen name="picture_width">57dp</dimen>
     <dimen name="picture_height">94dp</dimen>
     <dimen name="micro_margin">3dp</dimen>
@@ -15,8 +15,8 @@
     <dimen name="textview_width">200dp</dimen>
     <dimen name="text_h2_height">30dp</dimen>
     <dimen name="containt_size">8dp</dimen>
-    <dimen name="main_layout_width">350dp</dimen>
-    <dimen name="main_layout_height">400dp</dimen>
+    <dimen name="main_layout_width">300dp</dimen>
+    <dimen name="main_layout_height">350dp</dimen>
     <dimen name="logo_width">300dp</dimen>
     <dimen name="logo_height">100dp</dimen>
     <dimen name="lbl1_width">190dp</dimen>

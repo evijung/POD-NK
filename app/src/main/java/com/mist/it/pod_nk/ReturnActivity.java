@@ -318,7 +318,7 @@ public class ReturnActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
             try {
-                Log.d("TAG", "Send ==> " + subjob_no + " , " + invoiceNo);
+                Log.d("NK-Tag-RA", "Send ==> " + subjob_no + " , " + invoiceNo);
                 OkHttpClient okHttpClient = new OkHttpClient();
                 RequestBody requestBody = new FormEncodingBuilder()
                         .add("isAdd", "true")
@@ -339,7 +339,7 @@ public class ReturnActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            Log.d("Tag", "onPostExecute: " + s);
+            Log.d("NK-Tag-RA", "onPostExecute: " + s);
 
             try {
                 JSONObject jsonObject = new JSONObject(s);
@@ -403,7 +403,7 @@ public class ReturnActivity extends AppCompatActivity {
                         }
                     }
 
-                    Log.d("Tag", "imgFirstPathString: " + imgFirstPathString + " " + imgSecondPathString );
+                    Log.d("NK-Tag-RA", "imgFirstPathString: " + imgFirstPathString + " " + imgSecondPathString );
                 }
 
                 //set adapter Listview
@@ -412,7 +412,7 @@ public class ReturnActivity extends AppCompatActivity {
 
                 itemListView.setAdapter(returnProductAdaptor);
                 // set image
-                Log.d("Tag", "Image Path :::  " + serverString + projectString + "/app/CenterService/" + imgFirstPathString);
+                Log.d("NK-Tag-RA", "Image Path :::  " + serverString + projectString + "/app/CenterService/" + imgFirstPathString);
 
                 if (!imgFirstPathString.equals("null")) {
                     Glide.with(ReturnActivity.this).load(serverString + projectString + "/app/CenterService/" + imgFirstPathString).into(firstImageView);
@@ -424,7 +424,7 @@ public class ReturnActivity extends AppCompatActivity {
 
 
             } catch (Exception e) {
-                Log.d("Tag", "onPostExecute: " + e + " Line: " + e.getStackTrace()[0].getLineNumber());
+                Log.d("NK-Tag-RA", "onPostExecute: " + e + " Line: " + e.getStackTrace()[0].getLineNumber());
             }
 
         }
@@ -455,7 +455,7 @@ public class ReturnActivity extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
 
-            Log.d("Tag", "onPostExecute:->return save return product:::::  " + s);
+            Log.d("NK-Tag-RA", "onPostExecute:->return save return product:::::  " + s);
 
         }
 
@@ -525,7 +525,7 @@ public class ReturnActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            Log.d("Tag", "onPostExecute:->return save return all product:::::  " + s);
+            Log.d("NK-Tag-RA", "onPostExecute:->return save return all product:::::  " + s);
 
         }
     }
@@ -632,23 +632,6 @@ public class ReturnActivity extends AppCompatActivity {
         }
 
 
-//        @Override
-//        protected void onPreExecute() {
-//            super.onPreExecute();
-//            progressDialog = new ProgressDialog(context);
-//            progressDialog.setMessage(getResources().getString(R.string.loading));
-//            progressDialog.setCancelable(false);
-//            progressDialog.show();
-//
-//            progressRunnable = new Runnable() {
-//                @Override
-//                public void run() {
-//                    progressDialog.cancel();
-//                }
-//            };
-//        }
-
-
         @Override
         protected String doInBackground(Void... params) {
 
@@ -675,7 +658,7 @@ public class ReturnActivity extends AppCompatActivity {
 
                     return response.body().string();
                 } catch (IOException e) {
-                    Log.d("Tag", String.valueOf(e) + " Line: " + e.getStackTrace()[0].getLineNumber());
+                    Log.d("NK-Tag-RA", String.valueOf(e) + " Line: " + e.getStackTrace()[0].getLineNumber());
                     e.printStackTrace();
                     return null;
                 }
@@ -687,7 +670,7 @@ public class ReturnActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            Log.d("Tag", "___________________" + s);
+            Log.d("NK-Tag-RA", "___________________" + s);
             if (s.equals("OK")) {
                 runOnUiThread(new Runnable() {
                     @Override

@@ -105,7 +105,7 @@ public class JobListActivity extends AppCompatActivity {
         }
         truckLicenseTextView.setText(loginStrings[3]);
 
-        Log.d("Tag", "Bool 1 ==> " + (dateString.equals("")) + " Bool 2 ==> " + (dateString == "") + " Date ==> " + dateString);
+        Log.d("NK-Tag-JLA", "Bool 1 ==> " + (dateString.equals("")) + " Bool 2 ==> " + (dateString == "") + " Date ==> " + dateString);
         if (dateString.equals("")) {
             SynGetJobList synGetJobList = new SynGetJobList(this, loginStrings[0]);
             synGetJobList.execute();
@@ -159,7 +159,7 @@ public class JobListActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            Log.d("Tag", s);
+            Log.d("NK-Tag-JLA", s);
 
             try {
                 JSONObject jsonObject = new JSONObject(s);
@@ -210,7 +210,7 @@ public class JobListActivity extends AppCompatActivity {
                     for (int j = 0; j < deliveryPlaceJsonArray.length(); j++) {
 
                         JSONObject jsonObject2 = deliveryPlaceJsonArray.getJSONObject(j);
-                        Log.d("Tag", "i ==> " + String.valueOf(i) + " j ==> " + String.valueOf(j) + " invoice ==> " + jsonObject2.getString("Invoice"));
+                        Log.d("NK-Tag-JLA", "i ==> " + String.valueOf(i) + " j ==> " + String.valueOf(j) + " invoice ==> " + jsonObject2.getString("Invoice"));
                         arriveTimeStrings[i][j] = jsonObject2.getString("ArrivalTime");
                         placeStrings[i][j] = jsonObject2.getString("DetailList");
                         detailListStrings[i][j] = jsonObject2.getString("DetailDesc");
@@ -218,7 +218,7 @@ public class JobListActivity extends AppCompatActivity {
                         jobNoStrings[i][j] = jsonObject2.getString("JobNo");
                     }
                 }
-                Log.d("Tag", "Truck ==> " + loginStrings[3]);
+                Log.d("NK-Tag-JLA", "Truck ==> " + loginStrings[3]);
                 fullNameTextView.setText(driverNameString);
                 dateButton.setText(deliveryDateString);
                 dateString = deliveryDateString;
@@ -228,7 +228,7 @@ public class JobListActivity extends AppCompatActivity {
                 
 
                 for (int i = 0; i < subJobNoStrings.length; i++) {
-                    Log.d("Tag", Arrays.toString(invoiceStrings[i]));
+                    Log.d("NK-Tag-JLA", Arrays.toString(invoiceStrings[i]));
                 }
 
             } catch (JSONException e) {
@@ -290,7 +290,7 @@ public class JobListActivity extends AppCompatActivity {
                     intent.putExtra("SubJobNo", subJobNoStrings[position]);
                     startActivity(intent);
                     finish();
-                    Log.d("Tag", "Position ==> " + position);
+                    Log.d("NK-Tag-JLA", "Position ==> " + position);
 
                 }
             });

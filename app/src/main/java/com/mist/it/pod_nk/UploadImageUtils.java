@@ -34,7 +34,7 @@ public class UploadImageUtils {
 
             URL url = new URL(urlServer + "?store_id=" + store_id + "&jobNo=" + jobNo + "&invoiceNo=" + invoiceNo + "&op=" + option + "&");
 
-            Log.d("Tag URL", "URL ===> " + url);
+            Log.d("NK-Tag-UIU", "URL ===> " + url);
             connection = (HttpURLConnection) url.openConnection();
 
             // Allow Inputs & Outputs
@@ -56,7 +56,7 @@ public class UploadImageUtils {
                             + fileNameInServer + "\"" + lineEnd);
             outputStream.writeBytes(lineEnd);
 
-            Log.d("Name", "Name ==> " + fileNameInServer + "\"" + lineEnd);
+            Log.d("NK-Tag-UIU", "Name ==> " + fileNameInServer + "\"" + lineEnd);
 
 
 
@@ -76,7 +76,7 @@ public class UploadImageUtils {
             data[16] =  00000001;
             data[17] = (byte) 244;
 
-            Log.d("Bitmap", "Bitmap ==> " + bitmap);
+            Log.d("NK-Tag-UIU", "Bitmap ==> " + bitmap);
 
             outputStream.write(data);
 
@@ -96,7 +96,7 @@ public class UploadImageUtils {
             outputStream.flush();
             outputStream.close();
 
-            Log.d("Tag", "Return ==> " + sb.toString());
+            Log.d("NK-Tag-UIU", "Return ==> " + sb.toString());
 
             return sb.toString();
 

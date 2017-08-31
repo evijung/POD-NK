@@ -7,6 +7,12 @@
     <string name="OK">OK</string>
     <string name="err_login_h">Login Failed</string>
     <string name="err_login_d">Please check username/password and try again</string>
+    <string name="confirm_h">Confirm</string>
+    <string name="confirm_d">Are You Sure To Confirm Job of This Store?</string>
+    <string name="err_confirm_h">Error Confirm</string>
+    <string name="err_confirm_d">Please Take a Photo of Every Invoice</string>
+    <string name="reject_h">Reject Arrive</string>
+    <string name="reject_d">Are You Sure To Reject Arrived of This Store?</string>
     <string name="NameAndSurname">Name - Surname</string>
     <string name="TruckLicense">Truck License</string>
     <string name="ODOMeter">Miles</string>
@@ -67,5 +73,6 @@
     <string name="return_dlg_header">Return all product</string>
     <string name="return_dlg_desc">Are you sure return all...?</string>
     <string name="Information">Information</string>
+    <string name="Reject">Reject</string>
 
 </resources>

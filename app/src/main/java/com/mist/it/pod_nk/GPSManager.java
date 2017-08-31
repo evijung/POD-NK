@@ -42,7 +42,7 @@ class GPSManager {
             location = locationManager.getLastKnownLocation(strProvider);
 
         } else {
-            Log.d("GPS", strError);
+            Log.d("NK-Tag-GPS", strError);
         }
 
 
@@ -90,7 +90,7 @@ class GPSManager {
         boolean result = false;
 
         do {
-            Log.d("ServiceTag", "Do " + rev);
+            Log.d("NK-Tag-GPS", "Do " + rev);
             String strLat = "Unknown";
             String strLng = "Unknown";
             setupLocation();
@@ -110,10 +110,10 @@ class GPSManager {
 
                 rev++;
 //                setLatLong(rev);
-                Log.d("ServiceTag", "Repeat");
+                Log.d("NK-Tag-GPS", "Repeat");
             } else if (strLat.equals("Unknown") && strLng.equals("Unknown") && rev >= 10) {
                 //Can't get lat/long
-                Log.d("ServiceTag", "Can't get lat/long");
+                Log.d("NK-Tag-GPS", "Can't get lat/long");
                 rev++;
                 b = false;
             } else {
